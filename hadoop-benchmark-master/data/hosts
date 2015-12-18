@@ -1,0 +1,4 @@
+172.17.0.2 control-node
+172.17.0.3 compute-node1
+172.17.0.4 compute-node2
+172.17.0.5 compute-node3
