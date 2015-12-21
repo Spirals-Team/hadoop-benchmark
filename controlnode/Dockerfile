@@ -6,4 +6,4 @@ RUN mv /tmp/* /root/hadoop/etc/hadoop
 
 RUN /root/hadoop/bin/hadoop namenode -format
 
-CMD 'service ssh start'; 'bash'
+ENTRYPOINT service ssh restart && bash

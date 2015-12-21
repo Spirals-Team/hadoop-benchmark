@@ -4,4 +4,4 @@ ADD hadoop-conf/* /tmp/
 
 RUN mv /tmp/* /root/hadoop/etc/hadoop
 
-CMD 'service ssh start'; 'bash'
+ENTRYPOINT service ssh restart && bash
