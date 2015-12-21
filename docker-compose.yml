@@ -1,0 +1,14 @@
+control-node:
+ image: hadoop_controlnode
+ container_name: control-node
+ tty: true
+ command: 
+  - service ssh start
+  - bash
+
+compute-node:
+ image: hadoop_computenode
+ tty: true
+ command: 
+  - service ssh start
+  - bash

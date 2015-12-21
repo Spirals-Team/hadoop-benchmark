@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,11 +18,19 @@
 
 <configuration>
 	<property>
-		<name>fs.default.name</name>
-		<value>hdfs://hadoopControlNodeName:9000</value>
+		<name>mapreduce.framework.name</name>
+		<value>yarn</value>
 	</property>
 	<property>
-		<name>hadoop.tmp.dir</name>
-		<value>/tmp</value>
+		<name>mapreduce.jobhistory.address</name>
+		<value>control-node:10020</value>
+	</property>
+	<property>
+		<name>mapreduce.jobhistory.webapp.address</name>
+		<value>control-node:19888</value>
+	</property>
+	<property>
+		<name>yarn.app.mapreduce.am.resource.mb</name>
+		<value>1536</value>
 	</property>
 </configuration>
