@@ -32,6 +32,8 @@ RUN echo 'export PATH=$PATH:$HADOOP_INSTALL/bin' >> .bashrc && \
 
         echo "source .bashrc" >> /etc/bash.bashrc
 
+RUN /bin/bash -c "source .bashrc"
+
 #SSH
 ADD ssh_config /root/
 
