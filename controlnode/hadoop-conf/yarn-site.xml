@@ -25,19 +25,19 @@
 	</property>
 	<property>
 		<name>yarn.resourcemanager.resource-tracker.address</name>
-		<value>control-node:8025</value>
+		<value>ControlNodeHostName:8025</value>
 	</property>
 	<property>
 		<name>yarn.resourcemanager.scheduler.address</name>
-		<value>control-node:8030</value>
+		<value>ControlNodeHostName:8030</value>
 	</property>
 	<property>
 		<name>yarn.resourcemanager.address</name>
-		<value>control-node:8040</value>
+		<value>ControlNodeHostName:8040</value>
 	</property>
 	<property>
 		<name>yarn.resourcemanager.admin.address</name>
-		<value>control-node:8033</value>
+		<value>ControlNodeHostName:8033</value>
 	</property>
 	<property>
 		<name>yarn.scheduler.minimum-allocation-mb</name>

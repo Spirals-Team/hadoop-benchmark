@@ -4,6 +4,8 @@ ADD hadoop-conf/* /tmp/
 
 RUN mv /tmp/* /root/hadoop/etc/hadoop
 
-RUN /root/hadoop/bin/hadoop namenode -format
+ADD entrypoint.sh /
 
-ENTRYPOINT service ssh restart && bash
+RUN chmod 777 entrypoint.sh
+
+ENTRYPOINT service ssh restart && sh /entrypoint.sh && bash

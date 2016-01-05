@@ -23,11 +23,11 @@
 	</property>
 	<property>
 		<name>mapreduce.jobhistory.address</name>
-		<value>control-node:10020</value>
+		<value>ControlNodeHostName:10020</value>
 	</property>
 	<property>
 		<name>mapreduce.jobhistory.webapp.address</name>
-		<value>control-node:19888</value>
+		<value>ControlNodeHostName:19888</value>
 	</property>
 	<property>
 		<name>yarn.app.mapreduce.am.resource.mb</name>

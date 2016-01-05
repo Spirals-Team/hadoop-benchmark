@@ -37,4 +37,8 @@
 		<name>dfs.web.ugi</name>
   		<value>root</value>
  	</property>
+	<property>
+		<name>dfs.hosts.exclude</name>
+		<value>/root/hadoop/etc/hadoop/datanode-excludes</value>
+	</property>
 </configuration>

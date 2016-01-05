@@ -16,10 +16,10 @@ RUN wget http://www.motorlogy.com/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1
         mv hadoop-2.7.1 /root/hadoop
 
 #Hadoop env
-ENV HADOOP_INSTALL=/root/hadoop 
-ENV JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
+RUN echo 'export HADOOP_INSTALL=/root/hadoop' >> .bashrc && \
+	echo 'export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64' >> .bashrc && \
 
-RUN echo 'export PATH=$PATH:$HADOOP_INSTALL/bin' >> .bashrc && \
+	echo 'export PATH=$PATH:$HADOOP_INSTALL/bin' >> .bashrc && \
         echo 'export PATH=$PATH:$HADOOP_INSTALL/sbin' >> .bashrc && \
 
         echo 'export HADOOP_MAPRED_HOME=$HADOOP_INSTALL' >> .bashrc && \
@@ -30,9 +30,9 @@ RUN echo 'export PATH=$PATH:$HADOOP_INSTALL/bin' >> .bashrc && \
         echo 'export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_INSTALL/lib/native' >> .bashrc && \
         echo 'export HADOOP_OPTS="-Djava.library.path=$HADOOP_INSTALL/lib"' >> .bashrc && \
 
-        echo "source .bashrc" >> /etc/bash.bashrc
+        echo "source /.bashrc" >> /etc/bash.bashrc
 
-RUN /bin/bash -c "source .bashrc"
+RUN /bin/bash -c "source /.bashrc"
 
 #SSH
 ADD ssh_config /root/
