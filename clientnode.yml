@@ -1,0 +1,7 @@
+client-node:
+ image: hadoop_clientnode
+ container_name: client-node
+ tty: true
+ stdin_open: true
+ volumes:
+  - /Users/spirals/Desktop/hadoop-env/data:/data
