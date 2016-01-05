@@ -13,6 +13,7 @@
 docker build -t hadoop_yarn .
 docker build -t hadoop_controlnode controlnode/
 docker build -t hadoop_computenode computenode/
+docker build -t hadoop_clientnode clientnode/
 
 #master='control-node'
 #name='hadoop_control'
@@ -61,5 +62,7 @@ docker build -t hadoop_computenode computenode/
 #start Hadoop Cluster
 #docker exec $name /root/hadoop/sbin/start-all.sh
 
-#echo "In Hadoop Control Node now!"
-#docker attach $name
+docker-compose --x-networking -f cluster.yml -f clientnode.yml up -d
+
+echo "In HiBench Client Node now!"
+docker attach client-node
