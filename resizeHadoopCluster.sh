@@ -5,8 +5,18 @@ if [ $# == '0' ]; then
 	exit;
 fi
 
+if [ $1 -lt '1' ]; then
+	echo "At least one compute node!"
+	exit;
+fi
+
 number=$(docker exec control-node /bin/bash -c 'cat /etc/hosts | grep "compute-node" | wc -l')
 number=$(echo $number/2 | bc)
+
+if [ $1 -eq $number ]; then
+	echo "Already achieved!"
+	exit;
+fi
 
 if [ $1 -lt $number ]; then
 	for i in $(seq $(echo $1+1 | bc) $number);

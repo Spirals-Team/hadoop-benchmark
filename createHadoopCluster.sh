@@ -1,36 +1,9 @@
 #!/bin/bash
 
-#if [ $# == '0' ]; then
-#	echo "Please indicate the amount of compute nodes as a parameter."
-#	exit;
-#fi
-
-#if [ $1 -lt '1' ]; then
-#	echo "There must be at least 1 compute node!"
-#	exit;
-#fi
-
 docker build -t hadoop_yarn .
 docker build -t hadoop_controlnode controlnode/
 docker build -t hadoop_computenode computenode/
 docker build -t hadoop_clientnode clientnode/
-
-#master='control-node'
-#name='hadoop_control'
-
-#touch slaves
-
-#for i in $(seq 1 $1);
-#do
-#	echo "compute-node$i" >> slaves
-#done;
-
-#docker run -itd -P --name $name -h $master -v $(pwd)/data:/data hadoop_controlnode
-
-#docker cp slaves $name:/root/hadoop/etc/hadoop/
-#docker exec $name service ssh start
-
-#rm slaves
 
 #for i in $(seq 1 $1);
 #do
