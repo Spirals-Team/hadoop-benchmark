@@ -1,9 +1,9 @@
 #!/bin/bash
 
-docker build -t hadoop_yarn .
-docker build -t hadoop_controlnode controlnode/
-docker build -t hadoop_computenode computenode/
-docker build -t hadoop_clientnode clientnode/
+#docker build -t hadoop_yarn .
+#docker build -t hadoop_controlnode controlnode/
+#docker build -t hadoop_computenode computenode/
+#docker build -t hadoop_clientnode clientnode/
 
 #for i in $(seq 1 $1);
 #do

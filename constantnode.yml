@@ -1,12 +1,12 @@
 control-node:
- image: hadoop_controlnode
+ image: zhangbbo/hadoop-benchmark:hadoop-controlnode
  container_name: control-node
  hostname: control-node
  tty: true
  stdin_open: true
 
 client-node:
- image: hadoop_clientnode
+ image: zhangbbo/hadoop-benchmark:hadoop-clientnode
  container_name: client-node
  hostname: client-node
  tty: true
