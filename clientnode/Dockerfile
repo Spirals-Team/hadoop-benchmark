@@ -1,4 +1,4 @@
-FROM hadoop_yarn
+FROM zhangbbo/hadoop-benchmark:hadoop-yarn
 
 RUN apt-get update && \
 	apt-get install -y bc
