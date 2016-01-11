@@ -1,0 +1,6 @@
+compute-node:
+ image: hadoop_computenode
+ tty: true
+ stdin_open: true
+ volumes:
+  - /Users/spirals/Desktop/hadoop-env/data:/data

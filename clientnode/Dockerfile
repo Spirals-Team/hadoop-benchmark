@@ -1,5 +1,8 @@
 FROM hadoop_yarn
 
+RUN apt-get update && \
+	apt-get install -y bc
+
 ADD hadoop-conf/* /tmp/
 RUN mv /tmp/* /root/hadoop/etc/hadoop
 
