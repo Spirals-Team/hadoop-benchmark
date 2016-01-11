@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm data/hosts
+rm /Users/spirals/Desktop/hadoop-env/data/hosts
 
 docker stop $(docker ps -a -q)
 
