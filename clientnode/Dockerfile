@@ -1,12 +1,12 @@
 FROM zhangbbo/hadoop-benchmark:hadoop-yarn
 
 RUN apt-get update && \
-	apt-get install -y bc
+	apt-get install -y bc \
+	git
 
 ADD hadoop-conf/* /tmp/
 RUN mv /tmp/* /root/hadoop/etc/hadoop
 
-RUN apt-get install -y git
 RUN git clone -b yarn https://github.com/intel-hadoop/HiBench.git && \
 	mv /HiBench /root/
 
