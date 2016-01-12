@@ -32,8 +32,6 @@ RUN echo 'export HADOOP_INSTALL=/root/hadoop' >> .bashrc && \
 
         echo "source /.bashrc" >> /etc/bash.bashrc
 
-RUN /bin/bash -c "source /.bashrc"
-
 #SSH
 ADD ssh_config /root/
 
@@ -45,4 +43,4 @@ RUN mkdir /var/run/sshd && \
 
 EXPOSE 22 7373 7946 9000 50010 50020 50070 50075 50090 50475 8025 8030 8031 8032 8033 8040 8042 8060 8088 8080 50060 10020 19888
 
-CMD 'bash'
+ENTRYPOINT bash
