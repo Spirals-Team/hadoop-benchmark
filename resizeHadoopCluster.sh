@@ -10,7 +10,7 @@ if [ $1 -lt '1' ]; then
 	exit;
 fi
 
-number=$(docker exec control-node /bin/bash -c 'cat /etc/hosts | grep "compute-node" | wc -l')
+number=$(docker exec hadoop-control /bin/bash -c 'cat /etc/hosts | grep "hadoop-compute" | wc -l')
 number=$(echo $number/2 | bc)
 
 if [ $1 -eq $number ]; then
@@ -21,22 +21,22 @@ fi
 if [ $1 -lt $number ]; then
 	for i in $(seq $(echo $1+1 | bc) $number);
 	do
-		ip=$(docker exec control-node /bin/bash -c "cat /etc/hosts | grep compute-node_$i$ | tr '\t' ' ' | cut -d' ' -f1")
-		docker exec control-node /bin/bash -c "echo $ip >> /root/hadoop/etc/hadoop/datanode-excludes" ;
+		ip=$(docker exec hadoop-control /bin/bash -c "cat /etc/hosts | grep hadoop-compute_$i$ | tr '\t' ' ' | cut -d' ' -f1")
+		docker exec hadoop-control /bin/bash -c "echo $ip >> /root/hadoop/etc/hadoop/datanode-excludes" ;
 	done
 
-	docker exec control-node /bin/bash -c '/root/hadoop/bin/hdfs dfsadmin -refreshNodes'
-	docker-compose --x-networking -f computenode.yml scale compute-node=$1 ;
+	docker exec hadoop-control /bin/bash -c '/root/hadoop/bin/hdfs dfsadmin -refreshNodes'
+	docker-compose --x-networking -f computenode.yml scale hadoop-compute=$1 ;
 fi
 
 if [ $1 -gt $number ]; then
-	docker-compose --x-networking -f computenode.yml scale compute-node=$1
+	docker-compose --x-networking -f computenode.yml scale hadoop-compute=$1
 
 	for i in $(seq $(echo $number+1 | bc) $1);
 	do
-		ip=$(docker exec control-node /bin/bash -c "cat /etc/hosts | grep compute-node_$i$ | tr '\t' ' ' | cut -d' ' -f1")
-		docker exec control-node /bin/bash -c "sed -i '/^$ip/d' /root/hadoop/etc/hadoop/datanode-excludes"
+		ip=$(docker exec hadoop-control /bin/bash -c "cat /etc/hosts | grep hadoop-compute_$i$ | tr '\t' ' ' | cut -d' ' -f1")
+		docker exec hadoop-control /bin/bash -c "sed -i '/^$ip/d' /root/hadoop/etc/hadoop/datanode-excludes"
 	done
 
-	docker exec control-node /bin/bash -c '/root/hadoop/bin/hdfs dfsadmin -refreshNodes' ;
+	docker exec hadoop-control /bin/bash -c '/root/hadoop/bin/hdfs dfsadmin -refreshNodes' ;
 fi

@@ -1,4 +1,4 @@
-compute-node:
+hadoop-compute:
  image: zhangbbo/hadoop-benchmark:hadoop-computenode
  tty: true
  stdin_open: true

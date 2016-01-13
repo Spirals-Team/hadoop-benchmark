@@ -12,5 +12,5 @@ sleep 5
 
 docker-compose --x-networking -f computenode.yml up -d
 
-echo "In HiBench Client Node now!"
-docker attach client-node
+echo "In Hadoop HiBench Node now!"
+docker attach hadoop-hibench
