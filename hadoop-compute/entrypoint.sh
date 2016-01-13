@@ -10,6 +10,6 @@ echo $(cat /etc/hosts | grep $(hostname) | tr '\t' ' ' | cut -d' ' -f1)	$(hostna
 
 /root/hadoop/sbin/yarn-daemon.sh start nodemanager 
 
-/bin/serf join control-node:7946
+/bin/serf join hadoop-control:7946
 
 

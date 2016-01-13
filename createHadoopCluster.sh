@@ -7,7 +7,7 @@
 
 docker-compose --x-networking -f constantnode.yml up -d
 
-echo "Wait for the control-node."
+echo "Wait for the hadoop-control node."
 sleep 5
 
 docker-compose --x-networking -f computenode.yml up -d
