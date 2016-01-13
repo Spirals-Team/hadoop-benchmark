@@ -7,7 +7,9 @@ RUN apt-get update && \
 	apt-get install -y wget \
 	vim \
 	openjdk-7-jdk \
-	openssh-server
+	openssh-server \
+	unzip \
+	curl
 
 #Hadoop
 RUN wget http://www.motorlogy.com/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz && \
@@ -18,19 +20,16 @@ RUN wget http://www.motorlogy.com/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1
 #Hadoop env
 RUN echo 'export HADOOP_INSTALL=/root/hadoop' >> .bashrc && \
 	echo 'export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64' >> .bashrc && \
-
 	echo 'export PATH=$PATH:$HADOOP_INSTALL/bin' >> .bashrc && \
         echo 'export PATH=$PATH:$HADOOP_INSTALL/sbin' >> .bashrc && \
-
         echo 'export HADOOP_MAPRED_HOME=$HADOOP_INSTALL' >> .bashrc && \
         echo 'export HADOOP_COMMON_HOME=$HADOOP_INSTALL' >> .bashrc && \
         echo 'export HADOOP_HDFS_HOME=$HADOOP_INSTALL' >> .bashrc && \
         echo 'export YARN_HOME=$HADOOP_INSTALL' >> .bashrc && \
-
         echo 'export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_INSTALL/lib/native' >> .bashrc && \
         echo 'export HADOOP_OPTS="-Djava.library.path=$HADOOP_INSTALL/lib"' >> .bashrc && \
-
         echo "source /.bashrc" >> /etc/bash.bashrc
+
 
 #SSH
 ADD ssh_config /root/
@@ -40,6 +39,18 @@ RUN mkdir /var/run/sshd && \
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && \
 	mv ~/ssh_config ~/.ssh/config && \
 	sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+
+# install serf
+RUN curl -Lso serf.zip https://dl.bintray.com/mitchellh/serf/0.5.0_linux_amd64.zip && \
+	unzip serf.zip -d /bin && \
+	rm serf.zip
+
+
+# configure serf
+ADD serf/* /etc/serf/
+RUN chmod +x /etc/serf/event-router.sh
+
 
 EXPOSE 22 7373 7946 9000 50010 50020 50070 50075 50090 50475 8025 8030 8031 8032 8033 8040 8042 8060 8088 8080 50060 10020 19888
 

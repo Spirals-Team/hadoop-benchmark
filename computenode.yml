@@ -2,5 +2,3 @@ compute-node:
  image: zhangbbo/hadoop-benchmark:hadoop-computenode
  tty: true
  stdin_open: true
- volumes:
-  - /Users/spirals/Desktop/hadoop-env/data:/data

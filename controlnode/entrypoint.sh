@@ -4,6 +4,8 @@ sed -i -- "s/ControlNodeHostName/$(echo $HOSTNAME)/g" /root/hadoop/etc/hadoop/co
 sed -i -- "s/ControlNodeHostName/$(echo $HOSTNAME)/g" /root/hadoop/etc/hadoop/mapred-site.xml
 sed -i -- "s/ControlNodeHostName/$(echo $HOSTNAME)/g" /root/hadoop/etc/hadoop/yarn-site.xml 
 
+/bin/serf agent -config-dir /etc/serf > serf_log &
+
 /root/hadoop/bin/hadoop namenode -format
 
 /root/hadoop/sbin/hadoop-daemon.sh start namenode
