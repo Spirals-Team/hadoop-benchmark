@@ -37,6 +37,10 @@ docker $(docker-machine config hadoop-hibench) exec hadoop-hibench /bin/bash -c 
 docker $(docker-machine config hadoop-compute1) exec $(docker $(docker-machine config hadoop-compute1) ps -q -l) /bin/bash -c "sh /getMaping.sh"
 
 
+echo "Start Hadoop."
+docker $(docker-machine config hadoop-control) exec hadoop-control /bin/bash -c "sh /start-hadoop.sh"
+
+
 eval $(docker-machine env hadoop-hibench)
 echo "In Hadoop HiBench Node now!"
 docker attach hadoop-hibench
