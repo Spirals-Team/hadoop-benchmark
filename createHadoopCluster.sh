@@ -38,7 +38,8 @@ docker $(docker-machine config hadoop-compute1) exec $(docker $(docker-machine c
 
 
 echo "Start Hadoop."
-docker $(docker-machine config hadoop-control) exec hadoop-control /bin/bash -c "sh /start-hadoop.sh"
+docker $(docker-machine config hadoop-control) exec hadoop-control /bin/bash -c "sh /start-control.sh"
+docker $(docker-machine config hadoop-compute1) exec hadoop-control /bin/bash -c "sh /start-compute.sh"
 
 
 eval $(docker-machine env hadoop-hibench)
