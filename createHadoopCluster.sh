@@ -35,4 +35,4 @@ docker $(docker-machine config hadoop-compute1) exec $(docker $(docker-machine c
 
 eval $(docker-machine env hadoop-hibench)
 echo "In Hadoop HiBench Node now!"
-docker attach hadoop-hibench
+docker attach hadoop-hibenchnode
