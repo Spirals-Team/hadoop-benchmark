@@ -13,4 +13,7 @@ RUN git clone -b yarn https://github.com/intel-hadoop/HiBench.git && \
 ADD hibench-config.sh /tmp/
 RUN mv /tmp/* /root/HiBench/bin
 
-ENTRYPOINT service ssh restart && bash
+ADD getMaping.sh /
+RUN chmod +x /getMaping.sh
+
+ENTRYPOINT service ssh restart && sh /getMaping.sh && bash
