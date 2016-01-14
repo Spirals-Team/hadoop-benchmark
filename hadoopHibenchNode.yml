@@ -1,5 +1,5 @@
 hadoop-hibench:
- image: zhangbbo/hadoop-benchmark:hadoop-hibenchnode
+ image: zhangbbo/hadoop-benchmark:hadoop-hibenchnode-multinodes
  container_name: hadoop-hibench
  hostname: hadoop-hibench
  tty: true

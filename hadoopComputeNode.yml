@@ -1,5 +1,5 @@
 hadoop-compute:
- image: zhangbbo/hadoop-benchmark:hadoop-computenode
+ image: zhangbbo/hadoop-benchmark:hadoop-computenode-multinodes
  tty: true
  stdin_open: true
  volumes:
