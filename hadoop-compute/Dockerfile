@@ -1,4 +1,4 @@
-FROM zhangbbo/hadoop-benchmark:hadoop-yarn
+FROM zhangbbo/hadoop-benchmark:hadoop-yarn-multinodes
 
 ADD hadoop-conf/* /tmp/
 RUN mv /tmp/* /root/hadoop/etc/hadoop
