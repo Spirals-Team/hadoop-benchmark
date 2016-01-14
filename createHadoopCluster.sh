@@ -24,7 +24,7 @@ echo "$(docker-machine ip hadoop-compute1) $(docker ps -q -l)" >> /Users/spirals
 
 docker $(docker-machine config hadoop-control) exec hadoop-control /bin/bash -c "sh /getMaping.sh"
 docker $(docker-machine config hadoop-hibench) exec hadoop-hibench /bin/bash -c "sh /getMaping.sh"
-docker $(docker-machine config hadoop-compute1) exec $(docker ps -q -l) /bin/bash -c "sh /getMaping.sh"
+docker $(docker-machine config hadoop-compute1) exec $(docker $(docker-machine config hadoop-compute1) ps -q -l) /bin/bash -c "sh /getMaping.sh"
 
 eval $(docker-machine env hadoop-hibench)
 echo "In Hadoop HiBench Node now!"
