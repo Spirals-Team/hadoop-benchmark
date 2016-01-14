@@ -24,8 +24,8 @@ docker pull zhangbbo/hadoop-benchmark:hadoop-computenode-multinodes
 docker-compose --x-networking -f hadoopComputeNode.yml up -d
 
 echo "Collect Hostname IP maping."
-echo "$(docker-machine ip hadoop-control) hadoop-controlnode" >> /Users/spirals/data/hosts
-echo "$(docker-machine ip hadoop-hibench) hadoop-hibenchnode" >> /Users/spirals/data/hosts
+echo "$(docker-machine ip hadoop-control) hadoop-control" >> /Users/spirals/data/hosts
+echo "$(docker-machine ip hadoop-hibench) hadoop-hibench" >> /Users/spirals/data/hosts
 echo "$(docker-machine ip hadoop-compute1) $(docker ps -q -l)" >> /Users/spirals/data/hosts
 
 echo "Distribute Hostname IP maping."
