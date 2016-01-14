@@ -23,9 +23,9 @@ echo "$(docker-machine ip hadoop-control) hadoop-control" >> /Users/spirals/data
 echo "$(docker-machine ip hadoop-hibench) hadoop-control" >> /Users/spirals/data/hosts
 echo "$(docker-machine ip hadoop-compute1) hadoop-control" >> /Users/spirals/data/hosts
 
-docker $(docker-machine config hadoop-control) exec /bin/bash -c "cat /data/hosts >> /etc/hosts"
-docker $(docker-machine config hadoop-hibench) exec /bin/bash -c "cat /data/hosts >> /etc/hosts"
-docker $(docker-machine config hadoop-compute1) exec /bin/bash -c "cat /data/hosts >> /etc/hosts"
+docker $(docker-machine config hadoop-control) exec hadoop-control /bin/bash -c "cat /data/hosts >> /etc/hosts"
+docker $(docker-machine config hadoop-hibench) exec hadoop-hibench /bin/bash -c "cat /data/hosts >> /etc/hosts"
+docker $(docker-machine config hadoop-compute1) exec $(docker ps -q -l) /bin/bash -c "cat /data/hosts >> /etc/hosts"
 
 eval $(docker-machine env hadoop-hibench)
 echo "In Hadoop HiBench Node now!"
