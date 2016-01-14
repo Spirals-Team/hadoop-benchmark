@@ -29,10 +29,13 @@ echo "$(docker-machine ip hadoop-hibench) hadoop-hibench" >> /Users/spirals/data
 echo "$(docker-machine ip hadoop-compute1) $(docker ps -q -l)" >> /Users/spirals/data/hosts
 
 echo "Distribute Hostname IP maping."
-docker $(docker-machine config hadoop-control) exec hadoop-controlnode /bin/bash -c "sh /getMaping.sh"
-docker $(docker-machine config hadoop-hibench) exec hadoop-hibenchnode /bin/bash -c "sh /getMaping.sh"
+docker $(docker-machine config hadoop-control) exec hadoop-control /bin/bash -c "sh /getMaping.sh"
+docker $(docker-machine config hadoop-hibench) exec hadoop-hibench /bin/bash -c "sh /getMaping.sh"
 docker $(docker-machine config hadoop-compute1) exec $(docker $(docker-machine config hadoop-compute1) ps -q -l) /bin/bash -c "sh /getMaping.sh"
+
+echo"Start Hadoop"
+docker $(docker-machine config hadoop-control) exec hadoop-control /bin/bash -c "sh /start-hadoop.sh"
 
 eval $(docker-machine env hadoop-hibench)
 echo "In Hadoop HiBench Node now!"
-docker attach hadoop-hibenchnode
+docker attach hadoop-hibench

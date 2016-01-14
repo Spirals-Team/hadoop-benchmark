@@ -1,7 +1,7 @@
 hadoop-control:
  image: zhangbbo/hadoop-benchmark:hadoop-controlnode-multinodes
- container_name: hadoop-controlnode
- hostname: hadoop-controlnode
+ container_name: hadoop-control
+ hostname: hadoop-control
  tty: true
  stdin_open: true
  volumes:

@@ -1,7 +1,7 @@
 hadoop-hibench:
  image: zhangbbo/hadoop-benchmark:hadoop-hibenchnode-multinodes
- container_name: hadoop-hibenchnode
- hostname: hadoop-hibenchnode
+ container_name: hadoop-hibench
+ hostname: hadoop-hibench
  tty: true
  stdin_open: true
  volumes:
