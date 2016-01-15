@@ -33,4 +33,8 @@
 		<name>yarn.app.mapreduce.am.resource.mb</name>
 		<value>1536</value>
 	</property>
+	<property>
+		<name>yarn.app.mapreduce.am.job.client.port-range</name>
+		<value>50100-50400</value>
+	</property>
 </configuration>
