@@ -6,6 +6,7 @@
 #docker build -t hadoop_clientnode clientnode/
 
 mkdir /Users/spirals/data
+export COMPOSE_HTTP_TIMEOUT=300
 
 docker-machine create --driver virtualbox hadoop-control
 docker-machine create --driver virtualbox hadoop-hibench
