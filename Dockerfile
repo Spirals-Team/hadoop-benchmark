@@ -40,6 +40,10 @@ RUN mkdir /var/run/sshd && \
 	sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 
+#Reset local port range
+RUN sysctl -w net.ipv4.ip_local_port_range="50100 50400"
+
+
 EXPOSE 22 7373 7946 9000 9001 50010 50020 50070 50075 50090 50091 50475 8025 8030 8031 8032 8033 8040 8041 8042 8060 8088 8080 50060 10020 19888 50470 8020 50100-50400
 
 ENTRYPOINT bash
