@@ -4,6 +4,7 @@ hadoop-compute:
  stdin_open: true
  volumes:
   - /Users/spirals/data:/data
+ privileged: true
  ports:
   - "2222:22"
   - "7373:7373"
