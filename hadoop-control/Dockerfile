@@ -9,4 +9,4 @@ RUN chmod +x /start-control.sh
 ADD getMaping.sh /
 RUN chmod +x /getMaping.sh
 
-ENTRYPOINT service ssh restart && sh /entrypoint.sh && bash
+ENTRYPOINT service ssh restart && bash
