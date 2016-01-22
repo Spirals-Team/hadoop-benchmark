@@ -12,4 +12,7 @@ RUN chmod +x /getMaping.sh
 ADD entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
+ADD self-balancing-extractor /root/
+RUN chmod +x /root/self-balancing-extractor/start-self-balancing.sh
+
 ENTRYPOINT service ssh restart && sh /entrypoint.sh && bash
