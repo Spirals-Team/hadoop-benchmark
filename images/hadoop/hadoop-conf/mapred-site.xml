@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,32 +17,31 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
+	<!-- MapReduce Applications -->
 	<property>
-		<name>dfs.replication</name>
-  		<value>3</value>
- 	</property>
-	<property>
-		<name>dfs.namenode.name.dir</name>
-  		<value>file:/hadoop/namenode</value>
- 	</property>
-	<property>
-		<name>dfs.datanode.data.dir</name>
-  		<value>file:/hadoop/datanode</value>
- 	</property>
-	<property>
-		<name>dfs.permissions</name>
-  		<value>false</value>
- 	</property>
-	<property>
-		<name>dfs.web.ugi</name>
-  		<value>root</value>
- 	</property>
-	<property>
-		<name>dfs.hosts.exclude</name>
-		<value>/root/hadoop/etc/hadoop/datanode-excludes</value>
+		<name>mapreduce.framework.name</name>
+		<value>yarn</value>
 	</property>
-        <property>
-                <name>dfs.namenode.rpc-bind-host</name>
-                <value>0.0.0.0</value>
-        </property>
+
+	<!-- MapReduce JobHistory Server -->
+	<property>
+		<name>mapreduce.jobhistory.address</name>
+		<value>%CONF_CONTROLLER_HOSTNAME:10020</value>
+	</property>
+	<property>
+		<name>mapreduce.jobhistory.webapp.address</name>
+		<value>%CONF_CONTROLLER_HOSTNAME:19888</value>
+	</property>
+	<property>
+		<name>mapreduce.jobhistory.intermediate-done-dir</name>
+		<value>%CONF_JOBHISTORY_INTERMEDIATE_DIR</value>
+	</property>
+	<property>
+		<name>mapreduce.jobhistory.done-dir</name>
+		<value>%CONF_JOBHISTORY_DONE_DIR</value>
+	</property>
+	<property>
+		<name>mapreduce.jobhistory.bind-host</name>
+		<value>0.0.0.0</value>
+	</property>
 </configuration>

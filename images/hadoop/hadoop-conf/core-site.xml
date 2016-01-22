@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,23 +18,7 @@
 
 <configuration>
 	<property>
-		<name>mapreduce.framework.name</name>
-		<value>yarn</value>
-	</property>
-	<property>
-		<name>mapreduce.jobhistory.address</name>
-		<value>ControlNodeHostName:10020</value>
-	</property>
-	<property>
-		<name>mapreduce.jobhistory.webapp.address</name>
-		<value>ControlNodeHostName:19888</value>
-	</property>
-	<property>
-		<name>yarn.app.mapreduce.am.resource.mb</name>
-		<value>1536</value>
-	</property>
-	<property>
-		<name>yarn.app.mapreduce.am.job.client.port-range</name>
-		<value>50100-50400</value>
+		<name>fs.defaultFS</name>
+		<value>hdfs://%CONF_CONTROLLER_HOSTNAME:9000</value>
 	</property>
 </configuration>
