@@ -36,6 +36,9 @@ setup() {
     awk '{ while(match($0, "%CONF_[a-zA-Z0-9_]+")) { var=substr($0, RSTART + 1, RLENGTH - 1) ; gsub("%"var, ENVIRON[var]) } }1' < $f > "$f.tmp"
     mv "$f.tmp" $f
   done
+
+  # start collectd
+  /usr/sbin/collectd -C /etc/collectd/collectd.conf
 }
 
 case "$1" in

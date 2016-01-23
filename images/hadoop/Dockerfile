@@ -1,8 +1,14 @@
 FROM fikovnik/hadoop-benchmark-base
 MAINTAINER Bo ZHANG <bo.zhang@inria.fr>
 
+# prerequisite
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get install -yqq \
+		  collectd
+
 # copy configuration files
 ADD hadoop-conf/* /usr/local/hadoop/etc/hadoop/
+ADD collectd.conf /etc/collectd/collectd.conf
 
 # add auxiliary helpers
 ADD *.sh /
@@ -11,6 +17,14 @@ ADD *.sh /
 ENV HADOOP_PREFIX /usr/local/hadoop
 ENV JAVA_HOME /usr/lib/jvm/java-1.7.0-openjdk-amd64
 ENV PATH=$PATH:$HADOOP_PREFIX/bin
+
+# collectd volume
+VOLUME /var/lib/collectd
+
+# hadoop volumes
+VOLUME /usr/local/hadoop/logs
+VOLUME /usr/local/hadoop/etc
+VOLUME /usr/local/hadoop/var
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
