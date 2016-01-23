@@ -6,7 +6,7 @@ set -e
 
 # basics
 DRIVER=${DRIVER:-'virtualbox'}
-NUM_COMPUTE_NODES=${NUM_COMPUTE_NODES:-1}
+NUM_COMPUTE_NODES=${NUM_COMPUTE_NODES:-2}
 CLUSTER_NAME_PREFIX=${CLUSTER_NAME_PREFIX:-'vb-hadoop'}
 CLUSTER_ADVERTISE=${CLUSTER_ADVERTISE:-'eth1:2376'}
 
@@ -423,6 +423,11 @@ stop_cluster() {
   stop_machine $consul_node_name
 }
 
+restart_cluster() {
+  destroy_cluster
+  recreate='true' create_cluster
+}
+
 status_cluster() {
   run docker-machine ls --filter "name=$docker_name_prefix-.*"
 }
@@ -435,6 +440,8 @@ destroy_hadoop() {
   done
 
   destroy_container $controller_node_name controller
+
+  destroy_container $controller_node_name graphite
 }
 
 stop_hadoop() {
@@ -443,14 +450,33 @@ stop_hadoop() {
   done
 
   stop_container $controller_node_name controller
+
+  stop_container $controller_node_name graphite
 }
 
 start_hadoop() {
+
+  if [[ "$recreate" == 'true' ]]; then
+    destroy_hadoop
+  fi
+
   create_image $controller_node_name "hadoop-benchmark/hadoop" "images/hadoop"
 
   for i in $(seq 1 $NUM_COMPUTE_NODES); do
     create_image "$compute_node_name-$i" "hadoop-benchmark/hadoop" "images/hadoop"
   done
+
+  # start graphite frontend
+  start_container $controller_node_name graphite \
+    -d \
+    -h graphite \
+    --restart=always \
+    --net $network_name \
+    -p 80:80 \
+    -p 2003:2003 \
+    -p 8125:8125/udp \
+    -p 8126:8126 \
+    hopsoft/graphite-statsd
 
   # start controller
   start_container $controller_node_name controller \
@@ -494,8 +520,15 @@ start_hadoop() {
   connect_info
 }
 
+restart_hadoop() {
+  destroy_hadoop
+  recreate='true' start_hadoop
+}
+
 connect_info() {
   echo "To connect docker run: 'eval \$(docker-machine env --swarm "$controller_node_name")'"
+  echo "To connect a bash console to the cluster run: './benchmarks/console.sh'"
+  echo "To connect to Graphite (WEB console visualizing collectd data), visit http://$(docker-machine ip $controller_node_name)"
   echo "To connect to YARN ResourceManager WEB UI, visit http://$(docker-machine ip $controller_node_name):8088"
   echo "To connect to HDFS NameNode WEB UI, visit http://$(docker-machine ip $controller_node_name):50070"
   echo "To connect to YARN NodeManager WEB UI, visit:"
@@ -518,17 +551,51 @@ shell_init() {
   docker-machine env --swarm $controller_node_name
 }
 
+print_help() {
+cat <<EOM
+Usage $0 [OPTIONS] COMMAND
+
+Options:
+
+  -f, --force   Use '-f' in docker commands where applicable
+  -n, --noop    Only shows which commands would be executed wihout actually executing them
+  -q, -quiet    Do not print which commands are executed
+
+Commands:
+
+  Cluster:
+    create-cluster
+    start-cluster
+    stop-cluster
+    restart-cluster
+    destroy-cluster
+    status-cluster
+
+  Hadoop:
+    start-hadoop
+    stop-hadoop
+    restart-hadoop
+    destroy-hadoop
+
+  Info:
+
+    shell-init      Shows information how to initialize current shell to connect to the cluster
+                    Useful to execute like: 'eval \$($0 shell-init)'
+    connect-info    Shows information how to connect to the cluster
+EOM
+}
+
 # command
 command=
 
 while [[ $# > 0 ]]; do
   case $1 in
+      -h|--help)
+        print_help
+        exit 1
+      ;;
       -f|--force)
         force='true'
-        shift
-      ;;
-      -r|--recreate)
-        recreate='true'
         shift
       ;;
       -q|--quiet)
@@ -555,6 +622,10 @@ while [[ $# > 0 ]]; do
         command='status_cluster'
         shift
       ;;
+      restart-cluster)
+        command='restart_cluster'
+        shift
+      ;;
       destroy-hadoop)
         command='destroy_hadoop'
         shift
@@ -565,6 +636,10 @@ while [[ $# > 0 ]]; do
       ;;
       start-hadoop)
         command='start_hadoop'
+        shift
+      ;;
+      restart-hadoop)
+        command='restart_hadoop'
         shift
       ;;
       shell-init)
@@ -583,7 +658,7 @@ while [[ $# > 0 ]]; do
 done
 
 if [[ -z $command ]]; then
-  echo >&2 "Usage: $0 {connect-info|create-cluster|start-cluster|stop-cluster|destroy-cluster|status-cluster|destroy-hadoop|stop-hadoop|start-hadoop|shell-init} [-f|--force] [-n|--noop] [-q|-quiet] [-r|-recreate]"
+  print_help
   exit 1
 fi
 
