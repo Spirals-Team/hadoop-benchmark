@@ -10,6 +10,7 @@ stop() {
 
   echo "[$0]: *** Stopping all processes ***"
 
+  [[ -f /before-stop.sh ]] && /before-stop.sh $mode
   case "$mode" in
     controller)
       $HADOOP_PREFIX/sbin/hadoop-daemon.sh --config $HADOOP_CONF_DIR --script hdfs stop namenode
@@ -22,6 +23,7 @@ stop() {
       $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR stop nodemanager
     ;;
   esac
+  [[ -f /after-stop.sh ]] && /after-stop.sh $mode
 
   echo "[$0]: *** All processes have been stopped ***"
 
@@ -36,6 +38,7 @@ echo "[$0]: *** Starting collectd ***"
 
 echo "[$0]: *** Starting all processes ***"
 
+[[ -f /before-start.sh ]] && /before-start.sh $mode
 case "$mode" in
   controller)
     if [[ ! -d $CONF_NAMENODE_NAME_DIR ]]; then
@@ -53,6 +56,7 @@ case "$mode" in
     $HADOOP_YARN_HOME/sbin/yarn-daemon.sh --config $HADOOP_CONF_DIR start nodemanager
   ;;
 esac
+[[ -f /after-start.sh ]] && /after-start.sh $mode
 
 echo "[$0]: *** Waiting 5 seconds for pid and log files ***"
 sleep 5

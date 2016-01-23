@@ -37,9 +37,7 @@ export HADOOP_JOB_HISTORYSERVER_OPTS=""
 
 case "$mode" in
   controller|compute)
-    [[ -f /before-start.sh ]] && /before-start.sh $mode
     /start.sh $mode
-    [[ -f /after-start.sh ]] && /after-start.sh $mode
   ;;
   console)
     exec bash
