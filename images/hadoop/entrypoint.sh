@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+mode=$1
+
 # setup defaults
 export CONF_CLUSTER_NAME=${CONF_CLUSTER_NAME:-"cluster"}
 export CONF_CONTROLLER_HOSTNAME=${CONF_CONTROLLER_HOSTNAME:-"controller"}
@@ -29,41 +31,24 @@ export YARN_NODEMANAGER_OPTS=""
 export YARN_PROXYSERVER_OPTS=""
 export HADOOP_JOB_HISTORYSERVER_OPTS=""
 
-setup() {
-  # replace ANY %CONF_<NAME> to evaluated $CONF_<NAME> variables
-  for f in "$HADOOP_CONF_DIR"/*; do
-    echo "[$0]: processing '$f' configuration file"
-    awk '{ while(match($0, "%CONF_[a-zA-Z0-9_]+")) { var=substr($0, RSTART + 1, RLENGTH - 1) ; gsub("%"var, ENVIRON[var]) } }1' < $f > "$f.tmp"
-    mv "$f.tmp" $f
-  done
+[[ -f /before-setup.sh ]] && /before-setup.sh $mode
+/setup.sh $mode
+[[ -f /after-setup.sh ]] && /after-setup.sh $mode
 
-  # start collectd
-  /usr/sbin/collectd -C /etc/collectd/collectd.conf
-}
-
-case "$1" in
-  controller)
-    setup
-    /start_controller.sh
+case "$mode" in
+  controller|compute)
+    [[ -f /before-start.sh ]] && /before-start.sh $mode
+    /start.sh $mode
+    [[ -f /after-start.sh ]] && /after-start.sh $mode
   ;;
-
-  compute)
-    setup
-    /start_compute.sh
-  ;;
-
   console)
-    setup
     exec bash
   ;;
-
   run)
-    setup
     shift
     exec "$@"
   ;;
-
   *)
-    echo "Use with {controller|compute|console}"
+    echo "Use with {controller|compute|console|run}"
     exit 1
 esac

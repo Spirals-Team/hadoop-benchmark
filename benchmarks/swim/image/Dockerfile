@@ -1,4 +1,4 @@
-FROM hadoop-benchmark/hadoop
+FROM fikovnik/hadoop-benchmark
 MAINTAINER Bo ZHANG <bo.zhang@inria.fr>
 
 ENV SWIM_HOME /SWIM

@@ -1,0 +1,5 @@
+DRIVER='virtualbox'
+NUM_COMPUTE_NODES=1
+CLUSTER_NAME_PREFIX='local-hadoop'
+HADOOP_IMAGE='hadoop-benchmark/self-balancing-example'
+HADOOP_IMAGE_DIR=scenarios/self-balancing-example/image

@@ -6,12 +6,12 @@ if [[ ! -d images/swim ]]; then
   exit 1
 fi
 
-docker build -t hadoop-benchmark/swim images/swim
+docker build -t hadoop-benchmark-swim image
 
 docker run \
   -it \
   --rm \
   --net hadoop-net \
-  --name hadoop-swim \
-  -h hadoop-swim \
-  hadoop-benchmark/swim
+  --name hadoop-benchmark-swim \
+  -h hadoop-benchmark-swim \
+  hadoop-benchmark-swim
