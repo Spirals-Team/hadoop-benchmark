@@ -1,19 +1,27 @@
 #!/bin/bash
 set -e
 
-# TODO: colorful log
-# TODO: add debug for the commands, different color and separate from the log messages
-# TODO: create compute nodes in parallel
+# allow to easily override common settings
+[[ -f $CONFIG ]] && source $CONFIG
 
+# basics
 DRIVER=${DRIVER:-'virtualbox'}
 NUM_COMPUTE_NODES=${NUM_COMPUTE_NODES:-1}
+CLUSTER_NAME_PREFIX=${CLUSTER_NAME_PREFIX:-'vb-hadoop'}
+CLUSTER_ADVERTISE=${CLUSTER_ADVERTISE:-'eth1:2376'}
 
+# extension points
+EXT_AFTER_CONSUL_MACHINE=${EXT_AFTER_CONSUL_MACHINE:-''}
+EXT_AFTER_CONTROLLER_MACHINE=${EXT_AFTER_CONTROLLER_MACHINE:-''}
+EXT_AFTER_COMPUTE_MACHINE=${EXT_AFTER_COMPUTE_MACHINE:-''}
+
+# all driver related settings must be exported
 export VIRTUALBOX_MEMORY_SIZE=${VIRTUALBOX_MEMORY_SIZE:-2048}
 export VIRTUALBOX_CPU_COUNT=${VIRTUALBOX_CPU_COUNT:-1}
 export VIRTUALBOX_BOOT2DOCKER_URL=${VIRTUALBOX_BOOT2DOCKER_URL:-'https://github.com/AkihiroSuda/boot2docker/releases/download/v1.9.1-fix1/boot2docker-v1.9.1-fix1.iso'}
 
 # private constants
-declare -r docker_name_prefix='hadoop'
+declare -r docker_name_prefix="$CLUSTER_NAME_PREFIX"
 declare -r network_name='hadoop-net'
 declare -r script_name="$(basename $0)"
 declare -r consul_node_name="$docker_name_prefix-consul"
@@ -24,7 +32,7 @@ declare -r compute_node_name="$docker_name_prefix-compute"
 noop='false'
 force='false'
 recreate='false'
-debug='false'
+debug='true'
 
 log() {
   echo "$(tput setaf 2)[$script_name]$(tput sgr0): $@"
@@ -46,8 +54,42 @@ run() {
     log "---> $cmd"
   else
     debug "---> $cmd"
-    $@
+    "$@"
   fi
+}
+
+run_docker() {
+  case "$1" in
+    --swarm)
+      swarm="--swarm"
+      shift
+    ;;
+  esac
+
+  machine=$1
+  shift
+
+  status=$(docker-machine status $machine 2> /dev/null)
+
+  case "$status" in
+    Running)
+      docker_conn=$(docker-machine config $swarm $machine)
+      run docker $docker_conn "$@"
+    ;;
+    *)
+      error "docker machine $machine is not running, unable to run: docker $@"
+      exit 1
+  esac
+}
+
+wait_for_port() {
+  ip=$1
+  port=$2
+
+  while ! nc -z $ip $port > /dev/null; do
+    log "Waiting for $ip:$port ..."
+    sleep 1
+  done
 }
 
 destroy_machine() {
@@ -133,17 +175,25 @@ start_machine() {
   esac
 }
 
-destroy_container() {
+check_docker_container() {
   machine=$1
   shift
   name=$1
   shift
 
   docker_conn=$(docker-machine config $machine)
+  docker $docker_conn inspect -f '{{.State.Status}}' $name 2> /dev/null || echo 'nonexistent'
+}
+
+destroy_container() {
+  machine=$1
+  shift
+  name=$1
+  shift
 
   # check if it exists
   log "checking status of docker container: $name@$machine"
-  status=$(docker $docker_conn inspect -f '{{.State.Status}}' $name 2> /dev/null || echo 'nonexistent')
+  status=$(check_docker_container $machine $name)
 
   case "$status" in
     nonexistent)
@@ -153,7 +203,7 @@ destroy_container() {
 
     *)
       log "trying to remove docker container: $name@$machine..."
-      run docker $docker_conn rm $([[ "$force" == 'true' ]] && echo '-f') $name
+      run_docker $machine rm $([[ "$force" == 'true' ]] && echo '-f') $name
   esac
 }
 
@@ -163,20 +213,18 @@ stop_container() {
   name=$1
   shift
 
-  docker_conn=$(docker-machine config $machine)
-
   # check if it exists
   log "checking status of docker container: $name@$machine"
-  status=$(docker $docker_conn inspect -f '{{.State.Status}}' $name 2> /dev/null || echo 'nonexistent')
+  status=$(check_docker_container $machine $name)
 
   case "$status" in
     running)
       if [[ "$force" == 'true' ]]; then
         log "[force] docker container $name@$machine is running, killing..."
-        run docker $docker_conn kill $name
+        run_docker $machine kill $name
       else
         log "docker container $name@$machine is running, stopping..."
-        run docker $docker_conn stop $name
+        run_docker $machine stop $name
       fi
     ;;
 
@@ -192,7 +240,7 @@ stop_container() {
 
     *)
       log "trying to remove docker container $name@$machine..."
-      run docker $docker_conn kill $([[ "$force" == 'true' ]] && echo '-f') $name
+      run_docker $machine kill $([[ "$force" == 'true' ]] && echo '-f') $name
   esac
 
 }
@@ -205,10 +253,8 @@ start_container() {
 
   [[ "$recreate" == 'true' ]] && destroy_container $machine $name
 
-  docker_conn=$(docker-machine config $machine)
-
   log "checking status of docker container: $name@$machine"
-  status=$(docker $docker_conn inspect -f "{{.State.Status}}" $name 2> /dev/null || echo 'nonexistent')
+  status=$(check_docker_container $machine $name)
 
   case "$status" in
     running)
@@ -218,12 +264,12 @@ start_container() {
 
     exited)
       log "docker container $name@$machine is not running, starting..."
-      run docker $docker_conn start $name
+      run_docker $machine start $name
     ;;
 
     nonexistent)
       log "docker container $name@$machine does not exist, starting..."
-      run docker $docker_conn run --name $name $@
+      run_docker $machine run --name $name $@
     ;;
 
     *)
@@ -238,14 +284,12 @@ destroy_image() {
   name=$1
   shift
 
-  docker_conn=$(docker-machine config $machine)
-
   log "checking status of docker image: $name:latest on machine $machine"
-  if ! docker $docker_conn inspect $name:latest > /dev/null 2>&1; then
+  if ! run_docker $machine inspect $name:latest > /dev/null 2>&1; then
     log "docker image $name:latest does not exist on machine $machine"
   else
     log "docker image $name:latest exists on machine $machine"
-    run docker $docker_conn rmi $([[ "$force" == 'true' ]] && echo '-f') $name
+    run_docker $machine rmi $([[ "$force" == 'true' ]] && echo '-f') $name
   fi
 }
 
@@ -259,12 +303,10 @@ create_image() {
 
   [[ "$recreate" == 'true' ]] && destroy_image $machine $name
 
-  docker_conn=$(docker-machine config $machine)
-
   log "checking status of docker image: $name:latest on machine $machine"
-  if ! docker $docker_conn inspect $name:latest > /dev/null 2>&1; then
+  if ! run_docker $machine inspect $name:latest > /dev/null 2>&1; then
     log "docker image $name:latest does not exist on machine $machine, creating..."
-    run docker $docker_conn build -t $name $dir
+    run_docker $machine build -t $name $dir
   else
     log "docker image $name:latest exists on machine $machine"
   fi
@@ -276,10 +318,13 @@ destroy_network() {
   name=$1
   shift
 
-  docker_conn=$(docker-machine config --swarm $machine)
+  if [[ $(docker-machine status $name 2> /dev/null) == 'Running' ]]; then
+    log "trying to remove existing docker network $name on $machine..."
+    run_docker $machine network rm $name
+  else
+    log "docker machine $machine is not running, skipping"
+  fi
 
-  log "trying to remove existing docker network $name on $machine..."
-  run docker $docker_conn network rm $name
 }
 
 create_network() {
@@ -290,13 +335,11 @@ create_network() {
 
   [[ "$recreate" == 'true' ]] && destroy_network $machine $name
 
-  docker_conn=$(docker-machine config --swarm $machine)
-
   # check if it exists
   log "checking status of docker network: $name on $machine"
-  if ! docker $docker_conn network inspect $name > /dev/null 2>&1; then
+  if ! run_docker $machine network inspect $name > /dev/null 2>&1; then
     log "docker network $name does not exist, creating using: '$cmd'"
-    run docker $docker_conn network create -d overlay $@ $name
+    run_docker $machine network create -d overlay $@ $name
   else
     log "docker network $name already exist"
     # no more work
@@ -314,6 +357,9 @@ create_cluster() {
   # consul connection string
   consul_conn="consul://$(docker-machine ip $consul_node_name):8500"
 
+  # extension point
+  [[ -z $EXT_AFTER_CONSUL_MACHINE ]] || $EXT_AFTER_CONSUL_MACHINE $consul_node_name
+
   # setup controller
   start_machine $controller_node_name \
     --swarm \
@@ -321,16 +367,23 @@ create_cluster() {
     --swarm-discovery="$consul_conn" \
     --engine-label="type=controller" \
     --engine-opt="cluster-store=$consul_conn" \
-    --engine-opt="cluster-advertise=eth1:2376"
+    --engine-opt="cluster-advertise=$CLUSTER_ADVERTISE"
+
+  # extension point
+  [[ -z $EXT_AFTER_CONTROLLER_MACHINE ]] || $EXT_AFTER_CONTROLLER_MACHINE $controller_node_name
 
   # setup compute nodes
   for i in $(seq 1 $NUM_COMPUTE_NODES); do
-    start_machine "$compute_node_name-$i" \
+    local name="$compute_node_name-$i"
+    start_machine $name \
       --swarm \
       --swarm-discovery="$consul_conn" \
       --engine-label="type=compute" \
       --engine-opt="cluster-store=$consul_conn" \
-      --engine-opt="cluster-advertise=eth1:2376"
+      --engine-opt="cluster-advertise=$CLUSTER_ADVERTISE"
+
+    # extension point
+    [[ -z $EXT_AFTER_COMPUTE_MACHINE ]] || $EXT_AFTER_COMPUTE_MACHINE $name
   done
 
   # setup network
@@ -338,10 +391,10 @@ create_cluster() {
 }
 
 destroy_cluster() {
-  stop_cluster
-
   # network
   destroy_network $controller_node_name $network_name
+
+  stop_cluster
 
   # machines
   cmd="docker-machine ls --filter name=$docker_name_prefix-.*"
@@ -371,15 +424,7 @@ stop_cluster() {
 }
 
 status_cluster() {
-  docker-machine ls --filter name=$docker_name_prefix-.*
-}
-
-init_hadoop() {
-  create_image $controller_node_name "hadoop-benchmark/hadoop-base" "images/hadoop-base"
-
-  for i in $(seq 1 $NUM_COMPUTE_NODES); do
-    create_image "$compute_node_name-$i" "hadoop-benchmark/hadoop-base" "images/hadoop-base"
-  done
+  run docker-machine ls --filter "name=$docker_name_prefix-.*"
 }
 
 destroy_hadoop() {
@@ -401,10 +446,10 @@ stop_hadoop() {
 }
 
 start_hadoop() {
-  recreate='true' create_image $controller_node_name "hadoop-benchmark/hadoop" "images/hadoop"
+  create_image $controller_node_name "hadoop-benchmark/hadoop" "images/hadoop"
 
   for i in $(seq 1 $NUM_COMPUTE_NODES); do
-    recreate='true' create_image "$compute_node_name-$i" "hadoop-benchmark/hadoop" "images/hadoop"
+    create_image "$compute_node_name-$i" "hadoop-benchmark/hadoop" "images/hadoop"
   done
 
   # start controller
@@ -419,20 +464,33 @@ start_hadoop() {
 
   # wait for resource manager
   log "Waiting for ResourceManager"
-  docker $(docker-machine config $controller_node_name) exec controller \
-    bash -c "while ! nc -z localhost 8088; do echo -n '.'; sleep 1; done; echo ''"
+  wait_for_port $(docker-machine ip $controller_node_name) 8088
+  # run_docker $controller_node_name exec controller \
+  #   bash -c "while ! nc -z localhost 8088; do echo -n '.'; sleep 1; done; echo"
 
   # start computes
   for i in $(seq 1 $NUM_COMPUTE_NODES); do
-    start_container "$compute_node_name-$i" "compute-$i" \
-      -h "compute-$i" \
+    local name="compute-$i"
+    local machine="$compute_node_name-$i"
+    start_container $machine $name \
+      -h $name \
       --net $network_name \
       -p "8042:8042" \
       -e "CONF_CONTROLLER_HOSTNAME=controller" \
       -d \
       hadoop-benchmark/hadoop \
       compute
+
+    # wait for node manager
+    log "Waiting for NodeManager on $name"
+    wait_for_port $(docker-machine ip $machine) 8042
+    # run_docker $controller_node_name exec controller \
+    #   bash -c "while ! nc -z localhost 8042; do echo -n '.'; sleep 1; done; echo"
   done
+
+  echo "Hadoop should be ready"
+  echo "- to connect docker run: 'eval \$(docker-machine env --swarm "$controller_node_name")'"
+  echo "- to connect to YARN ResourceManager WEB UI, visit http://$(docker-machine ip $controller_node_name):8088"
 }
 
 shell_init() {
@@ -452,8 +510,8 @@ while [[ $# > 0 ]]; do
         recreate='true'
         shift
       ;;
-      -d|--debug)
-        debug='true'
+      -q|--quiet)
+        debug='false'
         shift
       ;;
       -n|--noop)
@@ -474,10 +532,6 @@ while [[ $# > 0 ]]; do
       ;;
       status-cluster)
         command='status_cluster'
-        shift
-      ;;
-      init-hadoop)
-        command='init_hadoop'
         shift
       ;;
       destroy-hadoop)
@@ -504,7 +558,7 @@ while [[ $# > 0 ]]; do
 done
 
 if [[ -z $command ]]; then
-  echo >&2 "Usage: $0 {create|destroy} [-f|--force]"
+  echo >&2 "Usage: $0 {create-cluster|start-cluster|stop-cluster|destroy-cluster|status-cluster|destroy-hadoop|stop-hadoop|start-hadoop|shell-init} [-f|--force] [-n|--noop] [-q|-quiet] [-r|-recreate]"
   exit 1
 fi
 
