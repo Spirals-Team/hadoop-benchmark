@@ -430,19 +430,19 @@ status_cluster() {
 destroy_hadoop() {
   stop_hadoop
 
-  destroy_container $controller_node_name controller
-
   for i in $(seq 1 $NUM_COMPUTE_NODES); do
     destroy_container "$compute_node_name-$i" "compute-$i"
   done
+
+  destroy_container $controller_node_name controller
 }
 
 stop_hadoop() {
-  stop_container $controller_node_name controller
-
   for i in $(seq 1 $NUM_COMPUTE_NODES); do
     stop_container "$compute_node_name-$i" "compute-$i"
   done
+
+  stop_container $controller_node_name controller
 }
 
 start_hadoop() {
