@@ -20,11 +20,8 @@ ENV PATH=$PATH:$HADOOP_PREFIX/bin
 
 # collectd volume
 VOLUME /var/lib/collectd
-
-# hadoop volumes
-VOLUME /usr/local/hadoop/logs
-VOLUME /usr/local/hadoop/etc
-VOLUME /usr/local/hadoop/var
+# hadoop volume
+VOLUME /usr/local/hadoop
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
