@@ -426,6 +426,7 @@ stop_cluster() {
 restart_cluster() {
   destroy_cluster
   recreate='true' create_cluster
+  echo "You should reconnect to docker: 'eval \$(docker-machine env --swarm "$controller_node_name")'"
 }
 
 status_cluster() {
