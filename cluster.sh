@@ -457,6 +457,7 @@ start_hadoop() {
     -h controller \
     --net $network_name \
     -p "8088:8088" \
+    -p "50070:50070" \
     -e "CONF_CONTROLLER_HOSTNAME=controller" \
     -d \
     hadoop-benchmark/hadoop \
@@ -476,6 +477,7 @@ start_hadoop() {
       -h $name \
       --net $network_name \
       -p "8042:8042" \
+      -p "50075:50075" \
       -e "CONF_CONTROLLER_HOSTNAME=controller" \
       -d \
       hadoop-benchmark/hadoop \
@@ -489,8 +491,27 @@ start_hadoop() {
   done
 
   echo "Hadoop should be ready"
-  echo "- to connect docker run: 'eval \$(docker-machine env --swarm "$controller_node_name")'"
-  echo "- to connect to YARN ResourceManager WEB UI, visit http://$(docker-machine ip $controller_node_name):8088"
+  connect_info
+}
+
+connect_info() {
+  echo "To connect docker run: 'eval \$(docker-machine env --swarm "$controller_node_name")'"
+  echo "To connect to YARN ResourceManager WEB UI, visit http://$(docker-machine ip $controller_node_name):8088"
+  echo "To connect to HDFS NameNode WEB UI, visit http://$(docker-machine ip $controller_node_name):50070"
+  echo "To connect to YARN NodeManager WEB UI, visit:"
+  for i in $(seq 1 $NUM_COMPUTE_NODES); do
+    echo "http://$(docker-machine ip "$compute_node_name-$i"):8042 for compute-$i"
+  done
+  echo "To connect to HDFS DataNode WEB UI, visit:"
+  for i in $(seq 1 $NUM_COMPUTE_NODES); do
+    echo "http://$(docker-machine ip "$compute_node_name-$i"):50075 for compute-$i"
+  done
+  echo
+  echo "If you plan to use YARN WEB UI more extensively, consider to add the following records to your /etc/hosts:"
+  echo "$(docker-machine ip $controller_node_name) controller"
+  for i in $(seq 1 $NUM_COMPUTE_NODES); do
+    echo "$(docker-machine ip "$compute_node_name-$i") compute-$i"
+  done
 }
 
 shell_init() {
@@ -550,6 +571,10 @@ while [[ $# > 0 ]]; do
         command='shell_init'
         shift
       ;;
+      connect-info)
+        command='connect_info'
+        shift
+      ;;
       *)
         echo >&2 "$1: unknown argument"
         exit 1
@@ -558,7 +583,7 @@ while [[ $# > 0 ]]; do
 done
 
 if [[ -z $command ]]; then
-  echo >&2 "Usage: $0 {create-cluster|start-cluster|stop-cluster|destroy-cluster|status-cluster|destroy-hadoop|stop-hadoop|start-hadoop|shell-init} [-f|--force] [-n|--noop] [-q|-quiet] [-r|-recreate]"
+  echo >&2 "Usage: $0 {connect-info|create-cluster|start-cluster|stop-cluster|destroy-cluster|status-cluster|destroy-hadoop|stop-hadoop|start-hadoop|shell-init} [-f|--force] [-n|--noop] [-q|-quiet] [-r|-recreate]"
   exit 1
 fi
 
