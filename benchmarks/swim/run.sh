@@ -1,12 +1,8 @@
 #!/bin/bash
 set -e
 
-if [[ ! -d images/swim ]]; then
-  echo "Run from the directory from which images/SWIM is reachable"
-  exit 1
-fi
-
-docker build -t hadoop-benchmark-swim image
+base=$(dirname "$(cd "$(dirname "$0")"; pwd)/$(basename "$0")")
+docker build -t hadoop-benchmark-swim "$base/image"
 
 docker run \
   -it \
