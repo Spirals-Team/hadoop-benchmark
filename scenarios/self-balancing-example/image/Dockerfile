@@ -9,10 +9,10 @@ RUN DEBIAN_FRONTEND=noninteractive \
 		  bc
 
 ADD self-balancing /self-balancing
-ADD self-balancing/capacity-scheduler.xml /usr/local/hadoop/etc/hadoop
+ADD capacity-scheduler.xml /usr/local/hadoop/etc/hadoop/
 
 ADD after-start.sh /
 
 WORKDIR /self-balancing
 
-ENTRYPOINT [ "/entrypoint.sh", "controller" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
