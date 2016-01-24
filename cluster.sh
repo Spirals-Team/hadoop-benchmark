@@ -6,6 +6,7 @@ set -e
 
 # basics
 DRIVER=${DRIVER:-'virtualbox'}
+DRIVER_OPTS=${DRIVER_OPTS:-''}
 NUM_COMPUTE_NODES=${NUM_COMPUTE_NODES:-1}
 CLUSTER_NAME_PREFIX=${CLUSTER_NAME_PREFIX:-'local-hadoop'}
 CLUSTER_ADVERTISE=${CLUSTER_ADVERTISE:-'eth1:2376'}
@@ -58,6 +59,10 @@ run() {
   fi
 }
 
+check_docker_machine() {
+  docker-machine status $machine > /dev/null 2>&1 || echo 'Nonexistent'
+}
+
 run_docker() {
   case "$1" in
     --swarm)
@@ -69,7 +74,7 @@ run_docker() {
   machine=$1
   shift
 
-  status=$(docker-machine status $machine 2> /dev/null)
+  status=$(check_docker_machine $machine)
 
   case "$status" in
     Running)
@@ -99,7 +104,7 @@ destroy_machine() {
   stop_machine $name
 
   log "checking status of docker machine: $name"
-  status=$(docker-machine status $name 2> /dev/null || echo 'Nonexistent')
+  status=$(check_docker_machine $machine)
 
   case "$status" in
     Nonexistent)
@@ -118,7 +123,7 @@ stop_machine() {
   shift
 
   log "checking status of docker machine: $name"
-  status=$(docker-machine status $name 2> /dev/null || echo 'Nonexistent')
+  status=$(check_docker_machine $machine)
 
   case "$status" in
     Running)
@@ -151,7 +156,7 @@ start_machine() {
 
   # check if it exists
   log "checking status of docker machine: $name"
-  status=$(docker-machine status $name 2> /dev/null || echo 'Nonexistent')
+  status=$(check_docker_machine $machine)
 
   case "$status" in
     Running)
@@ -166,7 +171,9 @@ start_machine() {
 
     Nonexistent)
       log "docker machine $name does not exists, creating..."
-      run docker-machine create -d $DRIVER $@ $name
+      extra_opts="\$DRIVER_OPTS_$(echo ${name#$docker_name_prefix-} | tr '[a-z-]' '[A-Z_]')"
+      extra_opts=$(eval echo "$extra_opts")
+      run docker-machine create -d $DRIVER $DRIVER_OPTS $extra_opts $@ $name
     ;;
 
     *)
@@ -560,7 +567,7 @@ Options:
 
   -f, --force   Use '-f' in docker commands where applicable
   -n, --noop    Only shows which commands would be executed wihout actually executing them
-  -q, -quiet    Do not print which commands are executed
+  -q, --quiet   Do not print which commands are executed
 
 Commands:
 

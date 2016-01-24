@@ -1,0 +1,8 @@
+DRIVER='generic'
+NUM_COMPUTE_NODES=1
+CLUSTER_NAME_PREFIX='local-hadoop'
+HADOOP_IMAGE='hadoop-benchmark/self-balancing-example'
+HADOOP_IMAGE_DIR=scenarios/self-balancing-example/image
+DRIVER_OPTS_CONSUL=--generic-ip-address='192.168.1.10'
+DRIVER_OPTS_CONTROLLER=--generic-ip-address='192.168.1.11'
+DRIVER_OPTS_COMPUTE_1=--generic-ip-address='192.168.1.12'
