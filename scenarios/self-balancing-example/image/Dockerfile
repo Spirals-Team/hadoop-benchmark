@@ -1,3 +1,4 @@
+#FROM java:7
 FROM fikovnik/hadoop-benchmark
 MAINTAINER Bo ZHANG <bo.zhang@inria.fr>
 
@@ -7,4 +8,11 @@ RUN DEBIAN_FRONTEND=noninteractive \
     apt-get install -yqq \
 		  bc
 
-ADD before-start.sh /
+ADD self-balancing /self-balancing
+ADD capacity-scheduler.xml /usr/local/hadoop/etc/hadoop/
+
+ADD after-start.sh /
+
+WORKDIR /self-balancing
+
+ENTRYPOINT [ "/entrypoint.sh" ]
