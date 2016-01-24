@@ -62,7 +62,7 @@ run() {
 }
 
 check_docker_machine() {
-  docker-machine status $machine > /dev/null 2>&1 || echo 'Nonexistent'
+  docker-machine status $1 2> /dev/null || echo 'Nonexistent'
 }
 
 run_docker() {
@@ -106,7 +106,7 @@ destroy_machine() {
   stop_machine $name
 
   log "checking status of docker machine: $name"
-  status=$(check_docker_machine $machine)
+  status=$(check_docker_machine $name)
 
   case "$status" in
     Nonexistent)
@@ -125,7 +125,7 @@ stop_machine() {
   shift
 
   log "checking status of docker machine: $name"
-  status=$(check_docker_machine $machine)
+  status=$(check_docker_machine $name)
 
   case "$status" in
     Running)
@@ -158,7 +158,7 @@ start_machine() {
 
   # check if it exists
   log "checking status of docker machine: $name"
-  status=$(check_docker_machine $machine)
+  status=$(check_docker_machine $name)
 
   case "$status" in
     Running)
