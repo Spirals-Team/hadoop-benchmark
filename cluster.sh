@@ -9,6 +9,8 @@ DRIVER=${DRIVER:-'virtualbox'}
 NUM_COMPUTE_NODES=${NUM_COMPUTE_NODES:-1}
 CLUSTER_NAME_PREFIX=${CLUSTER_NAME_PREFIX:-'local-hadoop'}
 CLUSTER_ADVERTISE=${CLUSTER_ADVERTISE:-'eth1:2376'}
+HADOOP_IMAGE=${HADOOP_IMAGE:-'hadoop-benchmark/hadoop'}
+HADOOP_IMAGE_DIR=${HADOOP_IMAGE_DIR:-'images/hadoop'}
 
 # extension points
 EXT_AFTER_CONSUL_MACHINE=${EXT_AFTER_CONSUL_MACHINE:-''}
@@ -16,7 +18,7 @@ EXT_AFTER_CONTROLLER_MACHINE=${EXT_AFTER_CONTROLLER_MACHINE:-''}
 EXT_AFTER_COMPUTE_MACHINE=${EXT_AFTER_COMPUTE_MACHINE:-''}
 
 # all driver related settings must be exported
-export VIRTUALBOX_MEMORY_SIZE=${VIRTUALBOX_MEMORY_SIZE:-1024}
+export VIRTUALBOX_MEMORY_SIZE=${VIRTUALBOX_MEMORY_SIZE:-2048}
 export VIRTUALBOX_CPU_COUNT=${VIRTUALBOX_CPU_COUNT:-1}
 export VIRTUALBOX_BOOT2DOCKER_URL=${VIRTUALBOX_BOOT2DOCKER_URL:-'https://github.com/AkihiroSuda/boot2docker/releases/download/v1.9.1-fix1/boot2docker-v1.9.1-fix1.iso'}
 
@@ -51,9 +53,9 @@ run() {
   cmd=${cmd//$'\n'/' '}
 
   if [[ "$noop" == 'true' ]]; then
-    log "---> $cmd"
+    log "===> $cmd"
   else
-    debug "---> $cmd"
+    debug "===> $cmd"
     "$@"
   fi
 }
@@ -312,6 +314,17 @@ create_image() {
   fi
 }
 
+build_image() {
+  name=$1
+  dir=$2
+
+  create_image $controller_node_name $name $dir
+
+  for i in $(seq 1 $NUM_COMPUTE_NODES); do
+    create_image "$compute_node_name-$i" $name $dir
+  done
+}
+
 destroy_network() {
   machine=$1
   shift
@@ -456,16 +469,11 @@ stop_hadoop() {
 }
 
 start_hadoop() {
-
   if [[ "$recreate" == 'true' ]]; then
     destroy_hadoop
   fi
 
-  create_image $controller_node_name "hadoop-benchmark/hadoop" "images/hadoop"
-
-  for i in $(seq 1 $NUM_COMPUTE_NODES); do
-    create_image "$compute_node_name-$i" "hadoop-benchmark/hadoop" "images/hadoop"
-  done
+  build_image $HADOOP_IMAGE $HADOOP_IMAGE_DIR
 
   # start graphite frontend
   start_container $controller_node_name graphite \
@@ -487,7 +495,7 @@ start_hadoop() {
     -p "50070:50070" \
     -e "CONF_CONTROLLER_HOSTNAME=controller" \
     -d \
-    hadoop-benchmark/hadoop \
+    $HADOOP_IMAGE \
     controller
 
   # wait for resource manager
@@ -507,7 +515,7 @@ start_hadoop() {
       -p "50075:50075" \
       -e "CONF_CONTROLLER_HOSTNAME=controller" \
       -d \
-      hadoop-benchmark/hadoop \
+      $HADOOP_IMAGE \
       compute
 
     # wait for node manager
@@ -552,6 +560,16 @@ shell_init() {
   docker-machine env --swarm $controller_node_name
 }
 
+console() {
+  start_container $controller_node_name console \
+    -it \
+    --rm \
+    --net hadoop-net \
+    -h hadoop-console \
+    $HADOOP_IMAGE \
+    console
+}
+
 print_help() {
 cat <<EOM
 Usage $0 [OPTIONS] COMMAND
@@ -578,8 +596,10 @@ Commands:
     restart-hadoop
     destroy-hadoop
 
-  Info:
+  Misc:
+    console         Enter a bash console in a container connected to the cluster
 
+  Info:
     shell-init      Shows information how to initialize current shell to connect to the cluster
                     Useful to execute like: 'eval \$($0 shell-init)'
     connect-info    Shows information how to connect to the cluster
@@ -649,6 +669,10 @@ while [[ $# > 0 ]]; do
       ;;
       connect-info)
         command='connect_info'
+        shift
+      ;;
+      console)
+        command='console'
         shift
       ;;
       *)
