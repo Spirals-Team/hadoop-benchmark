@@ -115,19 +115,22 @@ Users can also run HiBench on the Hadoop cluster, which is a famous hadoop bench
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;$ ./benchmarks/swim/run.sh<br/>
 <br/>
-At the end of the test, all the job logs is stored in the directory "workLogs" in current directory.
+At the end of the test, all the job logs is stored in the directory "workGenLogs" in current directory.
 
 
 <h2>4. Step-by-Step Instructions</h2>
 
+<h4>&nbsp;&nbsp;&nbsp;&nbsp;Download the project</h4>
+&nbsp;&nbsp;&nbsp;&nbsp;$ git clone https://github.com/Spirals-Team/hadoop-benchmark.git
 
+<h4>&nbsp;&nbsp;&nbsp;&nbsp;Start the cluster</h4>
 &nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=local_cluster ./cluster.sh create-cluster<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=local_cluster ./cluster.sh status-cluster<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=local_cluster ./cluster.sh start-hadoop<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;$ eval $(docker-machine env --swarm local-hadoop-controller)
 
 <h4>&nbsp;&nbsp;&nbsp;&nbsp;Quickly test the cluster</h4>
-&nbsp;&nbsp;&nbsp;&nbsp;$ ./benchmarks/path-to-mapreduce-examples/run.sh pi 2 2<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ ./benchmarks/hadoop-mapreduce-examples/run.sh pi 2 2<br/>
 
 
 <h2>5. Self-balancing Scenario</h2>

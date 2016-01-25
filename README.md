@@ -139,7 +139,7 @@ For example:
  ```sh
 	 $ ./benchmarks/swim/run.sh
  ```
- At the end of the test, all the job logs is stored in the directory "workLogs" in current directory.
+ At the end of the test, all the job logs is stored in the directory "workGenLogs" in current directory.
  
  
 ## 5. Self-balancing Scenario
