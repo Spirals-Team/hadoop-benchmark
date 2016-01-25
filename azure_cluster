@@ -1,0 +1,12 @@
+DRIVER='azure'
+NUM_COMPUTE_NODES=10
+CLUSTER_NAME_PREFIX='azure-hadoop'
+CLUSTER_ADVERTISE='eth0:2376' # azure does not have eth1 like VirtualBox
+
+# we need to open extra ports
+EXT_AFTER_CONSUL_MACHINE='. azure/create-consul-endpoints.sh'
+EXT_AFTER_CONTROLLER_MACHINE='. azure/create-controller-endpoints.sh'
+EXT_AFTER_COMPUTE_MACHINE='. azure/create-compute-endpoints.sh'
+
+export AZURE_SIZE='Small'
+export AZURE_LOCATION='North Europe'
