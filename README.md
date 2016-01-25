@@ -58,7 +58,7 @@ The main directory <<hadoop-benchmark>> contains several important components:
 	- benchmarks
 	- scenarios
 
-<cluster.sh>
+##### cluster.sh
  - It is the main bash of this project. The details can be found by command: 
  ```sh
 	 $ ./cluster.sh --help
@@ -69,16 +69,16 @@ The main directory <<hadoop-benchmark>> contains several important components:
 	- Hadoop compute node 1
 	(Consul K/V store is used by docker to create an overlay network which help docker containers in different hosts to connect to each other.)
  
- <images>
+##### images
   - This directory contains the Dockerfiles of Hadoop images. The built images should package the compiled Hadoop code, prepared configuration files and all required dependencies.
  
- <benchmarks>
+##### benchmarks
   - This directory provide 3 benchmarks.
   	- The bundled Hadoop examples
 	- Hibench
 	- SWIM - default 50 jobs 
 	
-<scenarios>
+##### scenarios
  - This directory provide the source code of an alternative Hadoop images. Besides the basic Hadoop environment, a self-adaptive approach is also packaged in these images.
 
 
@@ -131,17 +131,17 @@ For example:
  ```
  (Warning: each HiBench command will generates a lot of data (e.g. terasort input data is 1TB). So HiBench  is not suitable for a local machine.)
  
- #### 3.3.3 Run SWIM
+#### 3.3.3 Run SWIM
  In this project, a SWIM example workloads is also provided.
  This concurrent scenario contains 50 concurrent MapReduce jobs.
  Users can launch this benchmark by the bellow command:
  ```sh
 	 $ ./benchmarks/swim/run.sh
  ```
- At the end of the test, all the job logs is stored in the directory <workLogs> in current directory.
+ At the end of the test, all the job logs is stored in the directory "workLogs" in current directory.
  
  
- ## 4. Self-balancing Scenario
+## 4. Self-balancing Scenario
  Before this scenario, please ensure the Hadoop cluster has been stopped.
  Users can stop the Hadoop cluster by command:
  ```sh
