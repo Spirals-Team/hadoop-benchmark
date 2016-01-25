@@ -1,4 +1,4 @@
-FROM fikovnik/hadoop-benchmark
+FROM hadoop-benchmark/hadoop
 MAINTAINER Bo ZHANG <bo.zhang@inria.fr>
 
 # prerequisite
