@@ -4,8 +4,13 @@
 <h1>SEAMS16</h1>
 </head>
 <body>
+<h2>Hadoop-Benchmark: Rapid Prototyping and Evaluation of Self-Adaptive Behaviors in Hadoop Clusters</h2>
 
 <h2>1. Introduction</h2>
+
+This is a snapshot of the github project, for the latest version and additional resources, please visit https://github.com/Spirals-Team/hadoop-benchmark.
+<br/>
+<br/>
 
 Hadoop is a famous software to achieve reliable, scalable and distributed computing.
 But setting a Hadoop cluster always troubles users by its configurations and networking.
@@ -18,6 +23,47 @@ We also provide some acknowledged benchmarks and self-adaptive scenarios atop of
 <br/>
 <br/>
 The source code of this project is all stored in <a href="https://github.com/Spirals-Team/hadoop-benchmark">GitHub</a>.
+<br/>
+<br/>
+
+
+
+
+The main directory of this project contains several important components:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- cluster.sh<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- images<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- benchmarks<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- scenarios<br/>
+<br/>
+
+<h4>cluster.sh</h4>
+ - It is the main bash of this project. The details can be found by command:<br/><br/> 
+
+&nbsp;&nbsp;&nbsp;&nbsp;$ ./cluster.sh --help<br/><br/>
+
+ - With the default environment value, this bash will create an example Hadoop cluster which is composed by three nodes:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- Consul K/V store<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- Hadoop control node<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- Hadoop compute node 1<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(Consul K/V store is used by docker to create an overlay network which help docker containers in different hosts to connect to each other.)
+ 
+<h4>images</h4>
+  - This directory contains the Dockerfiles of Hadoop images. The built images should package the compiled Hadoop code, prepared configuration files and all required dependencies.
+ 
+<h4>benchmarks</h4>
+  - This directory provide 3 benchmarks.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- The bundled Hadoop examples<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- Hibench<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- SWIM - default 50 jobs <br/>
+	
+<h4>scenarios</h4>
+ - This directory provide the source code of an alternative Hadoop images. Besides the basic Hadoop environment, a self-adaptive approach is also packaged in these images.
+
+
+
+
+
+
 
 
 <h2>2. Requirements</h2>
@@ -32,22 +78,38 @@ The links following the software is the official tutorial or commands of install
 <h5><a href="https://docs.docker.com/engine/installation/windows/">windows</a></h5>
 
 <h4>docker-machine (version >= 0.5.6)</h4>
-(PS: docker-machine is installed together with docker by toolbox.)
-<h5><a href="https://docs.docker.com/engine/installation/">Linux</a></h5>
-<h5><a href="https://docs.docker.com/engine/installation/mac/">Mac</a></h5>
-<h5><a href="https://docs.docker.com/engine/installation/windows/">windows</a></h5>
+<h5>Linux</h5>
+&nbsp;&nbsp;&nbsp;&nbsp;$ curl -L https://github.com/docker/machine/releases/download/v0.5.6/docker-machine_linux-amd64 >/usr/local/bin/docker-machine && \
+    chmod +x /usr/local/bin/docker-machine
+<h5>Mac</h5>
+&nbsp;&nbsp;&nbsp;&nbsp;$ curl -L https://github.com/docker/machine/releases/download/v0.5.6/docker-machine_darwin-amd64 >/usr/local/bin/docker-machine && \
+    chmod +x /usr/local/bin/docker-machine
+<h5>windows</h5>
+&nbsp;&nbsp;&nbsp;&nbsp;$ if [[ ! -d "$HOME/bin" ]]; then mkdir -p "$HOME/bin"; fi && \
+    curl -L https://github.com/docker/machine/releases/download/v0.5.6/docker-machine_windows-amd64.exe > "$HOME/bin/docker-machine.exe" && \
+    chmod +x "$HOME/bin/docker-machine.exe"
+
 
 <h4>Bash (version >= 3)</h4>
 
-<h4>Git (version >= 2.6)</h4>
-<h5>Linux</h5>
-&nbsp;&nbsp;&nbsp;&nbsp;$ yum install git-core<br/>
-or<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;$ apt-get install git<br/>
-<h5><a href="https://git-scm.com/downloads">Mac</a></h5>
-<h5><a href="http://msysgit.github.com/">windows</a></h5>
+
+<h4>Option: Project download</h4>
+This project can be also cloned from Github.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ git clone https://github.com/Spirals-Team/hadoop-benchmark.git
+
+
+
 
 <h2>3. Getting started guide</h2>
+The next section is simplified "Getting started guide" without descriptions.
+
+<h3>3.0 Configuration</h3>
+Open the 'local_cluster' file and modify the desired number of nodes, the 'NUM_COMPUTE_NODES' settings.<br/><br/>
+The default deployment is on local machine using [ORACLE VirtualBox](https://www.virtualbox.org/). One hadoop instance requires about 2GB of RAM so be rather conservative to how many nodes can fit to your machine.<br/>
+A number of additional virtualization environments are support.
+The list, including all theior settings can be found at the [docker-machine website](https://docs.docker.com/machine/drivers/).<br/><br/>
+To use different driver, simply change the 'DRIVER' variable export all require properties based on the driver requirements. 
 
 <h3>3.1 Creating a cluster</h3>
 
@@ -146,11 +208,17 @@ This approach automatically balances the job-parallelism and job-throughput base
  
 To start Self-balancing Scenario, all commands used are similar to those in Section 3.<br/>
 But the 'local_cluster' configuration file should be replaced with the 'self-balancing-example/local_cluster' file.<br/>
-The commands should be like:
-<br/><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=scenarios/self-balancing-example/local_cluster ./cluster.sh start-hadoop
 <br/>
-
+<br/>
+The Self-balancing Scenario Step-by-Step Instructions:
+<br/><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=scenarios/self-balancing-example/local_cluster ./cluster.sh start-hadoop<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=scenarios/self-balancing-example/local_cluster ./cluster.sh status-cluster<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=scenarios/self-balancing-example/local_cluster ./cluster.sh start-hadoop<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ eval $(docker-machine env --swarm local-hadoop-controller)
+<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ ./benchmarks/hadoop-mapreduce-examples/run.sh pi 2 2<br/>
 
 
 
