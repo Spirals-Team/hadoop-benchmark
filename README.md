@@ -58,7 +58,7 @@ The main directory <<hadoop-benchmark>> contains several important components:
 	- benchmarks
 	- scenarios
 
-<<cluster.sh>>
+<cluster.sh>
  - It is the main bash of this project. The details can be found by command: 
  ```sh
 	 $ ./cluster.sh --help
@@ -69,16 +69,16 @@ The main directory <<hadoop-benchmark>> contains several important components:
 	- Hadoop compute node 1
 	(Consul K/V store is used by docker to create an overlay network which help docker containers in different hosts to connect to each other.)
  
- <<images>>
+ <images>
   - This directory contains the Dockerfiles of Hadoop images. The built images should package the compiled Hadoop code, prepared configuration files and all required dependencies.
  
- <<benchmarks>>
+ <benchmarks>
   - This directory provide 3 benchmarks.
   	- The bundled Hadoop examples
 	- Hibench
 	- SWIM - default 50 jobs 
 	
-<<scenarios>>
+<scenarios>
  - This directory provide the source code of an alternative Hadoop images. Besides the basic Hadoop environment, a self-adaptive approach is also packaged in these images.
 
 
@@ -138,7 +138,7 @@ For example:
  ```sh
 	 $ ./benchmarks/swim/run.sh
  ```
- At the end of the test, all the job logs is stored in the directory <<workLogs>> in current directory.
+ At the end of the test, all the job logs is stored in the directory <workLogs> in current directory.
  
  
  ## 4. Self-balancing Scenario
@@ -157,36 +157,3 @@ For example:
  ```sh
 	 $ CONFIG=scenarios/self-balancing-example/local_cluster ./cluster.sh start-hadoop
  ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```sh
-
-curl -L https://github.com/docker/machine/releases/download/v0.5.6/docker-machine_linux-amd64 >/home/bzhang/docker-machine &&     chmod +x /home/bzhang/docker-machine
-
-curl -L https://get.docker.com/builds/Linux/x86_64/docker-latest >/home/bzhang/docker &&     chmod +x /home/bzhang/docker
-
-export PATH=$PATH:/home/bzhang
-
-docker-machine create -d generic --generic-ip-address 172.16.65.59 --generic-ssh-key /home/bzhang/.ssh/id_rsa --generic-ssh-user root --generic-ssh-port 22 local-hadoop-consul
-
-docker-machine create -d generic --generic-ip-address 172.16.65.12 --generic-ssh-key /home/bzhang/.ssh/id_rsa --generic-ssh-user root --generic-ssh-port 22 g5k-hadoop-controller
-
-docker-machine create -d generic --generic-ip-address 172.16.65.3 --generic-ssh-key /home/bzhang/.ssh/id_rsa --generic-ssh-user root --generic-ssh-port 22 g5k-hadoop-compute-1
-
-```
