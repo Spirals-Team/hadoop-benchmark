@@ -24,7 +24,7 @@ The links following the software is the official tutorial or commands of install
     https://docs.docker.com/engine/installation/windows/
     
 #### docker-machine (version >= 0.5.6)
-(PS: docker-machine will be installed together with docker)
+(PS: docker-machine is installed together with docker)
 ##### Linux
     https://docs.docker.com/engine/installation/
 ##### Mac 
@@ -34,12 +34,13 @@ The links following the software is the official tutorial or commands of install
 
 #### bash (version >= 3)
     
-#### git (version >=2.6)
+#### Git (version >= 2.6)
 #####    Linux: 
-    $ yum install git-core
-    $ apt-get install git
+    	$ yum install git-core
+    or
+    	$ apt-get install git
 #####    Mac:
-    http://sourceforge.net/projects/git-osx-installer/
+    https://git-scm.com/downloads
 #####    Windows:
     http://msysgit.github.com/
 
@@ -82,8 +83,8 @@ The main directory <<hadoop-benchmark>> contains several important components:
  - This directory provide the source code of an alternative Hadoop images. Besides the basic Hadoop environment, a self-adaptive approach is also packaged in these images.
 
 
-## 3. Getting started guide
-### 3.1 Creating a cluster
+## 4. Getting started guide
+### 4.1 Creating a cluster
 When the project is downloaded, users can create an example Hadoop cluster by one command:
  ```sh
 	 $ CONFIG=local_cluster ./cluster.sh create-cluster
@@ -102,7 +103,7 @@ When the project is downloaded, users can create an example Hadoop cluster by on
 	 $ CONFIG=local_cluster ./cluster.sh status-cluster
  ```
 
-### 3.2 Starting hadoop 
+### 4.2 Starting hadoop 
 Once the step one finished, users can start hadoop cluster by another command:
  ```sh
 	 $ CONFIG=local_cluster ./cluster.sh start-hadoop
@@ -114,24 +115,24 @@ Once the step one finished, users can start hadoop cluster by another command:
  When the Hadoop control container is running, a Hadoop compute container will be launched in Hadoop Compute node 1.
  This container supports NodeManager and Datanode which are slave agent of Hadoop.
 
-### 3.3 Running bechnmarks
+### 4.3 Running bechnmarks
  After step two successes, users can execute different benchmarks in the running Hadoop cluster.
  
-#### 3.3.1 Quick test with Hadoop bundled examples
+#### 4.3.1 Quick test with Hadoop bundled examples
 Users can quickly test the Hadoop cluster with the bundled example Hadoop commands.
 For example:
  ```sh
 	 $ ./benchmarks/hadoop-mapreduce-examples/run.sh pi 2 2
  ```
  
- #### 3.3.2 Run HiBench
+ #### 4.3.2 Run HiBench
  Users can also run HiBench on the Hadoop cluster, which is a famous hadoop benchmark provided by Intel. The launch command is like:
  ```sh
 	 $ ./benchmarks/hibench/run.sh
  ```
  (Warning: each HiBench command will generates a lot of data (e.g. terasort input data is 1TB). So HiBench  is not suitable for a local machine.)
  
-#### 3.3.3 Run SWIM
+#### 4.3.3 Run SWIM
  In this project, a SWIM example workloads is also provided.
  This concurrent scenario contains 50 concurrent MapReduce jobs.
  Users can launch this benchmark by the bellow command:
@@ -141,7 +142,7 @@ For example:
  At the end of the test, all the job logs is stored in the directory "workLogs" in current directory.
  
  
-## 4. Self-balancing Scenario
+## 5. Self-balancing Scenario
  Before this scenario, please ensure the Hadoop cluster has been stopped.
  Users can stop the Hadoop cluster by command:
  ```sh

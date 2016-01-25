@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<h1>SEAMS16</h1>
+</head>
+<body>
+
+<h2>1. Introduction</h2>
+
+Hadoop is a famous software to achieve reliable, scalable and distributed computing.
+But setting a Hadoop cluster always troubles users by its configurations and networking.
+Moreover, in research community, there is no an easy way to quickly reproduce a running Hadoop cluster which can help researchers compare different existing approaches.
+<br/>
+<br/>
+This project use Docker to package a Hadoop cluster and all its dependencies in images.
+Users can use Docker containers to quickly build an Hadoop infrastructure.
+We also provide some acknowledged benchmarks and self-adaptive scenarios atop of it.
+<br/>
+<br/>
+The source code of this project is all stored in <a href="https://github.com/Spirals-Team/hadoop-benchmark">GitHub</a>.
+
+
+<h2>2. Requirements</h2>
+
+This project is based on Docker and Bash script.
+Before the start, please ensure that the bellow tools have been well installed.
+The links following the software is the official tutorial or commands of installation.
+
+<h4>docker (version >= 1.9.1)</h4>
+<h5><a href="https://docs.docker.com/engine/installation/">Linux</a></h5>
+<h5><a href="https://docs.docker.com/engine/installation/mac/">Mac</a></h5>
+<h5><a href="https://docs.docker.com/engine/installation/windows/">windows</a></h5>
+
+<h4>docker-machine (version >= 0.5.6)</h4>
+(PS: docker-machine is installed together with docker by toolbox.)
+<h5><a href="https://docs.docker.com/engine/installation/">Linux</a></h5>
+<h5><a href="https://docs.docker.com/engine/installation/mac/">Mac</a></h5>
+<h5><a href="https://docs.docker.com/engine/installation/windows/">windows</a></h5>
+
+<h4>Bash (version >= 3)</h4>
+
+<h4>Git (version >= 2.6)</h4>
+<h5>Linux</h5>
+&nbsp;&nbsp;&nbsp;&nbsp;$ yum install git-core<br/>
+or<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ apt-get install git<br/>
+<h5><a href="https://git-scm.com/downloads">Mac</a></h5>
+<h5><a href="http://msysgit.github.com/">windows</a></h5>
+
+<h2>3. Getting started guide</h2>
+
+<h3>3.1 Creating a cluster</h3>
+
+When the project is downloaded, users can create an example Hadoop cluster by one command:
+<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=local_cluster ./cluster.sh create-cluster<br/>
+<br/>
+
+By modifying 'NUM_COMPUTE_NODES', users can create a different scale Hadoop cluster by the above command.
+<br/>
+<br/>
+By default, this command will create the consul K/V store node firstly.
+And then, a consul K/V store container will be launched in this node.
+<br/>
+<br/> 
+After the consul K/V store is ready, two nodes will be created as Hadoop control node and compute node 1.
+<br/>
+The command will create an overlay network for all docker containers in this cluster at the end.
+<br/>
+Users can use the following command to check the status of the nodes created:
+<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=local_cluster ./cluster.sh status-cluster<br/>
+<br/>
+
+<h3>3.2 Starting hadoop</h3> 
+Once the step one finished, users can start hadoop cluster by another command:
+<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=local_cluster ./cluster.sh start-hadoop<br/>
+<br/>
+ 
+This command will create a Hadoop control container in Hadoop control node.
+This container shall run ResourceManager, NameNode, SecondaryNamenode and JobHistoryServer which are master components of Hadoop.
+<br/>
+<br/>
+When the Hadoop control container is running, a Hadoop compute container will be launched in Hadoop Compute node 1.
+This container supports NodeManager and Datanode which are slave agent of Hadoop.
+
+<h3>3.3 Running bechnmarks</h3>
+After step two successes, users can execute different benchmarks in the running Hadoop cluster.
+ 
+<h4>3.3.1 Quick test with Hadoop bundled examples</h4>
+Users can quickly test the Hadoop cluster with the bundled example Hadoop commands.
+For example:
+<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ ./benchmarks/hadoop-mapreduce-examples/run.sh pi 2 2<br/>
+<br/>
+ 
+<h4>3.3.2 Run HiBench</h4>
+Users can also run HiBench on the Hadoop cluster, which is a famous hadoop benchmark provided by Intel. The launch command is like:
+<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ ./benchmarks/hibench/run.sh<br/>
+<br/>
+ (Warning: each HiBench command will generates a lot of data (e.g. terasort input data is 1TB). So HiBench  is not suitable for a local machine.)
+ 
+<h4>3.3.3 Run SWIM</h4>
+ In this project, a SWIM example workloads is also provided.
+ This concurrent scenario contains 50 concurrent MapReduce jobs.
+ Users can launch this benchmark by the bellow command:
+<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ ./benchmarks/swim/run.sh<br/>
+<br/>
+At the end of the test, all the job logs is stored in the directory "workLogs" in current directory.
+
+
+<h2>4. Step-by-Step Instructions</h2>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=local_cluster ./cluster.sh create-cluster<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=local_cluster ./cluster.sh status-cluster<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=local_cluster ./cluster.sh start-hadoop<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ eval $(docker-machine env --swarm local-hadoop-controller)
+
+<h4>&nbsp;&nbsp;&nbsp;&nbsp;Quickly test the cluster</h4>
+&nbsp;&nbsp;&nbsp;&nbsp;$ ./benchmarks/path-to-mapreduce-examples/run.sh pi 2 2<br/>
+
+
+<h2>5. Self-balancing Scenario</h2>
+Before this scenario, please ensure the Hadoop cluster has been stopped.<br/>
+Users can stop the Hadoop cluster by command:
+<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=local_cluster ./cluster.sh stop-hadoop<br/>
+<br/>
+ 
+In Self-balacing Scenario, besides a running Hadooop cluster, an self-adaptive approach is also running in Hadoop control node.<br/>
+This approach automatically balances the job-parallelism and job-throughput based on the memory utilization of the whole Hadoop cluster.
+ 
+To start Self-balancing Scenario, all commands used are similar to those in Section 3.<br/>
+But the 'local_cluster' configuration file should be replaced with the 'self-balancing-example/local_cluster' file.<br/>
+The commands should be like:
+<br/><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$ CONFIG=scenarios/self-balancing-example/local_cluster ./cluster.sh start-hadoop
+<br/>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
