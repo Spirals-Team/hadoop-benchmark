@@ -125,7 +125,7 @@ For example:
 	 $ ./benchmarks/hadoop-mapreduce-examples/run.sh pi 2 2
  ```
  
- #### 4.3.2 Run HiBench
+#### 4.3.2 Run HiBench
  Users can also run HiBench on the Hadoop cluster, which is a famous hadoop benchmark provided by Intel. The launch command is like:
  ```sh
 	 $ ./benchmarks/hibench/run.sh
