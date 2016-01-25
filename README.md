@@ -24,29 +24,28 @@ The links following the software is the official tutorial or commands of install
     https://docs.docker.com/engine/installation/windows/
     
 #### docker-machine (version >= 0.5.6)
-(PS: docker-machine is installed together with docker)
 ##### Linux
-    https://docs.docker.com/engine/installation/
+```sh
+   $ curl -L https://github.com/docker/machine/releases/download/v0.5.6/docker-machine_linux-amd64 >/usr/local/bin/docker-machine && \
+    chmod +x /usr/local/bin/docker-machine
+```
 ##### Mac 
-    https://docs.docker.com/engine/installation/mac/
-##### windows 
-    https://docs.docker.com/engine/installation/windows/
+```sh
+$ curl -L https://github.com/docker/machine/releases/download/v0.5.6/docker-machine_darwin-amd64 >/usr/local/bin/docker-machine && \
+    chmod +x /usr/local/bin/docker-machine
+```
+##### windows (using git bash)
+```
+$ if [[ ! -d "$HOME/bin" ]]; then mkdir -p "$HOME/bin"; fi && \
+    curl -L https://github.com/docker/machine/releases/download/v0.5.6/docker-machine_windows-amd64.exe > "$HOME/bin/docker-machine.exe" && \
+    chmod +x "$HOME/bin/docker-machine.exe"
+```
 
 #### bash (version >= 3)
     
-#### Git (version >= 2.6)
-#####    Linux: 
-    	$ yum install git-core
-    or
-    	$ apt-get install git
-#####    Mac:
-    https://git-scm.com/downloads
-#####    Windows:
-    http://msysgit.github.com/
-
 ## 3. Organization
 
-This project can be downloaded by the command
+This project can be cloned by the command
 
 ```sh
 	$ git clone https://github.com/Spirals-Team/hadoop-benchmark.git
@@ -84,10 +83,17 @@ The main directory <<hadoop-benchmark>> contains several important components:
 
 
 ## 4. Getting started guide
+
+### 4.0 Configuration
+Open the `local_cluster` file and modify the desired number of nodes, the `NUM_COMPUTE_NODES` settings.
+The default deployment is on local machine using [ORACLE VirtualBox](https://www.virtualbox.org/). One hadoop instance requires about 2GB of RAM so be rather conservative to how many nodes can fit to your machine.
+A number of additional virtualization environments are support.
+The list, including all theior settings can be found at the [docker-machine website](https://docs.docker.com/machine/drivers/).
+To use different driver, simply change the `DRIVER` variable export all require properties based on the driver requirements. 
+
 ### 4.1 Creating a cluster
-When the project is downloaded, users can create an example Hadoop cluster by one command:
  ```sh
-	 $ CONFIG=local_cluster ./cluster.sh create-cluster
+$ CONFIG=local_cluster ./cluster.sh create-cluster
  ```
  By modifying 'NUM_COMPUTE_NODES', users can create a different scale Hadoop cluster by the above command.
  
@@ -99,15 +105,16 @@ When the project is downloaded, users can create an example Hadoop cluster by on
  The command will create an overlay network for all docker containers in this cluster at the end.
  
  Users can use the following command to check the status of the nodes created:
-  ```sh
-	 $ CONFIG=local_cluster ./cluster.sh status-cluster
- ```
+ 
+```sh
+$ CONFIG=local_cluster ./cluster.sh status-cluster
+```
 
 ### 4.2 Starting hadoop 
 Once the step one finished, users can start hadoop cluster by another command:
- ```sh
-	 $ CONFIG=local_cluster ./cluster.sh start-hadoop
- ```
+```sh
+$ CONFIG=local_cluster ./cluster.sh start-hadoop
+```
  
  This command will create a Hadoop control container in Hadoop control node.
  This container shall run ResourceManager, NameNode, SecondaryNamenode and JobHistoryServer which are master components of Hadoop.
@@ -153,7 +160,7 @@ For example:
  This approach automatically balances the job-parallelism and job-throughput based on the memory utilization of the whole Hadoop cluster.
  
  To start Self-balancing Scenario, all commands used are similar to those in Section 3.
- But the 'local_cluster' configuration file should be replaced with the 'self-balancing-example/local_cluster' file.
+ But the `local_cluster` configuration file should be replaced with the `self-balancing-example/local_cluster` file.
  The commands should be like:
  ```sh
 	 $ CONFIG=scenarios/self-balancing-example/local_cluster ./cluster.sh start-hadoop
