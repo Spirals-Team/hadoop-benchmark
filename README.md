@@ -51,12 +51,11 @@ This project can be cloned by the command
 	$ git clone https://github.com/Spirals-Team/hadoop-benchmark.git
 ```
 
-The main directory <<hadoop-benchmark>> contains several important components:
- - hadoop-benchmark
- 	- cluster.sh
- 	- images
-	- benchmarks
-	- scenarios
+The directory contains several important components:
+- cluster.sh
+- images
+- benchmarks
+- scenarios
 
 ##### cluster.sh
  - It is the main bash of this project. The details can be found by command: 
@@ -70,7 +69,7 @@ The main directory <<hadoop-benchmark>> contains several important components:
 	(Consul K/V store is used by docker to create an overlay network which help docker containers in different hosts to connect to each other.)
  
 ##### images
-  - This directory contains the Dockerfiles of Hadoop images. The built images should package the compiled Hadoop code, prepared configuration files and all required dependencies.
+  - This directory contains base images. The built images should package the compiled Hadoop code, prepared configuration files and all required dependencies.
  
 ##### benchmarks
   - This directory provide 3 benchmarks.
