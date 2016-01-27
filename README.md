@@ -88,8 +88,8 @@ The directory contains several important components:
 
 This project aims to help users quickly deploy a running Hadoop cluster.
 It provide a set of commands to simplify and accelerate the deployment.
-This guide will help users to create local Hadoop cluster, to execute a benchmark, check the results, and 
-The rapid deployment process will contain the following phases:
+This guide will help users to create local Hadoop cluster, to execute a benchmark, to check the results, and to rerun the benchmark with self-adaptive scenario.
+The guide process contains the following phases:
 
  - ./cluster.sh create-cluster
  - ./cluster.sh start-hadoop
@@ -97,6 +97,8 @@ The rapid deployment process will contain the following phases:
  - check the results
  - update Hadoop configuration / change to self-adaptive scenario
  - ./cluster.sh restart-hadoop
+
+The guide process can also be visualized in the bellow image:
 
 ![The guide process](/figures/guide.png)
 
