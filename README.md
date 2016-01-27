@@ -204,8 +204,8 @@ For example:
  In Self-balacing Scenario, besides a running Hadooop cluster, an self-adaptive approach is also running in Hadoop control node.
  This approach automatically balances the job-parallelism and job-throughput based on the memory utilization of the whole Hadoop cluster.
  
- To start Self-balancing Scenario, all commands used are similar to those in Section 3.
- But the `local_cluster` configuration file should be replaced with the `self-balancing-example/local_cluster` file.
+ To start Self-balancing Scenario, all commands used are similar to those in Section 4.
+ But the `local_cluster` configuration file should be replaced with the `scenario/self-balancing-example/local_cluster` file.
  The commands should be like:
  ```sh
 	 $ CONFIG=scenarios/self-balancing-example/local_cluster ./cluster.sh start-hadoop
