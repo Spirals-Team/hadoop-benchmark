@@ -128,6 +128,11 @@ $ CONFIG=local_cluster ./cluster.sh create-cluster
 ```sh
 $ CONFIG=local_cluster ./cluster.sh status-cluster
 ```
+
+If the Hadoop cluster has been successfully created, the status-create would show some results like
+![The result of create-cluster](/figures/result-status-cluster.png)
+
+
 The architecture of Hadoop cluster in local machine can be illustrated in following schema:
 ![The Architecture of Hadoop cluster deployed](/figures/architecture.png)
 
