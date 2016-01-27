@@ -198,7 +198,7 @@ For example:
  Before this scenario, please ensure the Hadoop cluster has been stopped.
  Users can stop the Hadoop cluster by command:
  ```sh
-	 $ CONFIG=local_cluster ./cluster.sh stop-hadoop
+	 $ CONFIG=local_cluster ./cluster.sh destroy-hadoop
  ```
  
  In Self-balacing Scenario, besides a running Hadooop cluster, an self-adaptive approach is also running in Hadoop control node.
