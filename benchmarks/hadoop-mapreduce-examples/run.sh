@@ -7,6 +7,6 @@ docker run \
   --net hadoop-net \
   --name hadoop-mapreduce-examples \
   -h hadoop-mapreduce-examples \
-  fikovnik/hadoop-benchmark \
+  hadoop-benchmark/hadoop \
   run \
   hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar "$@"

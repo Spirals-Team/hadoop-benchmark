@@ -154,7 +154,7 @@ $ CONFIG=local_cluster ./cluster.sh start-hadoop
  ![The result of start-hadoop](/figures/result-start-hadoop.png)
  
  
- PS: In order to be able to run the benchmarks, please do not forget the below command reminded in the above result. 
+ PS: In order to be able to run the benchmarks, please do not forget to execute the below command reminded in the above result. 
  ```sh
 	 $ eval $(docker-machine env --swarm local-hadoop-controller)
  ```
@@ -169,6 +169,11 @@ For example:
  ```sh
 	 $ ./benchmarks/hadoop-mapreduce-examples/run.sh pi 2 2
  ```
+ 
+ At the end of this command, if the terminal exposes some informations like below image, that means this Hadoop MapReduce application has been successfully treated. Users can obtain the details of the application in this terminal report.
+  ![The result of PI estimation](/figures/result-pi.png)
+ 
+ 
  
 #### 4.3.2 Run HiBench
  Users can also run HiBench on the Hadoop cluster, which is a famous hadoop benchmark provided by Intel. The launch command is like:
