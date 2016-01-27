@@ -98,7 +98,7 @@ The guide process contains the following phases:
  - run benchmark (experiment)
  - check results
  
- Furthermore, users can also create different Hadoop cluster to compare the performance difference between configurations (or scenario), following the further guide in next section.
+Furthermore, users can also create different Hadoop cluster to compare the performance difference between configurations (or scenario), following the further guide in next section.
  
  - update Hadoop configuration / change to self-adaptive scenario
  - restart hadoop
