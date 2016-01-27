@@ -149,6 +149,11 @@ $ CONFIG=local_cluster ./cluster.sh start-hadoop
  
  When the Hadoop control container is running, a Hadoop compute container will be launched in each Hadoop Compute node.
  This container supports NodeManager and Datanode which are slave agent of Hadoop.
+ 
+ When Hadoop cluster has been successfully started, there should be some results shown in the terminal:
+ ![The result of start-hadoop](/figures/result-start-hadoop.png)
+ 
+ 
 
 ### 4.3 Running bechnmarks
  After step two successes, users can execute different benchmarks in the running Hadoop cluster.
