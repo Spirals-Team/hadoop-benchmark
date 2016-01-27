@@ -128,6 +128,10 @@ $ CONFIG=local_cluster ./cluster.sh create-cluster
 ```sh
 $ CONFIG=local_cluster ./cluster.sh status-cluster
 ```
+The architecture of Hadoop cluster in local machine can be illustrated in following schema:
+![The Architecture of Hadoop cluster deployed](/figures/architecture.png)
+
+
 
 ### 4.2 Starting hadoop 
 Once the step one finished, users can start hadoop cluster by another command:
