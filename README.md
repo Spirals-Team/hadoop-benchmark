@@ -9,6 +9,7 @@ Users can use Docker containers to quickly build an Hadoop infrastructure.
 We also provide some acknowledged benchmarks and self-adaptive scenarios atop of it.
 
 
+
 ## 2. Requirements: 
 
 This project is based on Docker and Bash script.
@@ -42,7 +43,9 @@ $ if [[ ! -d "$HOME/bin" ]]; then mkdir -p "$HOME/bin"; fi && \
 ```
 
 #### bash (version >= 3)
-    
+
+
+
 ## 3. Organization
 
 This project can be cloned by the command
@@ -77,11 +80,26 @@ The directory contains several important components:
 	- Hibench
 	- SWIM - default 50 jobs 
 	
-##### scenarios
+##### self-adaptive scenarios
  - This directory provide the source code of an alternative Hadoop images. Besides the basic Hadoop environment, a self-adaptive approach is also packaged in these images.
 
 
 ## 4. Getting started guide
+
+This project aims to help users quickly deploy a running Hadoop cluster.
+It provide a set of commands to simplify and accelerate the deployment.
+This guide will help users to create local Hadoop cluster, to execute a benchmark, check the results, and 
+The rapid deployment process will contain the following phases:
+
+ - ./cluster.sh create-cluster
+ - ./cluster.sh start-hadoop
+ - run benchmark (experiment)
+ - check the results
+ - update Hadoop configuration / change to self-adaptive scenario
+ - ./cluster.sh restart-hadoop
+
+![The guide process](https://drive.google.com/file/d/0BwXBNlEmVc-kQTRBeVU2SkZhQ0U/view?usp=sharing)
+
 
 ### 4.0 Configuration
 Open the `local_cluster` file and modify the desired number of nodes, the `NUM_COMPUTE_NODES` settings.
