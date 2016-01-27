@@ -138,8 +138,6 @@ If the Hadoop cluster has been successfully created, the status-create would sho
 ![The result of create-cluster](/figures/result-status-cluster.png)
 
 
-The architecture of Hadoop cluster in local machine can be illustrated in following schema:
-![The Architecture of Hadoop cluster deployed](/figures/architecture.png)
 
 
 
@@ -163,6 +161,10 @@ $ CONFIG=local_cluster ./cluster.sh start-hadoop
  ```sh
 	 $ eval $(docker-machine env --swarm local-hadoop-controller)
  ```
+ 
+ 
+The architecture of Hadoop cluster in local machine can be illustrated in following schema:
+![The Architecture of Hadoop cluster deployed](/figures/architecture.png)
  
 
 ### 4.3 Running bechnmarks
