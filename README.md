@@ -93,12 +93,15 @@ Moreover, some example results are also provided to help users follow this guide
 Following this guide, users will create local Hadoop cluster, execute a benchmark, check the results, even rerun the benchmark with self-adaptive scenario (in next section).
 The guide process contains the following phases:
 
- - ./cluster.sh create-cluster
- - ./cluster.sh start-hadoop
+ - create cluster
+ - start hadoop
  - run benchmark (experiment)
- - check the results
+ - check results
+ 
+ Furthermore, users can also create different Hadoop cluster to compare the performance difference between configurations (or scenario), following the further guide in next section.
+ 
  - update Hadoop configuration / change to self-adaptive scenario
- - ./cluster.sh restart-hadoop
+ - restart hadoop
 
 The guide process can also be visualized in the below image:
 
