@@ -13,7 +13,7 @@ We also provide some acknowledged benchmarks and self-adaptive scenarios atop of
 ## 2. Requirements: 
 
 This project is based on Docker and Bash script.
-Before the start, please ensure that the bellow tools have been well installed.
+Before the start, please ensure that the below tools have been well installed.
 The links following the software is the official tutorial or commands of installation.
 
 #### docker (version >= 1.9.1)
@@ -98,7 +98,7 @@ The guide process contains the following phases:
  - update Hadoop configuration / change to self-adaptive scenario
  - ./cluster.sh restart-hadoop
 
-The guide process can also be visualized in the bellow image:
+The guide process can also be visualized in the below image:
 
 ![The guide process](/figures/guide.png)
 
@@ -154,6 +154,11 @@ $ CONFIG=local_cluster ./cluster.sh start-hadoop
  ![The result of start-hadoop](/figures/result-start-hadoop.png)
  
  
+ PS: In order to be able to run the benchmarks, please do not forget the below command reminded in the above result. 
+ ```sh
+	 $ eval $(docker-machine env --swarm local-hadoop-controller)
+ ```
+ 
 
 ### 4.3 Running bechnmarks
  After step two successes, users can execute different benchmarks in the running Hadoop cluster.
@@ -175,7 +180,7 @@ For example:
 #### 4.3.3 Run SWIM
  In this project, a SWIM example workloads is also provided.
  This concurrent scenario contains 50 concurrent MapReduce jobs.
- Users can launch this benchmark by the bellow command:
+ Users can launch this benchmark by the below command:
  ```sh
 	 $ ./benchmarks/swim/run.sh
  ```
