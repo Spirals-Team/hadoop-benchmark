@@ -147,7 +147,7 @@ $ CONFIG=local_cluster ./cluster.sh start-hadoop
  This command will create a Hadoop control container in Hadoop control node.
  This container shall run ResourceManager, NameNode, SecondaryNamenode and JobHistoryServer which are master components of Hadoop.
  
- When the Hadoop control container is running, a Hadoop compute container will be launched in Hadoop Compute node 1.
+ When the Hadoop control container is running, a Hadoop compute container will be launched in each Hadoop Compute node.
  This container supports NodeManager and Datanode which are slave agent of Hadoop.
 
 ### 4.3 Running bechnmarks
