@@ -98,7 +98,7 @@ The rapid deployment process will contain the following phases:
  - update Hadoop configuration / change to self-adaptive scenario
  - ./cluster.sh restart-hadoop
 
-![The guide process](https://drive.google.com/file/d/0BwXBNlEmVc-kQTRBeVU2SkZhQ0U/view)
+![The guide process](blob:https://drive.google.com/46e9d92f-cb33-4b6d-a874-65cb84dd8b6c)
 
 
 ### 4.0 Configuration
