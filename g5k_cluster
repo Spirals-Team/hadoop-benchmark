@@ -7,3 +7,4 @@ DRIVER_OPTS_CONSUL=--generic-ip-address='172.16.65.59'
 DRIVER_OPTS_CONTROLLER=--generic-ip-address='172.16.68.1'
 DRIVER_OPTS_COMPUTE_1=--generic-ip-address='172.16.68.3'
 CLUSTER_ADVERTISE='eth0:2376'
+DRIVER_OPTS=$(echo "--generic-ssh-key=/home/bzhang/.ssh/id_rsa --generic-ssh-user=root --generic-ssh-port=22")
