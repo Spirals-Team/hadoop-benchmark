@@ -241,6 +241,8 @@ The commands should be like:
  ```sh
 	 $ CONFIG=g5k_cluster ./cluster.sh create-cluster
  ```
+ 
+ PS: in the frontend of Grid5000, there are no docker and docker-machine installed. So users should install the two tools in the user home. And add the user home to `Path` environment parameter.
 
 
 
