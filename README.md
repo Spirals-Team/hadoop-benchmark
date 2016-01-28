@@ -215,3 +215,37 @@ For example:
  ```sh
 	 $ CONFIG=scenarios/self-balancing-example/local_cluster ./cluster.sh start-hadoop
  ```
+
+
+## 6. OPTION: Deployment in Grid5000
+
+This project can also be used in [Grid5000](https://www.grid5000.fr).
+In Grid5000, this project uses generic driver to create the cluster with the existing hosts.
+
+After the project is cloned in frontend, users should use `OAR` commands to reserve hosts firstly and then install OS by `kadeploy3` command.
+
+When users have finished the above step, there are several existing running hosts reserved.
+Then, secondly, several parameters in `g5k_cluster` file should be reconfigured.
+
+Users should use their proper host-ips to replace the examples in some parameters like:
+
+ - DRIVER_OPTS_CONSUL
+ - DRIVER_OPTS_CONTROLLER
+ - DRIVER_OPTS_COMPUTE_1
+
+To ensure `docker-machine` can successfully create cluster, SSH private key file should be correctly set in `--generic-ssh-key` of `DRIVER_OPTS`.
+
+When the two steps has been finished, users can create a cluster and start hadoop in Grid5000 with the commands presented in section 4.
+But the configuration file should be replaced with `g5k_cluster`.
+The commands should be like:
+ ```sh
+	 $ CONFIG=g5k_cluster ./cluster.sh create-cluster
+ ```
+
+
+
+
+
+
+
+
