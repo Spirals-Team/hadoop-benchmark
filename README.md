@@ -187,7 +187,7 @@ For example:
  ```sh
 	 $ ./benchmarks/hibench/run.sh
  ```
- (Warning: each HiBench command will generates a lot of data (e.g. terasort input data is 1TB). So HiBench  is not suitable for a local machine.)
+
  
 #### 4.3.3 Run SWIM
  In this project, a SWIM example workloads is also provided.
@@ -198,7 +198,7 @@ For example:
  ```
  At the end of the test, all the job logs is stored in the directory "workGenLogs" in current directory.
  
- (Warning: SWIM will launch many MapReduce applications running in parallel. So SWIM is also not suitable for a local machine.)
+ (Warning: SWIM will launch many MapReduce applications running in parallel. So SWIM is not suitable for a local machine.)
  
  
 ## 5. Self-balancing Scenario
