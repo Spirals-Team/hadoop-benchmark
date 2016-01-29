@@ -23,4 +23,7 @@ ADD HiBench-conf/wordcount/configure.sh $HIBENCH_HOME/wordcount/conf/
 # add auxiliary helpers
 ADD run.sh /
 
+#set workdirectory
+WORKDIR $HIBENCH_HOME
+
 ENTRYPOINT [ "/entrypoint.sh", "run", "/run.sh" ]

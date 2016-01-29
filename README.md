@@ -188,7 +188,8 @@ For example:
 	 $ ./benchmarks/hibench/run.sh
  ```
 
-The HiBench results are stored in ``.
+The HiBench results are stored in `hibench.report`.
+  ![The result of Hibench](/figures/result-hibench.png)
 
 
  
