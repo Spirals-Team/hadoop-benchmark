@@ -198,6 +198,8 @@ For example:
  ```
  At the end of the test, all the job logs is stored in the directory "workGenLogs" in current directory.
  
+ (Warning: SWIM will launch many MapReduce applications running in parallel. So SWIM is also not suitable for a local machine.)
+ 
  
 ## 5. Self-balancing Scenario
  Before this scenario, please ensure the Hadoop cluster has been stopped.
