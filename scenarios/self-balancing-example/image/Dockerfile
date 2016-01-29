@@ -1,4 +1,4 @@
-FROM hadoop-benchmark/hadoop
+FROM spirals/hadoop-benchmark:hadoop-benchmark
 MAINTAINER Bo ZHANG <bo.zhang@inria.fr>
 
 # prerequisite
