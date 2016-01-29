@@ -224,6 +224,8 @@ In Grid5000, this project uses generic driver to create the cluster with the exi
 
 After the project is cloned in frontend, users should use `OAR` commands to reserve hosts firstly and then install OS by `kadeploy3` command.
 
+PS: because a docker overlay network requires kernel (version >= 3.1.6), we suggest users using the environment `jessie-x64-base` to install `Debian Jessie` in the hosts.
+
 When users have finished the above step, there are several existing running hosts reserved.
 Then, secondly, several parameters in `g5k_cluster` file should be reconfigured.
 
