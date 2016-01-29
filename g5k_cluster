@@ -1,6 +1,6 @@
 DRIVER='generic'
 NUM_COMPUTE_NODES=1
-CLUSTER_NAME_PREFIX='local-hadoop'
+CLUSTER_NAME_PREFIX='g5k-hadoop'
 DRIVER_OPTS_CONSUL=--generic-ip-address='172.16.65.59'
 DRIVER_OPTS_CONTROLLER=--generic-ip-address='172.16.68.1'
 DRIVER_OPTS_COMPUTE_1=--generic-ip-address='172.16.68.3'
