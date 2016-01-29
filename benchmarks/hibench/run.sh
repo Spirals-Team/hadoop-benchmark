@@ -18,5 +18,5 @@ docker run \
   --net hadoop-net \
   --name hadoop-benchmark-hibench \
   -h hadoop-benchmark-hibench \
-  spirals/hadoop-benchmark:hadoop-benchmark-hibench \
+  hadoop-benchmark-hibench \
   --benchmarks "$BENCHMARKS"

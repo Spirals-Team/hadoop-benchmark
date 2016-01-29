@@ -10,4 +10,4 @@ docker run \
   --net hadoop-net \
   --name hadoop-benchmark-swim \
   -h hadoop-benchmark-swim \
-  spirals/hadoop-benchmark:hadoop-benchmark-swim
+  hadoop-benchmark-swim

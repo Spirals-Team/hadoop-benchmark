@@ -1,5 +1,5 @@
 DRIVER='azure'
-NUM_COMPUTE_NODES=10
+NUM_COMPUTE_NODES=1
 CLUSTER_NAME_PREFIX='azure-hadoop'
 CLUSTER_ADVERTISE='eth0:2376' # azure does not have eth1 like VirtualBox
 
