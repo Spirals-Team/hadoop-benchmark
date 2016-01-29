@@ -8,8 +8,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
 		  git \
 		  bc
 
-
-
 ENV HIBENCH_HOME /HiBench
 
 # checkout hibench
