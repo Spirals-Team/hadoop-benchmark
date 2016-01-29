@@ -3,9 +3,8 @@ set -e
 
 ALL_BENCHMARKS="wordcount sort terasort sleep"
 
-#base=$(dirname "$(cd "$(dirname "$0")"; pwd)/$(basename "$0")")
-#docker build -t hadoop-benchmark-hibench "$base/image"
-docker pull spirals/hadoop-benchmark:hadoop-benchmark-hibench
+base=$(dirname "$(cd "$(dirname "$0")"; pwd)/$(basename "$0")")
+docker build -t hadoop-benchmark-hibench "$base/image"
 
 if [[ $# -lt 1 ]]; then
   BENCHMARKS=$ALL_BENCHMARKS

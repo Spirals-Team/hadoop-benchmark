@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-#base=$(dirname "$(cd "$(dirname "$0")"; pwd)/$(basename "$0")")
-#docker build -t hadoop-benchmark-swim "$base/image"
+base=$(dirname "$(cd "$(dirname "$0")"; pwd)/$(basename "$0")")
+docker build -t hadoop-benchmark-swim "$base/image"
 
 docker run \
   -it \
