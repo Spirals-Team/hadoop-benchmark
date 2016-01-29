@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-base=$(dirname "$(cd "$(dirname "$0")"; pwd)/$(basename "$0")")
-docker build -t hadoop-benchmark-swim "$base/image"
+#base=$(dirname "$(cd "$(dirname "$0")"; pwd)/$(basename "$0")")
+#docker build -t hadoop-benchmark-swim "$base/image"
 
 docker run \
   -it \
@@ -10,4 +10,4 @@ docker run \
   --net hadoop-net \
   --name hadoop-benchmark-swim \
   -h hadoop-benchmark-swim \
-  hadoop-benchmark-swim
+  spirals/hadoop-benchmark:hadoop-benchmark-swim

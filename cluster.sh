@@ -10,7 +10,8 @@ DRIVER_OPTS=${DRIVER_OPTS:-''}
 NUM_COMPUTE_NODES=${NUM_COMPUTE_NODES:-1}
 CLUSTER_NAME_PREFIX=${CLUSTER_NAME_PREFIX:-'local-hadoop'}
 CLUSTER_ADVERTISE=${CLUSTER_ADVERTISE:-'eth1:2376'}
-HADOOP_IMAGE=${HADOOP_IMAGE:-'hadoop-benchmark/hadoop'}
+#HADOOP_IMAGE=${HADOOP_IMAGE:-'hadoop-benchmark/hadoop'}
+HADOOP_IMAGE=${HADOOP_IMAGE:-'spirals/hadoop-benchmark:hadoop-benchmark'}
 HADOOP_IMAGE_DIR=${HADOOP_IMAGE_DIR:-'images/hadoop'}
 
 # extension points
@@ -480,7 +481,7 @@ start_hadoop() {
     destroy_hadoop
   fi
 
-  build_image $HADOOP_IMAGE $HADOOP_IMAGE_DIR
+#  build_image $HADOOP_IMAGE $HADOOP_IMAGE_DIR
 
   # start graphite frontend
   start_container $controller_node_name graphite \
