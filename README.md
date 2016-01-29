@@ -188,6 +188,9 @@ For example:
 	 $ ./benchmarks/hibench/run.sh
  ```
 
+The HiBench results are stored in ``.
+
+
  
 #### 4.3.3 Run SWIM
  In this project, a SWIM example workloads is also provided.

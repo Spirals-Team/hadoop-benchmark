@@ -13,7 +13,7 @@ else
 fi
 
 docker run \
-  -t \
+  -it \
   --rm \
   --net hadoop-net \
   --name hadoop-benchmark-hibench \
