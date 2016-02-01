@@ -253,7 +253,7 @@ The commands should be like:
  PS: in the frontend of Grid5000, there are no docker and docker-machine installed. So users should install the two tools in the user home. And add the user home to `Path` environment parameter.
 
 
-## 7. Result Analysis
+## 7. Result Comparison 
 
 Based on our self-balancing research, we find that when Hadoop cluster process a concurrent MapReduce workload, its static configuration will degrade the cluster performance.
 That means, for different workloads, the best Hadoop configuration (MARP: a parameter in CapacityScheduler in ResourceManager of YARN) would be different.
