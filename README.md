@@ -253,9 +253,13 @@ The commands should be like:
  PS: in the frontend of Grid5000, there are no docker and docker-machine installed. So users should install the two tools in the user home. And add the user home to `Path` environment parameter.
 
 
+## 7. Result Analysis
 
-
-
-
-
-
+Based on our self-balancing research, we find that when Hadoop cluster process a concurrent MapReduce workload, its static configuration will degrade the cluster performance.
+That means, for different workloads, the best Hadoop configuration (MARP: a parameter in CapacityScheduler in ResourceManager of YARN) would be different.
+Furthermore, according to a time-varying workload, the most suitable value of MARP should be also dynamic.
+  ![different best configurations for different workloads](/figures/diff-type-size.png)
+ 
+To solve this problem, we proposed a self-balancing algorithm which can tune MARP at runtime to guarantee the cluster performance.
+The assessments in Grid5000 show that, our approach of self-balancing algorithm can significantly improve the Hadoop cluster performance at runtime.
+    ![homogenes](/figures/homogenes.png)
