@@ -21,7 +21,7 @@ EXT_AFTER_COMPUTE_MACHINE=${EXT_AFTER_COMPUTE_MACHINE:-''}
 # all driver related settings must be exported
 export VIRTUALBOX_MEMORY_SIZE=${VIRTUALBOX_MEMORY_SIZE:-1024}
 export VIRTUALBOX_CPU_COUNT=${VIRTUALBOX_CPU_COUNT:-1}
-export VIRTUALBOX_BOOT2DOCKER_URL=${VIRTUALBOX_BOOT2DOCKER_URL:-'https://github.com/AkihiroSuda/boot2docker/releases/download/v1.9.1-fix1/boot2docker-v1.9.1-fix1.iso'}
+export VIRTUALBOX_BOOT2DOCKER_URL=${VIRTUALBOX_BOOT2DOCKER_URL:-'https://github.com/boot2docker/boot2docker/releases/download/v1.13.0-rc5/boot2docker.iso'}
 
 # private constants
 declare -r docker_name_prefix="$CLUSTER_NAME_PREFIX"
@@ -109,14 +109,9 @@ destroy_machine() {
   status=$(check_docker_machine $name)
 
   case "$status" in
-    Nonexistent)
+    *)
       log "docker machine $name does not exists"
       # no more work
-    ;;
-
-    *)
-      log "trying to destroy docker machine $name..."
-      run docker-machine rm -y $([[ "$force" == "true" ]] && "echo -f") $name
   esac
 }
 
@@ -138,14 +133,9 @@ stop_machine() {
       # no more work
     ;;
 
-    Nonexistent)
+    *)
       log "docker machine $name does not exists"
       # no more work
-    ;;
-
-    *)
-      log "trying to stop docker machine $name..."
-      run docker-machine stop $name
   esac
 
 }
@@ -171,16 +161,11 @@ start_machine() {
       run docker-machine start $name
     ;;
 
-    Nonexistent)
+    *)
       log "docker machine $name does not exists, creating..."
       extra_opts="\$DRIVER_OPTS_$(echo ${name#$docker_name_prefix-} | tr '[a-z-]' '[A-Z_]')"
       extra_opts=$(eval echo "$extra_opts")
       run docker-machine create -d $DRIVER $DRIVER_OPTS $extra_opts $@ $name
-    ;;
-
-    *)
-      error "$status: of docker machine $name has to be attended manually, to connect use 'docker-machine $name'"
-      exit 1
   esac
 }
 
@@ -205,14 +190,9 @@ destroy_container() {
   status=$(check_docker_container $machine $name)
 
   case "$status" in
-    nonexistent)
+    *)
       log "docker container $name@$machine does not exist"
       # no more work
-    ;;
-
-    *)
-      log "trying to remove docker container: $name@$machine..."
-      run_docker $machine rm $([[ "$force" == 'true' ]] && echo '-f') $name
   esac
 }
 
@@ -242,14 +222,9 @@ stop_container() {
       # no more work
     ;;
 
-    nonexistent)
+    *)
       log "docker container $name@$machine does not exist"
       # no more work
-    ;;
-
-    *)
-      log "trying to remove docker container $name@$machine..."
-      run_docker $machine kill $([[ "$force" == 'true' ]] && echo '-f') $name
   esac
 
 }
@@ -276,14 +251,9 @@ start_container() {
       run_docker $machine start $name
     ;;
 
-    nonexistent)
+    *)
       log "docker container $name@$machine does not exist, starting..."
       run_docker $machine run --name $name $@
-    ;;
-
-    *)
-      echo >&2 "$status: of docker container $name@$machine has to be attended manually, to connect use 'docker $docker_conn'"
-      exit 1
   esac
 }
 
