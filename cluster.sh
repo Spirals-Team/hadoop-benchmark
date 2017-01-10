@@ -387,8 +387,6 @@ destroy_cluster() {
 
   stop_cluster
 
-  rm -rf $HOME/.docker/machine/certs/*
-
   sudo ifconfig vboxnet0 down && sudo ifconfig vboxnet0 up
 
   # machines
