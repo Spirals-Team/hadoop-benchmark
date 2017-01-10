@@ -387,6 +387,10 @@ destroy_cluster() {
 
   stop_cluster
 
+  rm -rf $HOME/.docker/machine/certs/*
+
+  sudo ifconfig vboxnet0 down && sudo ifconfig vboxnet0 up
+
   # machines
   cmd="docker-machine ls --filter name=$docker_name_prefix-.*"
   if [[ $($cmd | wc -l) -le 1 ]]; then
@@ -402,8 +406,6 @@ destroy_cluster() {
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     $cmd -q | xargs docker-machine rm -y$([[ -z $force ]] || echo ' --force')
   fi
-
-  rm -rf $HOME/.docker/machine/certs/*
 }
 
 stop_cluster() {
