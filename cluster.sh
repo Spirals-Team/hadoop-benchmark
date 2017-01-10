@@ -110,7 +110,8 @@ destroy_machine() {
 
   case "$status" in
     *)
-      log "docker machine $name does not exists"
+      log "trying to destroy docker machine $name..."
+      run docker-machine rm -y $([[ "$force" == "true" ]] && "echo -f") $name
       # no more work
   esac
 }
@@ -401,6 +402,8 @@ destroy_cluster() {
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     $cmd -q | xargs docker-machine rm -y$([[ -z $force ]] || echo ' --force')
   fi
+
+  rm -rf $HOME/.docker/machine/certs/*
 }
 
 stop_cluster() {
