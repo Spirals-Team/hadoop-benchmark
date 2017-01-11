@@ -135,7 +135,8 @@ stop_machine() {
     ;;
 
     *)
-      log "docker machine $name does not exists"
+      log "trying to stop docker machine $name..."
+      run docker-machine stop $name
       # no more work
   esac
 
@@ -192,7 +193,8 @@ destroy_container() {
 
   case "$status" in
     *)
-      log "docker container $name@$machine does not exist"
+      log "trying to remove docker container: $name@$machine..."
+      run_docker $machine rm $([[ "$force" == 'true' ]] && echo '-f') $name
       # no more work
   esac
 }
@@ -224,7 +226,8 @@ stop_container() {
     ;;
 
     *)
-      log "docker container $name@$machine does not exist"
+      log "trying to remove docker container $name@$machine..."
+      run_docker $machine kill $([[ "$force" == 'true' ]] && echo '-f') $name
       # no more work
   esac
 
