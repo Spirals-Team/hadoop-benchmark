@@ -181,6 +181,8 @@ For example:
  ```sh
 	 $ ./benchmarks/hadoop-mapreduce-examples/run.sh pi 2 2
  ```
+ > In this example, we try PI Estimator, a default hadoop benchmark packaged in hadoop-mapreduce-examples.jar
+ 
  
  At the end of this command, if the terminal exposes some informations like below image, that means this Hadoop MapReduce application has been successfully treated. Users can obtain the details of the application in this terminal report.
   ![The result of PI estimation](/figures/result-pi.png)
@@ -195,6 +197,7 @@ For all benchmarks packaged in Hadoop (e.g. pi), users can use the following com
  ```sh
 	 $ ./benchmarks/hibench/run.sh
  ```
+> In this example, we try 4 famous and typical Mapreduce benchmarks (Sleep, Sort, Terasort and Wordcount) provided by HiBench.
 
 The HiBench results are stored in `hibench.report`.
   ![The result of Hibench](/figures/result-hibench.png)
