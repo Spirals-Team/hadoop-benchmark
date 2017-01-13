@@ -519,7 +519,7 @@ restart_hadoop() {
 
 connect_info() {
   echo "To connect docker run: 'eval \$(docker-machine env --swarm "$controller_node_name")'"
-  echo "To connect a bash console to the cluster run: './benchmarks/console.sh'"
+  echo "To connect a bash console to the cluster use: 'console' option"
   echo "To connect to Graphite (WEB console visualizing collectd data), visit http://$(docker-machine ip $controller_node_name)"
   echo "To connect to YARN ResourceManager WEB UI, visit http://$(docker-machine ip $controller_node_name):8088"
   echo "To connect to HDFS NameNode WEB UI, visit http://$(docker-machine ip $controller_node_name):50070"
