@@ -187,13 +187,17 @@ For example:
  
  
  At the end of this command, if the terminal exposes some informations like below image, that means this Hadoop MapReduce application has been successfully treated. Users can obtain the details of the application in this terminal report.
-  ![The result of PI estimation](/figures/result-pi.png)
+ ![The result of PI estimation](/figures/result-pi.png)
  
-For all benchmarks packaged in Hadoop (e.g. pi), users can run them on the Hadoop Cluster of hadoop-benchmark. 
+  There are various benchmarks packaged in hadoop packages like:
+ ![The list of Default Benchmarks](/figures/defaultBenchmarkInfo.png)
+ 
+For all benchmarks packaged in Hadoop, users can run them on the Hadoop Cluster of hadoop-benchmark. 
 Please use the following command to get more informations about the packaged benchmarks.
  ```sh
 	$ ./benchmarks/hadoop-mapreduce-examples/run.sh 
  ```
+ 
  
 #### 4.3.2 Run HiBench
  Users can also run HiBench on the Hadoop cluster, which is a famous hadoop benchmark provided by Intel. The launch command is like:
