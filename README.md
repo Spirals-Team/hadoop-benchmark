@@ -250,14 +250,14 @@ To get more information about how to configure HiBench, users can visit [HiBench
 ## 6. OPTION: Deployment in Grid5000
 
 This project can also be used in [Grid5000](https://www.grid5000.fr).
-In Grid5000, this project uses [docker-machine-driver-g5k](https://github.com/Spirals-Team/docker-machine-driver-g5k) driver to create the cluster.
+In Grid5000, this project uses [docker-machine-driver-g5k](https://github.com/Spirals-Team/docker-machine-driver-g5k) driver to reserve nodes and deploy docker into them, and then creates Hadoop cluster using these prepared nodes.
 
-This driver will use Grid5000 VPN to reserve nodes from users' own laptop.
-Please follow the tutorial of docker-machine-driver-g5k to well configure it.
+This driver uses Grid5000 VPN for accessing to the grid system from users' own laptop.
+So users should follow the tutorial of docker-machine-driver-g5k to well configure it in laptop when they want to use hadoop-benchmark in Grid5000.
 
 >PS: because a docker overlay network requires kernel (version >= 3.1.6), we suggest users using the environment `jessie-x64-min` to install `Debian Jessie` in the hosts, which is set as default environment in docker-machine-driver-g5k driver.
 
-Users should use their proper informations to replace the examples in some parameters in `g5k_cluster` like:
+Users also should use their proper informations to replace the examples in some parameters in `g5k_cluster` like:
 
  - USER='bzhang'
  - PASSWD='xxxxxxx'
@@ -265,11 +265,11 @@ Users should use their proper informations to replace the examples in some param
  - PRIVATE_KEY=$HOME'/.ssh/id_rsa'
  - WALLTIME='8:00:00'
 
-To ensure `docker-machine` can successfully create cluster, SSH private key file should be correctly set.
+>To ensure `docker-machine` can successfully create cluster, SSH private key file should be correctly set.
 
 When the configuration of `docker-machine-driver-g5k` and `g5k_cluster` has finished, users can create a cluster and start hadoop in Grid5000 with the commands presented in section 4.
 But the configuration file should be replaced with `g5k_cluster`.
-The command should be like:
+The command will be like:
  ```sh
 	 $ CONFIG=g5k_cluster ./cluster.sh create-cluster
  ```
