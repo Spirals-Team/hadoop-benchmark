@@ -553,6 +553,30 @@ console() {
     console
 }
 
+run_controller() {
+  cmd="$@"
+  log "Command to be run at controller: $cmd"
+  run_docker $controller_node_name exec controller "$cmd"
+}
+
+hdfs() {
+  hdfs_cmd="hdfs $@"
+  run_controller "$hdfs_cmd"
+}
+
+
+hdfs_download() {
+  src="$1"
+  filename="$(basename $src)"
+  dest="${2:-$filename}"
+  tmp="/tmp/$(basename $(mktemp))"
+
+  log "Downloading file from HDFS: '$src' to localhost: '$dest' ('controller:$tmp')"
+  run_docker $controller_node_name exec controller hdfs dfs -get "$src" "$tmp"
+  run_docker $controller_node_name cp "controller:$tmp" "$dest"
+  run_docker $controller_node_name exec controller rm -f "$tmp"
+}
+
 print_help() {
 cat <<EOM
 Usage $0 [OPTIONS] COMMAND
@@ -580,7 +604,10 @@ Commands:
     destroy-hadoop
 
   Misc:
-    console         Enter a bash console in a container connected to the cluster
+    console                   Enter a bash console in a container connected to the cluster
+    run-controller CMD        Run a command CMD in the controller container
+    hdfs CMD                  Run the HDFS CMD command
+    hdfs-download SRC [DEST]  Download a file from HDFS SRC to localhost DEST    
 
   Info:
     shell-init      Shows information how to initialize current shell to connect to the cluster
@@ -658,6 +685,21 @@ while [[ $# > 0 ]]; do
         command='console'
         shift
       ;;
+      run-controller)
+        command='run_controller'
+        shift
+        break
+      ;;
+      hdfs)
+        command='hdfs'
+        shift
+        break
+      ;;
+      hdfs-download)
+        command='hdfs_download'
+        shift
+        break
+      ;;
       *)
         echo >&2 "$1: unknown argument"
         exit 1
@@ -670,4 +712,4 @@ if [[ -z $command ]]; then
   exit 1
 fi
 
-$command
+$command "$@"
