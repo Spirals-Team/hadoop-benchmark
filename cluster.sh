@@ -607,7 +607,7 @@ Commands:
     console                   Enter a bash console in a container connected to the cluster
     run-controller CMD        Run a command CMD in the controller container
     hdfs CMD                  Run the HDFS CMD command
-    hdfs-download SRC [DEST]  Download a file from HDFS SRC to localhost DEST    
+    hdfs-download SRC [DEST]  Download a file from HDFS SRC to localhost DEST
 
   Info:
     shell-init      Shows information how to initialize current shell to connect to the cluster
@@ -701,7 +701,7 @@ while [[ $# > 0 ]]; do
         break
       ;;
       *)
-        echo >&2 "$1: unknown argument"
+        echo >&2 "$1: unknown command or argument"
         exit 1
       ;;
   esac
