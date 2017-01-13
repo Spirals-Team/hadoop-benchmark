@@ -210,7 +210,7 @@ Please use the following command to get more informations about the packaged ben
 The HiBench results are stored in `hibench.report`.
   ![The result of Hibench](/figures/result-hibench.png)
 
-To generate new experiments of HiBench, users only need to replace the HiBench configuration files in `benchmarks/hibench/image/HiBench-conf` with new configuration or files.
+To generate new experiments of HiBench, users only need to replace the HiBench configuration files in corresponding directory under `benchmarks/hibench/image/HiBench-conf` with new configuration,or to create new directories for another benchmarks provided by HiBench like the 4 example benchmarks.
 
 To get more information about how to configure HiBench, users can visit [HiBench Github](https://github.com/intel-hadoop/HiBench).
 >HiBench is a big suit of benchmarks for Hadoop and Spark. `hadoop-benchmark` only supports the benchmarks of Hadoop cluster for the moment.
@@ -229,7 +229,7 @@ To get more information about how to configure HiBench, users can visit [HiBench
  
  SWIM is a Statistical Workload Injector for Mapreduce [(SWIM)](https://github.com/SWIMProjectUCB/SWIM/wiki).
  Users could generate their own SWIM workloads by following SWIM tutorial, and then replace `benchmarks/swim/image/SWIM` directory with new SWIM workloads directory.
-> In our example, we use a very small [work log](https://github.com/SWIMProjectUCB/SWIM/blob/master/workloadSuite/FB-2009_samples_24_times_1hr_0_first50jobs.tsv) which is captured by FaceBook in 2009 to generate our SWIM example workload which only contains 50 concurrent Mapreduce jobs.
+> In our example, we use a very small [work log](https://github.com/SWIMProjectUCB/SWIM/blob/master/workloadSuite/FB-2009_samples_24_times_1hr_0_first50jobs.tsv) which is captured by FaceBook in 2009 to generate our SWIM example workloads which only contain 50 concurrent Mapreduce jobs.
  
  
 ## 5. Self-balancing Scenario
@@ -239,7 +239,7 @@ To get more information about how to configure HiBench, users can visit [HiBench
 	 $ CONFIG=local_cluster ./cluster.sh destroy-hadoop
  ```
  
- In Self-balacing Scenario, besides a running Hadooop cluster, an self-adaptive approach is also running in Hadoop control node.
+ In Self-balacing Scenario, besides a running Hadooop cluster, a self-adaptive approach is also running in Hadoop control node.
  This approach automatically balances the job-parallelism and job-throughput based on the memory utilization of the whole Hadoop cluster.
  
  To start Self-balancing Scenario, all commands used are similar to those in Section 4.
@@ -277,6 +277,15 @@ But the configuration file should be replaced with `g5k_cluster`.
 The command will be like:
  ```sh
 	 $ CONFIG=g5k_cluster ./cluster.sh create-cluster
+ ```
+ and
+  ```sh
+	 $ CONFIG=g5k_cluster ./cluster.sh start-hadoop
+ ```
+ 
+ To launch self-adaptation scenario in Grid5000, users should use the proper `g5k_cluster` file also under `scenarios/self-balancing-example/` to start Hadoop Cluster. The command should be like
+ ```sh
+	 $ CONFIG=scenarios/self-balancing-example/g5k_cluster ./cluster.sh start-hadoop
  ```
 
 
