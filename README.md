@@ -140,7 +140,7 @@ $ CONFIG=local_cluster ./cluster.sh status-cluster
 If the Hadoop cluster has been successfully created, the status-create would show some results like
 ![The result of create-cluster](/figures/result-status-cluster.png)
 
-
+> In some cases that the creation of cluster was interrupted, users can continue the creation process by only rerunning `create-cluster` command.
 
 
 
@@ -170,6 +170,7 @@ The architecture of Hadoop cluster in local machine can be illustrated in follow
 ![The Architecture of Hadoop cluster deployed](/figures/architecture.png)
  
 > To customize the Hadoop cluster,  users only need to update the hadoop configuration files in `images/hadoop/hadoop-conf`.
+> Similar to `create-cluster`, users can continue starting Hadoop cluster by rerunning `start-hadoop` when the start process is interrupted.
 
 
 ### 4.3 Running bechnmarks
