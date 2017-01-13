@@ -574,7 +574,7 @@ hdfs_download() {
   log "Downloading file from HDFS: '$src' to localhost: '$dest' ('controller:$tmp')"
   run_docker $controller_node_name exec controller hdfs dfs -get "$src" "$tmp"
   run_docker $controller_node_name cp "controller:$tmp" "$dest"
-  run_docker $controller_node_name exec controller rm -f "$tmp"
+  run_docker $controller_node_name exec controller rm -fr "$tmp"
 }
 
 print_help() {
