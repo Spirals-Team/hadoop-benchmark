@@ -170,6 +170,7 @@ The architecture of Hadoop cluster in local machine can be illustrated in follow
 ![The Architecture of Hadoop cluster deployed](/figures/architecture.png)
  
 > To customize the Hadoop cluster,  users only need to update the hadoop configuration files in `images/hadoop/hadoop-conf`.
+
 > Similar to `create-cluster`, users can continue starting Hadoop cluster by rerunning `start-hadoop` when the start process is interrupted.
 
 
