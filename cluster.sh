@@ -554,14 +554,14 @@ console() {
 }
 
 run_controller() {
+  echo $#
   cmd="$@"
   log "Command to be run at controller: $cmd"
-  run_docker $controller_node_name exec controller "$cmd"
+  run_docker $controller_node_name exec controller $cmd
 }
 
 hdfs() {
-  hdfs_cmd="hdfs $@"
-  run_controller "$hdfs_cmd"
+  run_controller hdfs "$@"
 }
 
 
@@ -572,9 +572,9 @@ hdfs_download() {
   tmp="/tmp/$(basename $(mktemp))"
 
   log "Downloading file from HDFS: '$src' to localhost: '$dest' ('controller:$tmp')"
-  run_docker $controller_node_name exec controller hdfs dfs -get "$src" "$tmp"
+  hdfs dfs -get "$src" "$tmp"
   run_docker $controller_node_name cp "controller:$tmp" "$dest"
-  run_docker $controller_node_name exec controller rm -fr "$tmp"
+  run_controller rm -fr "$tmp"
 }
 
 print_help() {
