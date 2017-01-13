@@ -187,6 +187,7 @@ For example:
  
  
  At the end of this command, if the terminal exposes some informations like below image, that means this Hadoop MapReduce application has been successfully treated. Users can obtain the details of the application in this terminal report.
+
  ![The result of PI estimation](/figures/result-pi.png)
  
   There are various benchmarks packaged in hadoop packages like:
