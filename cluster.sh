@@ -569,7 +569,7 @@ hdfs_download() {
   src="$1"
   filename="$(basename $src)"
   dest="${2:-$filename}"
-  tmp="/tmp/$(basename $(mktemp))"
+  tmp="/tmp/$(basename $(mktemp -t statistics))"
 
   log "Downloading file from HDFS: '$src' to localhost: '$dest' ('controller:$tmp')"
   run_docker $controller_node_name exec controller hdfs dfs -get "$src" "$tmp"
