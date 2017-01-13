@@ -15,4 +15,5 @@ case "$1" in
   ;;
 esac
 
-/bin/bash
+echo "Benchmarks finished"
+cat $HIBENCH_HOME/hibench.report
