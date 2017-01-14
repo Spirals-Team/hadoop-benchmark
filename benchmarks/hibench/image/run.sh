@@ -14,7 +14,7 @@ case "$1" in
         $HIBENCH_HOME/bin/run-all.sh
         cat $HIBENCH_HOME/hibench.report
 
-        hdfs dfs -copyFromLocal $HIBENCH_HOME/hibench.report hdfs:///hibench-$(date +"%s").report
+        hdfs dfs -copyFromLocal $HIBENCH_HOME/hibench.report hdfs:///report/hibench-$(date +"%s").report
     done
   ;;
   *)
@@ -23,3 +23,5 @@ case "$1" in
 esac
 
 echo "Benchmarks finished"
+echo "All hibench.report files are uploaded to HDFS (in hdfs:///)"
+echo "To download these reports to current path, run './cluster.sh hdfs-download hdfs:///report/ .'"
