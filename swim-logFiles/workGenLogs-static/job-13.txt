@@ -1,0 +1,87 @@
+17/01/14 01:16:19 INFO client.RMProxy: Connecting to ResourceManager at controller/10.0.0.3:8032
+Max number of map tasks 40
+Max number of red tasks 8
+shuffleInputRatio  = 1.5258789E-5
+outputShuffleRatio = 1.0
+Running on 4 nodes with 36 maps and 1 reduces.
+0.6353900455924096
+0.07466739471564166
+Job started: Sat Jan 14 01:16:20 UTC 2017
+17/01/14 01:16:20 INFO client.RMProxy: Connecting to ResourceManager at controller/10.0.0.3:8032
+17/01/14 01:16:20 INFO client.RMProxy: Connecting to ResourceManager at controller/10.0.0.3:8032
+17/01/14 01:16:20 INFO mapred.FileInputFormat: Total input paths to process : 1
+17/01/14 01:16:20 INFO mapreduce.JobSubmitter: number of splits:2
+17/01/14 01:16:21 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1484356294283_0015
+17/01/14 01:16:21 INFO impl.YarnClientImpl: Submitted application application_1484356294283_0015
+17/01/14 01:16:21 INFO mapreduce.Job: The url to track the job: http://controller:8088/proxy/application_1484356294283_0015/
+17/01/14 01:16:21 INFO mapreduce.Job: Running job: job_1484356294283_0015
+17/01/14 01:28:48 INFO mapreduce.Job: Job job_1484356294283_0015 running in uber mode : false
+17/01/14 01:29:09 INFO ipc.Client: Retrying connect to server: compute-1/10.0.0.4:50837. Already tried 0 time(s); retry policy is RetryUpToMaximumCountWithFixedSleep(maxRetries=3, sleepTime=1000 MILLISECONDS)
+17/01/14 01:29:10 INFO ipc.Client: Retrying connect to server: compute-1/10.0.0.4:50837. Already tried 1 time(s); retry policy is RetryUpToMaximumCountWithFixedSleep(maxRetries=3, sleepTime=1000 MILLISECONDS)
+17/01/14 01:29:11 INFO ipc.Client: Retrying connect to server: compute-1/10.0.0.4:50837. Already tried 2 time(s); retry policy is RetryUpToMaximumCountWithFixedSleep(maxRetries=3, sleepTime=1000 MILLISECONDS)
+17/01/14 01:29:23 INFO mapred.ClientServiceDelegate: Application state is completed. FinalApplicationStatus=SUCCEEDED. Redirecting to job history server
+17/01/14 01:29:28 INFO mapreduce.Job:  map 100% reduce 100%
+17/01/14 01:29:34 INFO mapreduce.Job: Job job_1484356294283_0015 completed successfully
+17/01/14 01:30:06 INFO mapreduce.Job: Counters: 53
+	File System Counters
+		FILE: Number of bytes read=158195
+		FILE: Number of bytes written=665940
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=78593790
+		HDFS: Number of bytes written=1256
+		HDFS: Number of read operations=11
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=2
+		Launched reduce tasks=1
+		Data-local map tasks=2
+		Total time spent by all maps in occupied slots (ms)=147987
+		Total time spent by all reduces in occupied slots (ms)=3015
+		Total time spent by all map tasks (ms)=147987
+		Total time spent by all reduce tasks (ms)=3015
+		Total vcore-seconds taken by all map tasks=147987
+		Total vcore-seconds taken by all reduce tasks=3015
+		Total megabyte-seconds taken by all map tasks=151538688
+		Total megabyte-seconds taken by all reduce tasks=3087360
+	Map-Reduce Framework
+		Map input records=671089
+		Map output records=10
+		Map output bytes=158132
+		Map output materialized bytes=158201
+		Input split bytes=216
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=10
+		Reduce shuffle bytes=158201
+		Reduce input records=10
+		Reduce output records=10
+		Spilled Records=20
+		Shuffled Maps =2
+		Failed Shuffles=0
+		Merged Map outputs=2
+		GC time elapsed (ms)=1610
+		CPU time spent (ms)=147350
+		Physical memory (bytes) snapshot=899969024
+		Virtual memory (bytes) snapshot=2700333056
+		Total committed heap usage (bytes)=570425344
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	org.apache.hadoop.examples.WorkGen$Counters
+		MAP_BYTES_WRITTEN=158052
+		MAP_RECORDS_WRITTEN=10
+		RED_BYTES_WRITTEN=1000
+		RED_RECORDS_WRITTEN=10
+	File Input Format Counters 
+		Bytes Read=78593574
+	File Output Format Counters 
+		Bytes Written=1256
+Job ended: Sat Jan 14 01:30:06 UTC 2017
+The job took 826 seconds.

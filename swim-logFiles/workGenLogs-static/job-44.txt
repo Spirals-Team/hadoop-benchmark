@@ -1,0 +1,18 @@
+17/01/14 01:21:14 INFO client.RMProxy: Connecting to ResourceManager at controller/10.0.0.3:8032
+Max number of map tasks 40
+Max number of red tasks 8
+shuffleInputRatio  = 1.5258789E-5
+outputShuffleRatio = 5607.967
+Running on 4 nodes with 36 maps and 1 reduces.
+0.09014979172462034
+0.5240932905901294
+Job started: Sat Jan 14 01:21:53 UTC 2017
+17/01/14 01:21:53 INFO client.RMProxy: Connecting to ResourceManager at controller/10.0.0.3:8032
+17/01/14 01:21:53 INFO client.RMProxy: Connecting to ResourceManager at controller/10.0.0.3:8032
+17/01/14 01:23:38 WARN hdfs.DFSClient: Slow waitForAckedSeqno took 103223ms (threshold=30000ms)
+17/01/14 01:23:40 INFO mapred.FileInputFormat: Total input paths to process : 1
+17/01/14 01:23:52 INFO mapreduce.JobSubmitter: number of splits:2
+17/01/14 01:24:12 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1484356294283_0044
+17/01/14 01:24:19 INFO impl.YarnClientImpl: Submitted application application_1484356294283_0044
+17/01/14 01:24:21 INFO mapreduce.Job: The url to track the job: http://controller:8088/proxy/application_1484356294283_0044/
+17/01/14 01:24:21 INFO mapreduce.Job: Running job: job_1484356294283_0044
