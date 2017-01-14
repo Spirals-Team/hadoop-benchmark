@@ -210,7 +210,7 @@ Please use the following command to get more informations about the packaged ben
 The HiBench results are stored in `hibench.report`.
   ![The result of Hibench](/figures/result-hibench.png)
 
-To generate new experiments of HiBench, users only need to replace the HiBench configuration files in corresponding directory under `benchmarks/hibench/image/HiBench-conf` with new configuration,or to create new directories for another benchmarks provided by HiBench like the 4 example benchmarks.
+To generate new experiments of HiBench, users only need to replace the HiBench configuration files in corresponding directory under `benchmarks/hibench/image/HiBench-conf` with new configuration, or to create new directories for another benchmarks provided by HiBench like the 4 example benchmarks (in this case, users also should modify `ALL_BENCHMARKS` in `benchmarks/hibench/run.sh`).
 
 To get more information about how to configure HiBench, users can visit [HiBench Github](https://github.com/intel-hadoop/HiBench).
 >HiBench is a big suit of benchmarks for Hadoop and Spark. `hadoop-benchmark` only supports the benchmarks of Hadoop cluster for the moment.
