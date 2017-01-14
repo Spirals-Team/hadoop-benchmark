@@ -21,7 +21,7 @@ EXT_AFTER_COMPUTE_MACHINE=${EXT_AFTER_COMPUTE_MACHINE:-''}
 # all driver related settings must be exported
 export VIRTUALBOX_MEMORY_SIZE=${VIRTUALBOX_MEMORY_SIZE:-1024}
 export VIRTUALBOX_CPU_COUNT=${VIRTUALBOX_CPU_COUNT:-1}
-export VIRTUALBOX_BOOT2DOCKER_URL=${VIRTUALBOX_BOOT2DOCKER_URL:-'https://github.com/boot2docker/boot2docker/releases/download/v1.13.0-rc5/boot2docker.iso'}
+#export VIRTUALBOX_BOOT2DOCKER_URL=${VIRTUALBOX_BOOT2DOCKER_URL:-'https://github.com/boot2docker/boot2docker/releases/download/v1.13.0-rc5/boot2docker.iso'}
 
 # private constants
 declare -r docker_name_prefix="$CLUSTER_NAME_PREFIX"
