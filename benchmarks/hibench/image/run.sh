@@ -8,7 +8,14 @@ case "$1" in
     echo $@ | tr ' ' '\n' > $HIBENCH_HOME/conf/benchmarks.lst
     echo "Running benchmarks:"
     cat $HIBENCH_HOME/conf/benchmarks.lst
-    $HIBENCH_HOME/bin/run-all.sh
+
+    for i in $(seq 1 10);
+    do
+        $HIBENCH_HOME/bin/run-all.sh
+        cat $HIBENCH_HOME/hibench.report
+
+        hdfs dfs -copyFromLocal $HIBENCH_HOME/hibench.report hdfs:///hibench-$(date +"%s").report
+    done
   ;;
   *)
     exec "$@"
@@ -16,4 +23,3 @@ case "$1" in
 esac
 
 echo "Benchmarks finished"
-cat $HIBENCH_HOME/hibench.report
