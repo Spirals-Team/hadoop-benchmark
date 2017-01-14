@@ -3,10 +3,10 @@ NUM_COMPUTE_NODES=4
 CLUSTER_NAME_PREFIX='g5k-hadoop'
 
 USER='bzhang'
-PASSWD=‘xxxxxxxxx’
+PASSWD='xxxxxxx'
 SITE='lille'
 PRIVATE_KEY=$HOME'/.ssh/id_rsa'
-WALLTIME='5:00:00'
+WALLTIME='8:00:00'
 
 DRIVER_OPTS=$(echo "--g5k-username $USER --g5k-password $PASSWD --g5k-site $SITE --g5k-walltime $WALLTIME --g5k-ssh-private-key $PRIVATE_KEY")
 

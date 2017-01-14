@@ -16,7 +16,7 @@ This project is based on Docker and Bash script.
 Before the start, please ensure that the below tools have been well installed.
 The links following the software is the official tutorial or commands of installation.
 
-#### docker (version >= 1.9.1)
+#### docker (version >= 1.12.0)
 ##### Linux
     https://docs.docker.com/engine/installation/
 ##### Mac
@@ -24,10 +24,10 @@ The links following the software is the official tutorial or commands of install
 ##### windows
     https://docs.docker.com/engine/installation/windows/
     
-#### docker-machine (version >= 0.5.6)
+#### docker-machine (version >= 0.8.0)
 ##### Linux
 ```sh
-   $ curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine && \
+$ curl -L https://github.com/docker/machine/releases/download/v0.6.0/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine && \
     chmod +x /usr/local/bin/docker-machine
 ```
 ##### Mac 
@@ -36,15 +36,16 @@ $ curl -L https://github.com/docker/machine/releases/download/v0.5.6/docker-mach
     chmod +x /usr/local/bin/docker-machine
 ```
 ##### windows (using git bash)
-```
+```sh
 $ if [[ ! -d "$HOME/bin" ]]; then mkdir -p "$HOME/bin"; fi && \
     curl -L https://github.com/docker/machine/releases/download/v0.5.6/docker-machine_windows-amd64.exe > "$HOME/bin/docker-machine.exe" && \
     chmod +x "$HOME/bin/docker-machine.exe"
 ```
+>`Please ensure that 'nc' commands have been installed which is important to start hadoop cluster.`
 
 #### bash (version >= 3)
 
-#### VirtualBox
+#### VirtualBox (for local tests)
 
 
 
@@ -97,13 +98,13 @@ The guide process contains the following phases:
 
  - create cluster
  - start hadoop
- - run benchmark (experiment)
+ - run benchmarks (experiments)
  - check results
  
 Furthermore, users can also create different Hadoop cluster to compare the performance difference between configurations (or scenario), following the further guide in next section.
  
  - update Hadoop configuration / change to self-adaptive scenario
- - restart hadoop
+ - restart Hadoop cluster
 
 The guide process can also be visualized in the below image:
 
@@ -139,7 +140,7 @@ $ CONFIG=local_cluster ./cluster.sh status-cluster
 If the Hadoop cluster has been successfully created, the status-create would show some results like
 ![The result of create-cluster](/figures/result-status-cluster.png)
 
-
+> In some cases that the creation of cluster was interrupted, users can continue the creation process by only rerunning `create-cluster` command.
 
 
 
@@ -168,6 +169,10 @@ $ CONFIG=local_cluster ./cluster.sh start-hadoop
 The architecture of Hadoop cluster in local machine can be illustrated in following schema:
 ![The Architecture of Hadoop cluster deployed](/figures/architecture.png)
  
+> To customize the Hadoop cluster,  users only need to update the hadoop configuration files in `images/hadoop/hadoop-conf`.
+
+> Similar to `create-cluster`, users can continue starting Hadoop cluster by rerunning `start-hadoop` when the start process is interrupted.
+
 
 ### 4.3 Running bechnmarks
  After step two successes, users can execute different benchmarks in the running Hadoop cluster.
@@ -178,10 +183,21 @@ For example:
  ```sh
 	 $ ./benchmarks/hadoop-mapreduce-examples/run.sh pi 2 2
  ```
+ > In this example, we try PI Estimator, a default hadoop benchmark packaged in hadoop-mapreduce-examples.jar
+ 
  
  At the end of this command, if the terminal exposes some informations like below image, that means this Hadoop MapReduce application has been successfully treated. Users can obtain the details of the application in this terminal report.
-  ![The result of PI estimation](/figures/result-pi.png)
+
+ ![The result of PI estimation](/figures/result-pi.png)
  
+  There are various benchmarks packaged in hadoop packages like:
+ ![The list of Default Benchmarks](/figures/defaultBenchmarkInfo.png)
+ 
+For all benchmarks packaged in Hadoop, users can run them on the Hadoop Cluster of hadoop-benchmark. 
+Please use the following command to get more informations about the packaged benchmarks.
+ ```sh
+	$ ./benchmarks/hadoop-mapreduce-examples/run.sh 
+ ```
  
  
 #### 4.3.2 Run HiBench
@@ -189,10 +205,15 @@ For example:
  ```sh
 	 $ ./benchmarks/hibench/run.sh
  ```
+> In this example, we try 4 famous and typical Mapreduce benchmarks (Sleep, Sort, Terasort and Wordcount) provided by HiBench.
 
 The HiBench results are stored in `hibench.report`.
   ![The result of Hibench](/figures/result-hibench.png)
 
+To generate new experiments of HiBench, users only need to replace the HiBench configuration files in corresponding directory under `benchmarks/hibench/image/HiBench-conf` with new configuration, or to create new directories for another benchmarks provided by HiBench like the 4 example benchmarks (in this case, users also should modify `ALL_BENCHMARKS` in `benchmarks/hibench/run.sh`).
+
+To get more information about how to configure HiBench, users can visit [HiBench Github](https://github.com/intel-hadoop/HiBench).
+>HiBench is a big suit of benchmarks for Hadoop and Spark. `hadoop-benchmark` only supports the benchmarks of Hadoop cluster for the moment.
 
  
 #### 4.3.3 Run SWIM
@@ -206,6 +227,10 @@ The HiBench results are stored in `hibench.report`.
  
  (Warning: SWIM will launch many MapReduce applications running in parallel. So SWIM is not suitable for a local machine.)
  
+ SWIM is a Statistical Workload Injector for Mapreduce [(SWIM)](https://github.com/SWIMProjectUCB/SWIM/wiki).
+ Users could generate their own SWIM workloads by following SWIM tutorial, and then replace `benchmarks/swim/image/SWIM` directory with new SWIM workloads directory.
+> In our example, we use a very small [work log](https://github.com/SWIMProjectUCB/SWIM/blob/master/workloadSuite/FB-2009_samples_24_times_1hr_0_first50jobs.tsv) which is captured by FaceBook in 2009 to generate our SWIM example workloads which only contain 50 concurrent Mapreduce jobs.
+ 
  
 ## 5. Self-balancing Scenario
  Before this scenario, please ensure the Hadoop cluster has been stopped.
@@ -214,7 +239,7 @@ The HiBench results are stored in `hibench.report`.
 	 $ CONFIG=local_cluster ./cluster.sh destroy-hadoop
  ```
  
- In Self-balacing Scenario, besides a running Hadooop cluster, an self-adaptive approach is also running in Hadoop control node.
+ In Self-balacing Scenario, besides a running Hadooop cluster, a self-adaptive approach is also running in Hadoop control node.
  This approach automatically balances the job-parallelism and job-throughput based on the memory utilization of the whole Hadoop cluster.
  
  To start Self-balancing Scenario, all commands used are similar to those in Section 4.
@@ -224,35 +249,44 @@ The HiBench results are stored in `hibench.report`.
 	 $ CONFIG=scenarios/self-balancing-example/local_cluster ./cluster.sh start-hadoop
  ```
 
+>For all the benchmarks supported by hadoop-benchmark, users can execute them on the self-adaptation cluster by the same commands introduced in above.
+
 
 ## 6. OPTION: Deployment in Grid5000
 
 This project can also be used in [Grid5000](https://www.grid5000.fr).
-In Grid5000, this project uses generic driver to create the cluster with the existing hosts.
+In Grid5000, this project uses [docker-machine-driver-g5k](https://github.com/Spirals-Team/docker-machine-driver-g5k) driver to reserve nodes and deploy docker into them, and then creates Hadoop cluster using these prepared nodes.
 
-After the project is cloned in frontend, users should use `OAR` commands to reserve hosts firstly and then install OS by `kadeploy3` command.
+This driver uses Grid5000 VPN for accessing to the grid system from users' own laptop.
+So users should follow the tutorial of docker-machine-driver-g5k to well configure it in laptop when they want to use hadoop-benchmark in Grid5000.
 
-PS: because a docker overlay network requires kernel (version >= 3.1.6), we suggest users using the environment `jessie-x64-base` to install `Debian Jessie` in the hosts.
+>PS: because a docker overlay network requires kernel (version >= 3.1.6), we suggest users using the environment `jessie-x64-min` to install `Debian Jessie` in the hosts, which is set as default environment in docker-machine-driver-g5k driver.
 
-When users have finished the above step, there are several existing running hosts reserved.
-Then, secondly, several parameters in `g5k_cluster` file should be reconfigured.
+Users also should use their proper informations to replace the examples in some parameters in `g5k_cluster` like:
 
-Users should use their proper host-ips to replace the examples in some parameters like:
+ - USER='bzhang'
+ - PASSWD='xxxxxxx'
+ - SITE='lille'
+ - PRIVATE_KEY=$HOME'/.ssh/id_rsa'
+ - WALLTIME='8:00:00'
 
- - DRIVER_OPTS_CONSUL
- - DRIVER_OPTS_CONTROLLER
- - DRIVER_OPTS_COMPUTE_1
+>To ensure `docker-machine` can successfully create cluster, SSH private key file should be correctly set.
 
-To ensure `docker-machine` can successfully create cluster, SSH private key file should be correctly set in `--generic-ssh-key` of `DRIVER_OPTS`.
-
-When the two steps has been finished, users can create a cluster and start hadoop in Grid5000 with the commands presented in section 4.
+When the configuration of `docker-machine-driver-g5k` and `g5k_cluster` has finished, users can create a cluster and start hadoop in Grid5000 with the commands presented in section 4.
 But the configuration file should be replaced with `g5k_cluster`.
-The commands should be like:
+The command will be like:
  ```sh
 	 $ CONFIG=g5k_cluster ./cluster.sh create-cluster
  ```
+ and
+  ```sh
+	 $ CONFIG=g5k_cluster ./cluster.sh start-hadoop
+ ```
  
- PS: in the frontend of Grid5000, there are no docker and docker-machine installed. So users should install the two tools in the user home. And add the user home to `Path` environment parameter.
+ To launch self-adaptation scenario in Grid5000, users should use the proper `g5k_cluster` file also under `scenarios/self-balancing-example/` to start Hadoop Cluster. The command should be like
+ ```sh
+	 $ CONFIG=scenarios/self-balancing-example/g5k_cluster ./cluster.sh start-hadoop
+ ```
 
 
 ## 7. Result Comparison 
@@ -265,3 +299,6 @@ Furthermore, according to a time-varying workload, the most suitable value of MA
 To solve this problem, we proposed a self-balancing algorithm which can tune MARP at runtime to guarantee the cluster performance.
 The assessments in Grid5000 show that, our approach of self-balancing algorithm can significantly improve the Hadoop cluster performance at runtime.
     ![homogenes](/figures/homogenes.png)
+
+In hadoop-benchmark, we provide a simple bash+Rscript (analysis.sh analysis.R) to generate the comparison graph of each job completion time which are captured by SWIM between static Hadoop cluster and self-Adaptation cluster.
+ According to needs, users can generate their own graphs with the statistics generated by benchmarks.

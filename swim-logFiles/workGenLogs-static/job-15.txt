@@ -1,0 +1,97 @@
+17/01/14 01:16:37 INFO client.RMProxy: Connecting to ResourceManager at controller/10.0.0.3:8032
+Max number of map tasks 40
+Max number of red tasks 8
+shuffleInputRatio  = 2.7373433E-5
+outputShuffleRatio = 0.55743057
+Running on 4 nodes with 36 maps and 1 reduces.
+0.06188210480129486
+0.40646744611612207
+Job started: Sat Jan 14 01:16:38 UTC 2017
+17/01/14 01:16:38 INFO client.RMProxy: Connecting to ResourceManager at controller/10.0.0.3:8032
+17/01/14 01:16:38 INFO client.RMProxy: Connecting to ResourceManager at controller/10.0.0.3:8032
+17/01/14 01:16:38 INFO mapred.FileInputFormat: Total input paths to process : 1
+17/01/14 01:16:38 INFO mapreduce.JobSubmitter: number of splits:2
+17/01/14 01:16:39 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1484356294283_0017
+17/01/14 01:16:39 INFO impl.YarnClientImpl: Submitted application application_1484356294283_0017
+17/01/14 01:16:39 INFO mapreduce.Job: The url to track the job: http://controller:8088/proxy/application_1484356294283_0017/
+17/01/14 01:16:39 INFO mapreduce.Job: Running job: job_1484356294283_0017
+17/01/14 01:29:33 INFO mapreduce.Job: Job job_1484356294283_0017 running in uber mode : false
+17/01/14 01:29:38 INFO mapreduce.Job:  map 13% reduce 0%
+17/01/14 01:29:51 INFO mapreduce.Job:  map 30% reduce 0%
+17/01/14 01:29:53 INFO mapreduce.Job:  map 33% reduce 0%
+17/01/14 01:29:56 INFO mapreduce.Job:  map 36% reduce 0%
+17/01/14 01:29:59 INFO mapreduce.Job:  map 39% reduce 0%
+17/01/14 01:30:02 INFO mapreduce.Job:  map 42% reduce 0%
+17/01/14 01:30:05 INFO mapreduce.Job:  map 44% reduce 0%
+17/01/14 01:30:08 INFO mapreduce.Job:  map 47% reduce 0%
+17/01/14 01:30:11 INFO mapreduce.Job:  map 50% reduce 0%
+17/01/14 01:30:14 INFO mapreduce.Job:  map 53% reduce 0%
+17/01/14 01:30:17 INFO mapreduce.Job:  map 56% reduce 0%
+17/01/14 01:30:20 INFO mapreduce.Job:  map 59% reduce 0%
+17/01/14 01:30:23 INFO mapreduce.Job:  map 61% reduce 0%
+17/01/14 01:30:26 INFO mapreduce.Job:  map 64% reduce 0%
+17/01/14 01:30:33 INFO mapreduce.Job:  map 100% reduce 100%
+17/01/14 01:30:34 INFO mapreduce.Job: Job job_1484356294283_0017 completed successfully
+17/01/14 01:30:59 INFO mapreduce.Job: Counters: 53
+	File System Counters
+		FILE: Number of bytes read=239632
+		FILE: Number of bytes written=828835
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=78593790
+		HDFS: Number of bytes written=1372
+		HDFS: Number of read operations=11
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=2
+		Launched reduce tasks=1
+		Data-local map tasks=2
+		Total time spent by all maps in occupied slots (ms)=148810
+		Total time spent by all reduces in occupied slots (ms)=3031
+		Total time spent by all map tasks (ms)=148810
+		Total time spent by all reduce tasks (ms)=3031
+		Total vcore-seconds taken by all map tasks=148810
+		Total vcore-seconds taken by all reduce tasks=3031
+		Total megabyte-seconds taken by all map tasks=152381440
+		Total megabyte-seconds taken by all reduce tasks=3103744
+	Map-Reduce Framework
+		Map input records=671089
+		Map output records=22
+		Map output bytes=239500
+		Map output materialized bytes=239638
+		Input split bytes=216
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=22
+		Reduce shuffle bytes=239638
+		Reduce input records=22
+		Reduce output records=11
+		Spilled Records=44
+		Shuffled Maps =2
+		Failed Shuffles=0
+		Merged Map outputs=2
+		GC time elapsed (ms)=1446
+		CPU time spent (ms)=148580
+		Physical memory (bytes) snapshot=890802176
+		Virtual memory (bytes) snapshot=2689970176
+		Total committed heap usage (bytes)=570425344
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	org.apache.hadoop.examples.WorkGen$Counters
+		MAP_BYTES_WRITTEN=239324
+		MAP_RECORDS_WRITTEN=22
+		RED_BYTES_WRITTEN=1100
+		RED_RECORDS_WRITTEN=11
+	File Input Format Counters 
+		Bytes Read=78593574
+	File Output Format Counters 
+		Bytes Written=1372
+Job ended: Sat Jan 14 01:31:00 UTC 2017
+The job took 861 seconds.
