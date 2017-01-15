@@ -1,0 +1,18 @@
+## The hadoop-benchmark cluster configuration file
+
+# the name of the cluster
+CLUSTER_NAME_PREFIX='local-hadoop'
+
+# the driver to be used to create the cluster
+# for list of available drivers go to https://docs.docker.com/machine/drivers/
+DRIVER='virtualbox'
+
+# the extra driver options for controller and compute nodes
+# for list of available options `docker-machine create -d virtualbox --help | grep "\-\-virtualbox"`
+DRIVER_OPTS='--virtualbox-memory 2048'
+
+# number of compute nodes
+NUM_COMPUTE_NODES=1
+
+HADOOP_IMAGE='hadoop-benchmark/hadoop'
+HADOOP_IMAGE_DIR='scenarios/vanilla-hadoop/images/hadoop'
