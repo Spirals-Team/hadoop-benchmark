@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
+source $(dirname $0)/../common.sh
 
-docker run \
+docker $controller_conn run \
   -t \
   --rm \
   --net hadoop-net \

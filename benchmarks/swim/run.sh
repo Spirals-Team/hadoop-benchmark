@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
+source $(dirname $0)/../common.sh
 
 base=$(dirname "$(cd "$(dirname "$0")"; pwd)/$(basename "$0")")
-docker build -t hadoop-benchmark-swim "$base/image"
+docker $controller_conn build -t hadoop-benchmark-swim "$base/image"
 
-docker run \
+docker $controller_conn run \
   -it \
   --rm \
   --net hadoop-net \
