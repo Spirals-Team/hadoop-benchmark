@@ -549,7 +549,6 @@ console() {
 }
 
 run_controller() {
-  echo $#
   cmd="$@"
   log "Command to be run at controller: $cmd"
   run_docker $controller_node_name exec controller $cmd
@@ -562,14 +561,17 @@ hdfs() {
 
 hdfs_download() {
   src="$1"
-  filename="$(basename $src)"
-  dest="${2:-$filename}"
-  tmp="/tmp/$(basename $(mktemp -t statistics))"
+  tmp="/tmp/$(basename $(mktemp -t hadoop-benchmark))"
+  local_tmp=$(mktemp)
 
-  log "Downloading file from HDFS: '$src' to localhost: '$dest' ('controller:$tmp')"
+  run_controller "mkdir $tmp"
+  log "Downloading file from HDFS: '$src' to '$(pwd)' ('controller:$tmp')"
   hdfs dfs -get "$src" "$tmp"
-  run_docker $controller_node_name cp "controller:$tmp" "$dest"
-  run_controller rm -fr "$tmp"
+  run_controller tar -c -z -f "$tmp.tgz" -C $(dirname $tmp) $(basename $tmp)
+  run_docker $controller_node_name cp "controller:$tmp.tgz" $local_tmp
+  tar -x -z -f $local_tmp --strip-components 1 -v
+  rm -fr "$local_tmp"
+  run_controller "rm -fr $tmp"
 }
 
 print_help() {
@@ -602,7 +604,7 @@ Commands:
     console                   Enter a bash console in a container connected to the cluster
     run-controller CMD        Run a command CMD in the controller container
     hdfs CMD                  Run the HDFS CMD command
-    hdfs-download SRC [DEST]  Download a file from HDFS SRC to localhost DEST
+    hdfs-download SRC         Download a file from HDFS SRC to current directory
 
   Info:
     shell-init      Shows information how to initialize current shell to connect to the cluster
