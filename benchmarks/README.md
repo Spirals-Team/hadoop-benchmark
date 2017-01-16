@@ -12,6 +12,7 @@ At last, after the experiments, users should collect the reports or results gene
 In summary, users needs 3 steps to adapt a new benchmark to hadoop-benchmark: `create docker image`, `launch docker container`, `launch benchmark inside container and collect results`.
 
 Here, we'd like to explain this process by using HiBench as example:
+
 1. `create docker image`: under `benchmarks/hibench/image`, there is one file named `Dockerfile`.
 Docker engine will create docker image by following the steps specified in this file.
 The new docker image should be based on the hadoop image (hadoop-benchmark/hadoop) created by hadoop-benchmark.
