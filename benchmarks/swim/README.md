@@ -22,6 +22,9 @@ done
 logs="workGenLogs-$(date +"%Y%m%d-%H%M").tgz"
 tar cfvz "$logs" "$SWIM_HOME/workGenLogs"
 hdfs dfs -put "$logs" "/user/root/$logs"
+
+echo "Benchmarks finished"
+echo "Logs uploaded to HDFS: /user/root/$logs"
 ```
 
 ## Analysis

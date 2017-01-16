@@ -8,6 +8,3 @@ hadoop jar $SWIM_HOME/HDFSWrite.jar org.apache.hadoop.examples.HDFSWrite -conf $
 
 echo "Running SWIM:"
 $SWIM_HOME/run-jobs-all.sh &
-
-echo "Benchmarks finished"
-echo "Logs uploaded to HDFS: /user/root/$logs"
