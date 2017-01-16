@@ -9,6 +9,8 @@ case "$1" in
     echo "Running benchmarks:"
     cat $HIBENCH_HOME/conf/benchmarks.lst
 
+    hdfs dfs -mkdir hdfs:///report
+
     for i in $(seq 1 10);
     do
         $HIBENCH_HOME/bin/run-all.sh
