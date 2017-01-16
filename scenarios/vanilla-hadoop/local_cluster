@@ -14,5 +14,6 @@ DRIVER_OPTS='--virtualbox-memory 2048'
 # number of compute nodes
 NUM_COMPUTE_NODES=1
 
+# docker images to be used
 HADOOP_IMAGE='hadoop-benchmark/hadoop'
 HADOOP_IMAGE_DIR='scenarios/vanilla-hadoop/images/hadoop'
