@@ -22,6 +22,7 @@ Each of them contains one file (named `configure.sh`) which stores the datasets 
 Users can directly modify these files to achieve their desired benchmarks, or create a new directory containing a file having the same name (`configure.sh`) for another benchmarks.
 
 All the types of benchmarks supported by HiBench for YARN Hadoop can be checked [here](https://github.com/intel-hadoop/HiBench/blob/yarn/conf/benchmarks.lst).
+>PS: if users add another benchmarks of HiBench, please DO NOT forget to add the benchmark name to $ALL_BENCHMARKS in run.sh under `benchmarks/hibench`.
 
 ## Analysis
 
