@@ -104,3 +104,16 @@ sleep 33
 # max input 171246518
 # inputPartitionSize 67108864
 # inputPartitionCount 10
+
+for job in `jobs -p`
+do
+  echo "Waiting for $job to finish"
+  wait $job
+done
+
+logs="workGenLogs-$(date +"%Y%m%d-%H%M").tgz"
+tar cfvz "$logs" "$SWIM_HOME/workGenLogs"
+hdfs dfs -put "$logs" "/user/root/$logs"
+
+echo "Benchmarks finished"
+echo "Logs uploaded to HDFS: /user/root/$logs"
