@@ -10,7 +10,7 @@ The 4 benchmarks are:
 - Terasort
 - Sleep
 
-#### Image
+### Image
 
 The `image` directory will be required by docker engine to create HiBench image. 
 
@@ -23,6 +23,6 @@ Users can directly modify these files to achieve their desired benchmarks, or cr
 
 All the types of benchmarks supported by HiBench for YARN Hadoop can be checked [here](https://github.com/intel-hadoop/HiBench/blob/yarn/conf/benchmarks.lst).
 
-#### Analysis
+### Analysis
 
 In `analysis` directory, we provide a simple R script to help users analyse results and generate graphs. 
