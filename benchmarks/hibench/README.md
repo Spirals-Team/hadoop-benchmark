@@ -21,7 +21,7 @@ In `image/HiBench-conf` directory, there are 4 directory corresponding to 4 benc
 Each of them contains one file (named `configure.sh`) which stores the datasets of corresponding benchmark.
 Users can directly modify these files to achieve their desired benchmarks, or create a new directory containing a file having the same name (`configure.sh`) for another benchmarks.
 
-All the types of benchmarks supported by HiBench for YARN Hadoop can be checked [here](https://github.com/intel-hadoop/HiBench/blob/yarn/conf/benchmarks.lst), and the corresponding `configure.sh` can be checked [here](https://github.com/intel-hadoop/HiBench/tree/yarn) (under ${corresponding benchmark}/conf directory).
+All the types of benchmarks supported by HiBench for YARN Hadoop can be checked [here](https://github.com/intel-hadoop/HiBench/blob/yarn/conf/benchmarks.lst), and the corresponding `configure.sh` can be checked [here](https://github.com/intel-hadoop/HiBench/tree/yarn) (under `${corresponding benchmark}/conf` directory).
 >PS: if users add another benchmarks of HiBench into docker image, please ``DO NOT`` forget to add the benchmark name to $ALL_BENCHMARKS in run.sh under `benchmarks/hibench`.
 
 ## Analysis
