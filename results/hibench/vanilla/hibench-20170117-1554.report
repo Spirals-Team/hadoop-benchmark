@@ -1,5 +1,0 @@
-Type         Date       Time     Input_data_size      Duration(s)          Throughput(bytes/s)  Throughput/node     
-WORDCOUNT    2017-01-17 15:52:55 4703                 21.791               215                  53                  
-SORT         2017-01-17 15:53:42 5225                 20.922               249                  62                  
-TERASORT     2017-01-17 15:54:31 30000                18.762               1598                 399                 
-SLEEP        2017-01-17 15:54:55 0                    19.791               0                    0                   
