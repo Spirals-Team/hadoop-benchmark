@@ -11,6 +11,9 @@ DRIVER='virtualbox'
 # for list of available options `docker-machine create -d virtualbox --help | grep "\-\-virtualbox"`
 DRIVER_OPTS='--virtualbox-memory 2048'
 
+# override the memory for consul
+DRIVER_OPTS_CONSUL='--virtualbox-memory 512'
+
 # number of compute nodes
 NUM_COMPUTE_NODES=1
 

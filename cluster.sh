@@ -338,8 +338,7 @@ create_network() {
 
 create_cluster() {
   # setup consul node - this one can be small
-  DRIVER_OPTS="--virtualbox-memory 512" \
-    start_machine $consul_node_name
+  start_machine $consul_node_name
 
   # start consul container
   start_container $consul_node_name consul -d -p "8500:8500" -h consul progrium/consul -server -bootstrap
