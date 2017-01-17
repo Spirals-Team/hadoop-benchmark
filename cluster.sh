@@ -347,7 +347,7 @@ create_network() {
 }
 
 create_cluster() {
-  # setup consul node - this one can be small
+  # setup consul node
   start_machine $consul_node_name
 
   # start consul container
