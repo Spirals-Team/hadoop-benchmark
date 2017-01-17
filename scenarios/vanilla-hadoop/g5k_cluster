@@ -3,7 +3,7 @@ NUM_COMPUTE_NODES=4
 CLUSTER_NAME_PREFIX='g5k-hadoop'
 
 USER='bzhang'
-PASSWD='ZBzb@68930171'
+PASSWD='xxxxxxx'
 SITE='lille'
 PRIVATE_KEY=$HOME'/.ssh/id_rsa'
 WALLTIME='8:00:00'
