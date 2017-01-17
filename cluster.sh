@@ -18,11 +18,6 @@ EXT_AFTER_CONSUL_MACHINE=${EXT_AFTER_CONSUL_MACHINE:-''}
 EXT_AFTER_CONTROLLER_MACHINE=${EXT_AFTER_CONTROLLER_MACHINE:-''}
 EXT_AFTER_COMPUTE_MACHINE=${EXT_AFTER_COMPUTE_MACHINE:-''}
 
-# all driver related settings must be exported
-export VIRTUALBOX_MEMORY_SIZE=${VIRTUALBOX_MEMORY_SIZE:-1024}
-export VIRTUALBOX_CPU_COUNT=${VIRTUALBOX_CPU_COUNT:-1}
-export VIRTUALBOX_BOOT2DOCKER_URL=${VIRTUALBOX_BOOT2DOCKER_URL:-'https://github.com/boot2docker/boot2docker/releases/download/v1.13.0-rc5/boot2docker.iso'}
-
 # private constants
 declare -r docker_name_prefix="$CLUSTER_NAME_PREFIX"
 declare -r network_name='hadoop-net'
@@ -342,8 +337,15 @@ create_network() {
 
 create_cluster() {
   # setup consul node - this one can be small
-  VIRTUALBOX_MEMORY_SIZE=512 \
-    start_machine $consul_node_name
+  case "$DRIVER" in
+    virtualbox) 
+	DRIVER_OPTS="--virtualbox-memory 512" \
+	   start_machine $consul_node_name
+    ;;
+    *)
+        start_machine $consul_node_name
+  esac
+
 
   # start consul container
   start_container $consul_node_name consul -d -p "8500:8500" -h consul progrium/consul -server -bootstrap
