@@ -16,7 +16,7 @@ case "$1" in
 esac
 
 report=$HIBENCH_HOME/hibench.report
-dest="/user/root/hibench-$(date +"%Y%m%d-%H%M").report"
+dest="/hibench-$(date +"%Y%m%d-%H%M").report"
 hdfs dfs -put "$report" "$dest"
 
 echo "Benchmarks finished"
