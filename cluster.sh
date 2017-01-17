@@ -572,7 +572,7 @@ hdfs() {
 hdfs_download() {
   src="$1"
   tmp="/tmp/$(basename $(mktemp -t hadoop-benchmark))"
-  local_tmp=$(mktemp)
+  local_tmp=$(mktemp -t hadoop-benchmark)
 
   run_controller "mkdir $tmp"
   log "Downloading file from HDFS: '$src' to '$(pwd)' ('controller:$tmp')"
