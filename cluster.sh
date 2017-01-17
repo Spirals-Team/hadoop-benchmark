@@ -247,7 +247,8 @@ start_container() {
 
     exited)
       log "docker container $name@$machine is not running, starting..."
-      run_docker $machine start $name
+      run_docker $machine rm $name
+      run_docker $machine run --name $name $@
     ;;
 
     *)
