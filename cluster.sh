@@ -104,6 +104,11 @@ destroy_machine() {
   status=$(check_docker_machine $name)
 
   case "$status" in
+    Nonexistent)
+      log "docker machine $name does not exist"
+      # no more work
+    ;;
+
     *)
       log "trying to destroy docker machine $name..."
       run docker-machine rm -y $([[ "$force" == "true" ]] && "echo -f") $name
@@ -126,6 +131,11 @@ stop_machine() {
 
     Stopped)
       log "docker machine $name is already stopped"
+      # no more work
+    ;;
+
+    Nonexistent)
+      log "docker machine $name does not exist"
       # no more work
     ;;
 
