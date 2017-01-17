@@ -18,6 +18,11 @@ EXT_AFTER_CONSUL_MACHINE=${EXT_AFTER_CONSUL_MACHINE:-''}
 EXT_AFTER_CONTROLLER_MACHINE=${EXT_AFTER_CONTROLLER_MACHINE:-''}
 EXT_AFTER_COMPUTE_MACHINE=${EXT_AFTER_COMPUTE_MACHINE:-''}
 
+# all driver related settings must be exported
+export VIRTUALBOX_MEMORY_SIZE=${VIRTUALBOX_MEMORY_SIZE:-1024}
+export VIRTUALBOX_CPU_COUNT=${VIRTUALBOX_CPU_COUNT:-1}
+export VIRTUALBOX_BOOT2DOCKER_URL=${VIRTUALBOX_BOOT2DOCKER_URL:-'https://github.com/boot2docker/boot2docker/releases/download/v1.13.0-rc5/boot2docker.iso'}
+
 # private constants
 declare -r docker_name_prefix="$CLUSTER_NAME_PREFIX"
 declare -r network_name='hadoop-net'
@@ -337,7 +342,7 @@ create_network() {
 
 create_cluster() {
   # setup consul node - this one can be small
-  DRIVER_OPTS="--virtualbox-memory 512" \
+  VIRTUALBOX_MEMORY_SIZE=512 \
     start_machine $consul_node_name
 
   # start consul container
@@ -562,7 +567,7 @@ hdfs() {
 hdfs_download() {
   src="$1"
   tmp="/tmp/$(basename $(mktemp -t hadoop-benchmark))"
-  local_tmp=$(mktemp)
+  local_tmp=$(mktemp -t hadoop-benchmark)
 
   run_controller "mkdir $tmp"
   log "Downloading file from HDFS: '$src' to '$(pwd)' ('controller:$tmp')"
