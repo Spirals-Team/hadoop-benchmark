@@ -1,0 +1,1 @@
+strftime(Sys.time(), "%a %b %e %X UTC %Y", tz="GMT")

@@ -2,6 +2,7 @@
 
 library(tidyverse, warn.conflicts=FALSE, quietly=TRUE)
 library(Hmisc, warn.conflicts=FALSE, quietly=TRUE)
+Sys.setlocale("LC_TIME", "en_US.UTF-8")
 
 args <- commandArgs(trailingOnly=TRUE)
 if (length(args) != 1) {
