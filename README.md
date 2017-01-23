@@ -2,9 +2,12 @@
 
 Hadoop-Benchmark is an open-source research acceleration platform for rapid prototyping and evaluation of self-adaptive behaviors in Hadoop clusters.
 The main objectives are to allow researchers to
-− rapidly prototype—i.e., to experiment with self-adaptation in Hadoop clusters without the need to cope with low-level system infrastructure details,
-− reproduction—i.e., to share complete experiments for others to reproduce them independently, and
-− repetition—i.e., to experiment with and to compare their work, re-doing the same experiments on the same system using the same evaluation methods.
+
+− _rapidly prototype_, i.e., to experiment with self-adaptation in Hadoop clusters without the need to cope with low-level system infrastructure details,
+
+− _reproduction_, i.e., to share complete experiments for others to reproduce them independently, and
+
+− _repetition_, i.e., to experiment with and to compare their work, re-doing the same experiments on the same system using the same evaluation methods.
 
 It uses [docker](https://www.docker.com/products/docker-engine) and [docker-machine](https://www.docker.com/products/docker-machine) to easily create a multi-node cluster (on a single laptop or in a cloud including [Grid5000](https://github.com/Spirals-Team/docker-machine-driver-g5k)) and provision Hadoop.
 It contains a number of acknowledged [benchmarks](https://github.com/Spirals-Team/hadoop-benchmark/tree/master/benchmarks) and one self-adaptive [scenario](https://github.com/Spirals-Team/hadoop-benchmark/tree/master/scenarios/self-balancing-example).
