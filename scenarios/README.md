@@ -1,3 +1,4 @@
+#SCENARIOS
 In this directory, we provide 2 scenarios which have been adapted to docker for hadoop-benchmark:
 - Vanilla Configuration (default Hadoop Cluster) 
 - Self-Adaptation Hadoop Cluster
