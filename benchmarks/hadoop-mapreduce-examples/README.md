@@ -9,12 +9,12 @@ What users should do is only to concatenate benchmarks' arguments after `run.sh`
 ```sh
 	$ ./benchmarks/hadoop-mapreduce-examples/run.sh pi 2 2
 ```
-The corresponding statistics of this command all will be shown like the bellow graph.
+The corresponding statistics of this command all will be shown like the below graph.
 
  ![The result of PI estimator](/figures/result-pi.png)
 
 
-The further informations about these benchmarks can be checked by bellow command
+The further informations about these benchmarks can be checked by below command
 ```sh
 	$ ./benchmarks/hadoop-mapreduce-examples/run.sh
 ```
