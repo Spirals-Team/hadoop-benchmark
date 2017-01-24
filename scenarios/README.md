@@ -31,11 +31,11 @@ The commands are like:
 ### Creating New Scenario
 To create a new scenario, there are several steps:
 
-1. Create new Dockerfile: This file will be used by hadoop-benchmark to create new hadoop docker image which will be used to produce specific Hadoop cluster.
+1. Create new Dockerfile: This file will be used by hadoop-benchmark to create new hadoop docker image which will be used to produce specific Hadoop cluster (e.g. `/scenarios/self-balancing-example/image/Dockerfile`).
 
-2. Generat new hadoop-benchmark configuration file: This file will be used in launching command to indicate correct docker image and specific configurations concerning the new Hadoop cluster.
+2. Generat new hadoop-benchmark configuration file: This file will be used in launching command to indicate correct docker image and specific configurations concerning the new Hadoop cluster (e.g. `/scenarios/self-balancing-example/local_cluster`).
 
-3. Option: generating `after-start.sh` bash is also necessary when there are additional services need to be launched after Hadoop cluster becomes ready.
+3. Option: generating `after-start.sh` bash is also necessary when there are additional services need to be launched after Hadoop cluster becomes ready (e.g. `/scenarios/self-balancing-example/image/after-start.sh`).
 
 In these steps, `Create new Dockerfile` is the most important one.
 To understand and learn how to create a new Dockerfile, users can get more informations and tutorial [here](https://docs.docker.com/engine/reference/builder/).
