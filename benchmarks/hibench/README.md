@@ -10,6 +10,11 @@ The 4 benchmarks are:
 - Terasort
 - Sleep
 
+The statistics of these benchmarks will be stored in a file called `hibench.report` like:
+
+ ![The result of HiBench examples](/figures/result-hibench.png)
+
+
 ## Image
 
 The `image` directory will be required by docker engine to create HiBench image. 
