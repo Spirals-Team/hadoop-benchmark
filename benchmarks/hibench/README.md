@@ -27,8 +27,9 @@ All the types of benchmarks supported by HiBench for YARN Hadoop can be checked 
 ## Analysis
 
 In `analysis` directory, we provide a simple R script to help users analyse results and generate graphs. 
+
 After users have collected the HiBench reports (hibench.report) from hadoop-benchmark, please put them in a proper directory (e.g. `results/hibench/`).
 And the command to launch R scripte will be like:
 ```sh
-	$ Rscript hibench-report.R results/hibench
+	$ Rscript hibench-report.R results/hibench/
 ```
