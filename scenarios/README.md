@@ -39,28 +39,28 @@ In all the files contained by `image` directory, the `Dockerfile` is the importa
 This file will be used by hadoop-benchmark to create new hadoop docker image which will be used to produce specific Hadoop cluster.
 In this file, the commands describe the steps one by one, which customize the Hadoop cluster based on a basic docker image.
 
->For example (e.g. `/scenarios/self-balancing-example/image/Dockerfile`),
->```sh
->	ADD self-balancing /self-balancing
->```
->This Dockerfile command inserts our self-balancing approach into the new docker image, and puts it under root directory.
->```sh
->	ADD capacity-scheduler.xml /usr/local/hadoop/etc/hadoop/
->```
->This command replaces a default hadoop configuration file with a new customized one.
+>>For example (e.g. `/scenarios/self-balancing-example/image/Dockerfile`),
+>>```sh
+>>ADD self-balancing /self-balancing
+>>```
+>>This Dockerfile command inserts our self-balancing approach into the new docker image, and puts it under root directory.
+>>```sh
+>>ADD capacity-scheduler.xml /usr/local/hadoop/etc/hadoop/
+>>```
+>>This command replaces a default hadoop configuration file with a new customized one.
 
->According to the new Dockerfile, docker engine could generate a new docker image which contains new customized hadoop packages with users' implementations.
+>>According to the new Dockerfile, docker engine could generate a new docker image which contains new customized hadoop packages with users' implementations.
 With the new docker images, users could easily create a new hadoop cluster by only one command of hadoop-benchmark.
 
->To well understand and learn how to create a new Dockerfile, users can get more informations and tutorial [here](https://docs.docker.com/engine/reference/builder/).
+>>To well understand and learn how to create a new Dockerfile, users can get more informations and tutorial [here](https://docs.docker.com/engine/reference/builder/).
 
 - Generat new hadoop-benchmark configuration file: This file will be used in launching command to indicate correct docker image and specific configurations concerning the new Hadoop cluster (e.g. `/scenarios/self-balancing-example/local_cluster`).
 
-In fact, users can directly copy the `local_cluster` file from self-adaptation scenario, but please DO NOT forget to modify $HADOOP_IMAGE and $HADOOP_IMAGE_DIR parameters, like:
-```sh
-HADOOP_IMAGE='hadoop-benchmark/{new scenario}'
-HADOOP_IMAGE_DIR='scenarios/{new scenario}/image'
-```
+>>In fact, users can directly copy the `local_cluster` file from self-adaptation scenario, but please DO NOT forget to modify $HADOOP_IMAGE and $HADOOP_IMAGE_DIR parameters, like:
+>>```sh
+>>HADOOP_IMAGE='hadoop-benchmark/{new scenario}'
+>>HADOOP_IMAGE_DIR='scenarios/{new scenario}/image'
+>>```
 
 - Option: generating `after-start.sh` bash is also necessary when there are additional services need to be launched after Hadoop cluster becomes ready (e.g. `/scenarios/self-balancing-example/image/after-start.sh`).
 For example, in the case of self-adaptation scenario, our self-balancing approach should be launched after the running of Hadoop cluster.
