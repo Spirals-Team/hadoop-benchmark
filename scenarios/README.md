@@ -50,7 +50,7 @@ This Dockerfile command inserts our self-balancing approach into the new docker 
 This command replaces a default hadoop configuration file with a new customized one.
 
 According to the new Dockerfile, docker engine could generate a new docker image which contains new customized hadoop packages with users' implementations.
-With the new docker images, users could easily create a new hadoop cluster by only one command with hadoop-benchmark.
+With the new docker images, users could easily create a new hadoop cluster by only one command of hadoop-benchmark.
 
 To well understand and learn how to create a new Dockerfile, users can get more informations and tutorial [here](https://docs.docker.com/engine/reference/builder/).
 
