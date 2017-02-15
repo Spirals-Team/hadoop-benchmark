@@ -1,0 +1,14 @@
+DRIVER='g5k'
+NUM_COMPUTE_NODES=2
+CLUSTER_NAME_PREFIX='g5k-spark'
+
+USER='bzhang'
+PASSWD='ZBzb@68930171'
+SITE='lille'
+PRIVATE_KEY=$HOME'/.ssh/id_rsa'
+WALLTIME='8:00:00'
+
+DRIVER_OPTS=$(echo "--g5k-username $USER --g5k-password $PASSWD --g5k-site $SITE --g5k-walltime $WALLTIME --g5k-ssh-private-key $PRIVATE_KEY")
+
+HADOOP_IMAGE='hadoop-benchmark/spark'
+HADOOP_IMAGE_DIR=scenarios/spark/image

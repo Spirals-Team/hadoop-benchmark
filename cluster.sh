@@ -668,11 +668,23 @@ while [[ $# > 0 ]]; do
         command='destroy_hadoop'
         shift
       ;;
+      destroy-spark)
+        command='destroy_hadoop'
+        shift
+      ;;
       stop-hadoop)
         command='stop_hadoop'
         shift
       ;;
+      stop-spark)
+        command='stop_hadoop'
+        shift
+      ;;
       start-hadoop)
+        command='start_hadoop'
+        shift
+      ;;
+      start-spark)
         command='start_hadoop'
         shift
       ;;

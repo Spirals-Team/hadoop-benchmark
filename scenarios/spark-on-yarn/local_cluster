@@ -1,0 +1,22 @@
+## The hadoop-benchmark cluster configuration file
+
+# the name of the cluster
+CLUSTER_NAME_PREFIX='local-spark'
+
+# the driver to be used to create the cluster
+# for list of available drivers go to https://docs.docker.com/machine/drivers/
+DRIVER='virtualbox'
+
+# the extra driver options for controller and compute nodes
+# for list of available options `docker-machine create -d virtualbox --help | grep "\-\-virtualbox"`
+DRIVER_OPTS='--virtualbox-memory 1536'
+
+# override the memory for consul
+DRIVER_OPTS_CONSUL='--virtualbox-memory 512'
+
+# number of compute nodes
+NUM_COMPUTE_NODES=1
+
+# docker images to be used
+HADOOP_IMAGE='hadoop-benchmark/spark'
+HADOOP_IMAGE_DIR='scenarios/spark/image'
