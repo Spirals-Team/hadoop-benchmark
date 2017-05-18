@@ -65,8 +65,7 @@ Commands:
 
 - check the [tutorial](https://github.com/Spirals-Team/hadoop-benchmark/wiki/Tutorial) to get started.
 
-- get started screencast:
-<script type="text/javascript" src="https://asciinema.org/a/8bibyzinreyz30f0dkjk75yhv.js" id="asciicast-8bibyzinreyz30f0dkjk75yhv" async></script>
+- check the [screencast](https://asciinema.org/a/8bibyzinreyz30f0dkjk75yhv)
 
-- [demonstration](https://youtu.be/T6m4OM3nvGc) of using hadoop-benchmark on Grid5000
+- check the [demonstration](https://youtu.be/T6m4OM3nvGc) of using hadoop-benchmark on Grid5000
 
