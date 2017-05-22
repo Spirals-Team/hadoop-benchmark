@@ -3,7 +3,7 @@
 In this directory, we provide the following benchmarks:
 
 + default Hadoop benchmarks
-+ default Spark benchamrks
++ default Spark benchmarks
 + HiBench
 + SWIM (Statistical Workload Injector for Mapreduce)
 
